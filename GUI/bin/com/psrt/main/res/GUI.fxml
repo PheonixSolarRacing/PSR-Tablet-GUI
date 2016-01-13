@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?scenebuilder-classpath-element ../../../../../../PSRT/bin?>
+<?import javafx.scene.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.media.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import com.psrt.main.*?>
+
+<TabPane id="main_tabs" fx:id="main_tabs" prefHeight="800.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="1.7976931348623157E100" tabMaxWidth="1.7976931348623157E100" tabMinHeight="60.0" tabMinWidth="100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.psrt.main.UIController">
+  <tabs>
+    <Tab id="main_tab" fx:id="main_tab" closable="false" text="Main">
+      <content>
+        <AnchorPane id="main_anchor_pane" fx:id="main" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <MediaView fx:id="cam_display" fitHeight="734.0" fitWidth="1174.0" layoutX="53.0" />
+                  <Label fx:id="speed_display" alignment="CENTER" layoutX="433.0" layoutY="460.0" opacity="0.5" prefHeight="292.0" prefWidth="414.0" text="35">
+                     <font>
+                        <Font size="200.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Your Speed Dufus!">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Tooltip>
+                     </tooltip>
+                  </Label>
+                  <Label id="mph" layoutX="745.0" layoutY="661.0" opacity="0.6" text="MPH" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab id="status_tab" fx:id="status_tab" text="Status">
+         <content>
+            <AnchorPane id="status_anchor_pane" fx:id="status" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+    <Tab id="bms_tab" fx:id="bms_tab" text="B-MO">
+      <content>
+        <AnchorPane id="bms_anchor_pane" fx:id="bms" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="28.0" layoutX="307.0" layoutY="172.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
+                  <ProgressBar id="soc_indicator" layoutX="227.0" layoutY="235.0" prefHeight="95.0" prefWidth="200.0" progress="0.83" rotate="-90.0" />
+                  <Label id="SOC_Label" layoutX="375.0" layoutY="290.0" prefHeight="93.0" prefWidth="245.0" text="80%">
+                     <font>
+                        <Font size="64.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab id="motors_tab" fx:id="motos_tab" text="Motors">
+         <content>
+            <AnchorPane id="motors_anchor_pane" fx:id="motors" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <LineChart fx:id="motors_graph" layoutX="147.0" layoutY="78.0">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+               </children></AnchorPane>
+         </content>
+      </Tab>
+      <Tab id="pdb_tab" fx:id="pdb_tab" text="PDB">
+         <content>
+            <AnchorPane id="pdb_anchor_pane" fx:id="pdb" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e4e4e4" height="673.0" layoutX="144.0" layoutY="31.0" stroke="BLACK" strokeType="INSIDE" width="978.0" />
+                  <ImageView id="PDB_panel" fitHeight="701.0" fitWidth="1071.0" layoutX="131.0" layoutY="8.0" opacity="0.76" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/PDB%20outline%203.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="169.0" layoutY="568.0" prefHeight="36.0" prefWidth="77.0" text="DC to DC:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label id="dc_to_dc_voltage" fx:id="dc_to_dc_voltage" layoutX="165.0" layoutY="583.0" prefHeight="57.0" prefWidth="85.0" text="11.5V">
+                     <font>
+                        <Font name="Arial Black" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label id="batteries_all_current" fx:id="batteries_current" layoutX="489.0" layoutY="280.0" prefHeight="57.0" prefWidth="85.0" text="5.2A">
+                     <font>
+                        <Font name="Arial Black" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="488.0" layoutY="263.0" prefHeight="36.0" prefWidth="72.0" text="Batteries:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="483.0" layoutY="405.0" prefHeight="36.0" prefWidth="76.0" text="DC to DC:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label id="dc_to_dc_current" fx:id="dc_to_dc_current" layoutX="491.0" layoutY="421.0" prefHeight="57.0" prefWidth="85.0" text="0.0A">
+                     <font>
+                        <Font name="Arial Black" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="703.0" layoutY="602.0" prefHeight="36.0" prefWidth="75.0" text="Output 7:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label id="output_7_current" fx:id="output_7_current" layoutX="704.0" layoutY="619.0" prefHeight="57.0" prefWidth="80.0" text="0.0A" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Arial Black" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="170.0" layoutY="437.0" prefHeight="36.0" prefWidth="77.0" text="Battery 4:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label id="battery_4_voltage" fx:id="battery_4_voltage" layoutX="166.0" layoutY="463.0" prefHeight="10.0" prefWidth="91.0" text="11.3V">
+                     <font>
+                        <Font name="Arial Black" size="25.0" />
+                     </font>
+                  </Label>
+                  <Label id="lv_bus_voltage" fx:id="lv_bus_voltage" layoutX="695.0" layoutY="344.0" prefHeight="64.0" prefWidth="91.0" text="14.2V">
+                     <font>
+                        <Font name="Arial Black" size="25.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="676.0" layoutY="331.0" prefHeight="36.0" prefWidth="126.0" text="LV Bus Voltage:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label id="output_8_current" fx:id="output_8_current" layoutX="584.0" layoutY="618.0" prefHeight="57.0" prefWidth="80.0" text="0.0A" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Arial Black" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="583.0" layoutY="601.0" prefHeight="36.0" prefWidth="75.0" text="Output 8:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="824.0" layoutY="601.0" prefHeight="36.0" prefWidth="75.0" text="Output 6:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label id="output_6_current" fx:id="output_6_current" layoutX="825.0" layoutY="618.0" prefHeight="57.0" prefWidth="80.0" text="0.0A" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Arial Black" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label id="output_5_current" fx:id="output_5_current" layoutX="945.0" layoutY="619.0" prefHeight="57.0" prefWidth="80.0" text="1.8A" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Arial Black" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="944.0" layoutY="602.0" prefHeight="36.0" prefWidth="75.0" text="Output 5:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="944.0" layoutY="63.0" prefHeight="36.0" prefWidth="75.0" text="Output 1:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label id="output_1_current" fx:id="output_1_current" layoutX="945.0" layoutY="80.0" prefHeight="57.0" prefWidth="80.0" text="2.1A" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Arial Black" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label id="output_2_current" fx:id="output_2_current" layoutX="825.0" layoutY="79.0" prefHeight="57.0" prefWidth="80.0" text="1.3A" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Arial Black" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="824.0" layoutY="62.0" prefHeight="36.0" prefWidth="75.0" text="Output 2:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="583.0" layoutY="62.0" prefHeight="36.0" prefWidth="75.0" text="Output 4:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label id="output_4_current" fx:id="output_4_current" layoutX="584.0" layoutY="79.0" prefHeight="57.0" prefWidth="80.0" text="0.0A" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Arial Black" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label id="output_3_current" fx:id="output_3_current" layoutX="704.0" layoutY="80.0" prefHeight="57.0" prefWidth="80.0" text="0.0A" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Arial Black" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="703.0" layoutY="63.0" prefHeight="36.0" prefWidth="75.0" text="Output 3:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <ImageView id="battery_1_led" fx:id="battery_1_led" fitHeight="40.0" fitWidth="40.0" layoutX="264.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/Green%20Light%20Medium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="battery_2_led" fx:id="battery_2_led" fitHeight="40.0" fitWidth="40.0" layoutX="264.0" layoutY="228.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/Green%20Light%20Medium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="battery_3_led" fx:id="battery_3_led" fitHeight="40.0" fitWidth="40.0" layoutX="264.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/Yellow%20Light%20Medium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="battery_4_led" fx:id="battery_4_led" fitHeight="40.0" fitWidth="40.0" layoutX="264.0" layoutY="463.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/Red%20Light%20Medium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="battery_5_led" fx:id="dc_to_dc_voltage_led" fitHeight="40.0" fitWidth="40.0" layoutX="264.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/Green%20Light%20Medium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="output_8_led" fx:id="output_8_led" fitHeight="40.0" fitWidth="40.0" layoutX="598.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/Off%20Light%20Medium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="output_7_led" fx:id="output_7_led" fitHeight="40.0" fitWidth="40.0" layoutX="719.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/Off%20Light%20Medium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="output_5_led" fx:id="output_5_led" fitHeight="40.0" fitWidth="40.0" layoutX="960.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/Green%20Light%20Medium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="output_6_led" fx:id="output_6_led" fitHeight="40.0" fitWidth="40.0" layoutX="839.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/Off%20Light%20Medium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="output_2_led" fx:id="output_2_led" fitHeight="40.0" fitWidth="40.0" layoutX="839.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/Green%20Light%20Medium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="output_1_led" fx:id="output_1_led" fitHeight="40.0" fitWidth="40.0" layoutX="960.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/Green%20Light%20Medium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="output_3_led" fx:id="output_3_led" fitHeight="40.0" fitWidth="40.0" layoutX="719.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/Off%20Light%20Medium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="output_4_led" fx:id="output_4_led" fitHeight="40.0" fitWidth="40.0" layoutX="598.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/Off%20Light%20Medium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="batteries_all_current_led" fx:id="batteries_current_led" fitHeight="40.0" fitWidth="40.0" layoutX="565.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/Green%20Light%20Medium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="dc_to_dc_current_led" fx:id="dc_to_dc_current_led" fitHeight="40.0" fitWidth="40.0" layoutX="564.0" layoutY="417.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/Off%20Light%20Medium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="893.0" layoutY="422.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/Green%20Light%20Medium.png" />
+                     </image>
+                  </ImageView>
+                  <Label id="battery_4_percentage" fx:id="battery_4_percentage" layoutX="184.0" layoutY="495.0" prefHeight="22.0" prefWidth="71.0" text="8%">
+                     <font>
+                        <Font name="Arial Black" size="21.0" />
+                     </font>
+                  </Label>
+                  <Label id="battery_3_percentage" fx:id="battery_3_percentage" layoutX="184.0" layoutY="378.0" prefHeight="22.0" prefWidth="71.0" text="25%">
+                     <font>
+                        <Font name="Arial Black" size="21.0" />
+                     </font>
+                  </Label>
+                  <Label id="battery_3_voltage" fx:id="battery_3_voltage" layoutX="166.0" layoutY="346.0" prefHeight="10.0" prefWidth="91.0" text="12.1V">
+                     <font>
+                        <Font name="Arial Black" size="25.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="170.0" layoutY="320.0" prefHeight="36.0" prefWidth="77.0" text="Battery 3:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="170.0" layoutY="204.0" prefHeight="36.0" prefWidth="77.0" text="Battery 2:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label id="battery_2_voltage" fx:id="battery_2_voltage" layoutX="166.0" layoutY="230.0" prefHeight="10.0" prefWidth="91.0" text="12.9V">
+                     <font>
+                        <Font name="Arial Black" size="25.0" />
+                     </font>
+                  </Label>
+                  <Label id="battery_2_percentage" fx:id="battery_2_percentage" layoutX="184.0" layoutY="262.0" prefHeight="22.0" prefWidth="71.0" text="70%">
+                     <font>
+                        <Font name="Arial Black" size="21.0" />
+                     </font>
+                  </Label>
+                  <Label id="battery_1_percent" fx:id="battery_1_percentage" layoutX="184.0" layoutY="145.0" prefHeight="22.0" prefWidth="71.0" text="98%">
+                     <font>
+                        <Font name="Arial Black" size="21.0" />
+                     </font>
+                  </Label>
+                  <Label id="battery_1_voltage" fx:id="battery_1_voltage" layoutX="163.0" layoutY="113.0" prefHeight="10.0" prefWidth="91.0" text="14.2V">
+                     <font>
+                        <Font name="Arial Black" size="25.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label layoutX="170.0" layoutY="87.0" prefHeight="36.0" prefWidth="77.0" text="Battery 1:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+         </content>
+      </Tab>
+      <Tab id="solar_tab" fx:id="solar_tab" text="Solar">
+         <content>
+            <AnchorPane id="solar_anchor_pane" fx:id="solar" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Canvas height="551.0" layoutX="174.0" layoutY="109.0" width="982.0" />
+               </children></AnchorPane>
+         </content>
+      </Tab>
+      <Tab id="can_tab" fx:id="can_tab" text="CAN">
+         <content>
+            <AnchorPane id="can_anchor_pane" fx:id="can" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+      <Tab id="indicators_tab" fx:id="indicators_tab" text="Indicators">
+         <content>
+            <AnchorPane id="indicators_anchor_pane" fx:id="indicators" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+      <Tab id="other_tab" fx:id="other_tab" text="Other">
+         <content>
+            <AnchorPane id="other_anchor_pane" fx:id="other" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+      <Tab id="erros_tab" fx:id="errors_tab" text="Errors">
+         <content>
+            <AnchorPane id="errors_anchor_pane" fx:id="errors" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>

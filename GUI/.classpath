@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="src/com/psrt/main/lib/artemis-odb-0.12.1.jar" sourcepath="src/com/psrt/main/lib/artemis-odb-0.12.1-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/austi/Documents/GoogleDrive/workspace/PSRT/src/com/psrt/main/lib/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/austi/Documents/GoogleDrive/workspace/PSRT/bin"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
