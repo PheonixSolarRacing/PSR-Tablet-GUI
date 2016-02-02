@@ -16,17 +16,13 @@
 <?import javafx.scene.text.*?>
 <?import com.psrt.main.*?>
 
-<TabPane id="main_tabs" fx:id="main_tabs" prefHeight="800.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="1.7976931348623157E100" tabMaxWidth="1.7976931348623157E100" tabMinHeight="60.0" tabMinWidth="100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.psrt.main.UIController">
+<TabPane id="main_tabs" fx:id="main_tabs" prefHeight="750.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="1.7976931348623157E100" tabMaxWidth="1.7976931348623157E100" tabMinHeight="60.0" tabMinWidth="100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <tabs>
     <Tab id="main_tab" fx:id="main_tab" closable="false" text="Main">
       <content>
         <AnchorPane id="main_anchor_pane" fx:id="main" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <MediaView fx:id="cam_display" fitHeight="734.0" fitWidth="1174.0" layoutX="53.0" />
-                  <Label fx:id="speed_display" alignment="CENTER" layoutX="433.0" layoutY="460.0" opacity="0.5" prefHeight="292.0" prefWidth="414.0" text="35">
-                     <font>
-                        <Font size="200.0" />
-                     </font>
+                  <Label id="speed_display" fx:id="speed_display" alignment="CENTER" layoutX="867.0" layoutY="420.0" opacity="0.5" prefHeight="292.0" prefWidth="414.0" text="35">
                      <tooltip>
                         <Tooltip text="Your Speed Dufus!">
                            <font>
@@ -34,8 +30,34 @@
                            </font>
                         </Tooltip>
                      </tooltip>
+                     <font>
+                        <Font size="200.0" />
+                     </font>
                   </Label>
-                  <Label id="mph" layoutX="745.0" layoutY="661.0" opacity="0.6" text="MPH" />
+                  <Label id="mph" layoutX="1135.0" layoutY="635.0" opacity="0.6" prefHeight="34.0" prefWidth="51.0" text="MPH" />
+                  <Label layoutX="13.0" layoutY="50.0" prefHeight="41.0" prefWidth="191.0" text="Select webcam:">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+                  <ComboBox id="cbCameraOptions" layoutX="197.0" layoutY="49.0" prefHeight="43.0" prefWidth="360.0" />
+                  <BorderPane id="bpWebCamPaneHolder" layoutX="14.0" layoutY="102.0" prefHeight="535.0" prefWidth="888.0">
+                     <center>
+                        <ImageView id="imgWebCamCapturedImage" fitHeight="242.0" fitWidth="363.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                           <image>
+                              <Image url="@images/other/troll1.png" />
+                           </image>
+                        </ImageView>
+                     </center>
+                  </BorderPane>
+                  <Label layoutX="13.0" layoutY="3.0" prefHeight="38.0" prefWidth="161.0" text="Max Resolution:">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+                  <ComboBox id="cbResolutionOptions" layoutX="197.0" layoutY="1.0" prefHeight="41.0" prefWidth="360.0" />
+                  <Label layoutX="567.0" layoutY="12.0" text="(Not guaranteed)" />
+                  <Accordion layoutX="867.0" layoutY="118.0" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -48,13 +70,13 @@
       <content>
         <AnchorPane id="bms_anchor_pane" fx:id="bms" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="28.0" layoutX="307.0" layoutY="172.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-                  <ProgressBar id="soc_indicator" layoutX="227.0" layoutY="235.0" prefHeight="95.0" prefWidth="200.0" progress="0.83" rotate="-90.0" />
-                  <Label id="SOC_Label" layoutX="375.0" layoutY="290.0" prefHeight="93.0" prefWidth="245.0" text="80%">
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="16.0" layoutX="291.0" layoutY="231.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
+                  <Label id="SOC_Label" layoutX="376.0" layoutY="331.0" prefHeight="93.0" prefWidth="245.0" text="80%">
                      <font>
                         <Font size="64.0" />
                      </font>
                   </Label>
+                  <ProgressBar id="soc_indicator" fx:id="soc_indicator" layoutX="225.0" layoutY="277.0" prefHeight="96.0" prefWidth="172.0" progress="0.83" rotate="-90.0" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -372,7 +394,7 @@
             <AnchorPane id="other_anchor_pane" fx:id="other" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>
       </Tab>
-      <Tab id="erros_tab" fx:id="errors_tab" text="Errors">
+      <Tab id="errors_tab" fx:id="errors_tab" text="Errors">
          <content>
             <AnchorPane id="errors_anchor_pane" fx:id="errors" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>

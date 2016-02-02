@@ -6,21 +6,24 @@ import com.artemis.Entity;
 import com.artemis.EntitySubscription;
 import com.artemis.EntitySystem;
 import com.artemis.utils.IntBag;
+import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextComponent;
 import com.psrt.entities.components.TimingComponent;
+import com.psrt.entities.components.ValueComponent;
 import com.psrt.main.Main;
 
 public class ValueSystem extends EntitySystem {
 	EntitySubscription sub;
 	
 	ComponentMapper<TextComponent> tm;
+	ComponentMapper<ProgressComponent> pm;
 	ComponentMapper<TimingComponent> timeM;
 		
 	long ticks = 0;
 	private Main main;
 
 	public ValueSystem(Main main) {
-		super(Aspect.all(TextComponent.class));
+		super(Aspect.one(TextComponent.class, ProgressComponent.class));
 		this.main = main;
 	}
 	
@@ -35,6 +38,7 @@ public class ValueSystem extends EntitySystem {
 		if(ticks == 0){
 			tm = world.getMapper(TextComponent.class);
 			timeM = world.getMapper(TimingComponent.class);
+			pm = world.getMapper(ProgressComponent.class);
 		}
 		else if(ticks == 1){
 			defaultValues(sub.getEntities());
@@ -63,11 +67,18 @@ public class ValueSystem extends EntitySystem {
 		Entity e = world.getEntity(entityId);
 		//just for testing purposes
 		TextComponent tc = tm.getSafe(entityId);
+		ProgressComponent pc = (tc == null) ? pm.getSafe(entityId) : null;
 		TimingComponent t = timeM.getSafe(entityId);
 		
+		@SuppressWarnings("rawtypes")
+		ValueComponent v = null;
 		
+		//if tc isn't null set it to v, if tc is null then set pc to v, if pc is null then set v to null
+		v = ((tc != null) ? tc : ((pc != null) ? pc : null));
 		
-		if(tc.hasChanged()){
+		boolean hasChanged = v.hasChanged();
+
+		if(hasChanged){
 			if(t != null){
 				if(t.available()){
 					main.sendToUI(e);
@@ -76,7 +87,7 @@ public class ValueSystem extends EntitySystem {
 			}else{
 				main.sendToUI(e);
 			}
-			tc.reset();
+			v.reset();
 		}
 	}
 }

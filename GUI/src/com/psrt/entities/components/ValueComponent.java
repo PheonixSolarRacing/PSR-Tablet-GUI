@@ -12,14 +12,24 @@ public abstract class ValueComponent<V, T extends Control> extends Component {
 	
 	protected boolean hasChanged = false;
 	
-	public ValueComponent(T element, String reference){
+	public ValueComponent(Property<V> value, T element, String reference){
+		this.value = value;
 		this.element = element;
 		this.reference = reference;
 	}
+
+	public T getElement(){ return this.element;}
 	
-	public abstract void setValue(V value);
+	public void setValue(V value){
+		this.value.setValue(value);
+		this.hasChanged = true;
+	}
 	
-	public abstract V getValue();
+	public V getValue(){
+		return this.value.getValue();
+	}
+	
+	public abstract void update();
 	
 	public boolean hasChanged(){
 		return this.hasChanged;

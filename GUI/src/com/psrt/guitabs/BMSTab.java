@@ -1,22 +1,20 @@
 package com.psrt.guitabs;
 
 import com.artemis.Entity;
-import com.artemis.EntityEdit;
-import com.psrt.entities.components.TextComponent;
-import com.psrt.entities.components.TimingComponent;
 import com.psrt.entities.components.TimingComponent.TimingType;
+import com.psrt.guitabs.factories.MyEntityFactory;
+import com.psrt.guitabs.factories.MyEntityFactory.ElementType;
 
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 
 public class BMSTab {
-	
 	public static void SOC_Label(com.artemis.World world, Node n){
-		Entity e2 = world.createEntity();
-		EntityEdit edit2 = e2.edit();
-		edit2.add(new TextComponent("NA%", "SOC_Label", (Label) n));
-		edit2.add(new TimingComponent(250, TimingType.ASTABLE));
+		Entity e = MyEntityFactory.createEntity(world, n, ElementType.Label, "NA%", "SOC_Label");
+		MyEntityFactory.addTimer(e, 250, TimingType.ASTABLE);
 	}
-
 	
+	public static void soc_indicator(com.artemis.World world, Node n){
+		Entity e = MyEntityFactory.createEntity(world, n, ElementType.ProgressBar, "0", "soc_indicator");
+		MyEntityFactory.addTimer(e, 200, TimingType.ASTABLE);
+	}
 }

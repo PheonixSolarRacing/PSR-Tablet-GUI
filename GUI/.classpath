@@ -8,6 +8,9 @@
 			<attribute name="javadoc_location" value="file:/D:/austi/Documents/GoogleDrive/workspace/PSRT/src/com/psrt/main/lib/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/austi/Documents/GoogleDrive/workspace/PSRT/bin"/>
+	<classpathentry exported="true" kind="lib" path="D:/austi/Documents/GoogleDrive/workspace/PSRT/bin"/>
+	<classpathentry exported="true" kind="lib" path="src/com/psrt/main/lib/bridj-0.6.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="src/com/psrt/main/lib/slf4j-api-1.7.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="src/com/psrt/main/lib/webcam-capture-0.3.10.jar" sourcepath="src/com/psrt/main/lib/webcam-capture-0.3.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
