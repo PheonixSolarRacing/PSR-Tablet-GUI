@@ -12,5 +12,6 @@
 	<classpathentry exported="true" kind="lib" path="src/com/psrt/main/lib/bridj-0.6.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/com/psrt/main/lib/slf4j-api-1.7.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/com/psrt/main/lib/webcam-capture-0.3.10.jar" sourcepath="src/com/psrt/main/lib/webcam-capture-0.3.10.jar"/>
+	<classpathentry exported="true" kind="lib" path="src/com/psrt/main/lib/RXTX64comm.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

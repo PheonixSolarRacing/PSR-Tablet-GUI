@@ -14,6 +14,7 @@ import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextComponent;
 import com.psrt.entities.systems.TimingSystem;
 import com.psrt.entities.systems.ValueSystem;
+import com.psrt.threads.SerialMonitor;
 import com.psrt.threads.UIThread;
 
 import javafx.application.Application;
@@ -27,17 +28,24 @@ public class Main extends Application{
     
     private UIThread uiThread;
     
+    private SerialMonitor m;
+    
     public final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
    
-    public Main(){}
+    
     
     private void initAll(Stage primaryStage){
     	initConfig();
     	initUIThread(primaryStage);
+    	initSerialMonitor();
     	startThreads();
     }
 
-    /**
+    private void initSerialMonitor() {
+    	m = new SerialMonitor();
+	}
+
+	/**
      * Get this class, which there should only be one instance of in existence.
      * @return the Main object
      */
@@ -135,6 +143,7 @@ public class Main extends Application{
 			}
 		}, 0, 1000, TimeUnit.MILLISECONDS);
     	//scheduler.scheduleAtFixedRate(entityThread, 30, 30, TimeUnit.MILLISECONDS);
+		
 	}
 
 	/**
@@ -150,7 +159,7 @@ public class Main extends Application{
     
     /**
      * Called when the GUI is closed.  Right now it is used to close the ThreadPoolExecutor which is running different threads. 
-     * Better solutions exist, so this could change.
+     * It also closes down the serial monitor and ports.
      */
     @Override
     public void stop(){
@@ -161,6 +170,10 @@ public class Main extends Application{
 			e.printStackTrace();
 		} // wait for 10s in this case
     	this.scheduler.shutdownNow();
+    	synchronized(SerialMonitor.lock){
+    		SerialMonitor.lock.notify();
+    	}
+    	m.close();
     }
 
     /**
