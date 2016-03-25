@@ -20,7 +20,7 @@ public class ProgressComponent extends ValueComponent<Number, ProgressBar> {
 	
 	@Override 
 	public void setValue(Number n){
-		System.out.println("ProgressComponent: setting progress to " + n.doubleValue());
+		//System.out.println("ProgressComponent: setting progress to " + n.doubleValue());
 		super.element.setProgress(n.doubleValue());
 	}
 	

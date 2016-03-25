@@ -20,7 +20,7 @@ public abstract class ValueComponent<V, T extends Control> extends Component {
 
 	public T getElement(){ return this.element;}
 	
-	public void setValue(V value){
+	public synchronized void setValue(V value){
 		this.value.setValue(value);
 		this.hasChanged = true;
 	}

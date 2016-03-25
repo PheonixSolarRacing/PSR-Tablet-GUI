@@ -96,7 +96,6 @@ public class UIThread implements Runnable{
         			}
         		}
         	}
-        	
         }
 	}
 

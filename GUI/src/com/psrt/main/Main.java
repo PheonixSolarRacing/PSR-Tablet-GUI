@@ -32,6 +32,7 @@ public class Main extends Application{
     
     public final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
    
+    public static boolean DEBUG = true;
     
     
     private void initAll(Stage primaryStage){
@@ -42,7 +43,7 @@ public class Main extends Application{
     }
 
     private void initSerialMonitor() {
-    	m = new SerialMonitor();
+    	m = new SerialMonitor(this.world);
 	}
 
 	/**
@@ -93,7 +94,6 @@ public class Main extends Application{
     private void initUIThread(Stage primaryStage){
     	uiThread = new UIThread(primaryStage, world);
     }
-    
     /**
      * Starts everything up, really. Probably starting the UI and backend (serial) threads. Who knows
      */
@@ -143,7 +143,6 @@ public class Main extends Application{
 			}
 		}, 0, 1000, TimeUnit.MILLISECONDS);
     	//scheduler.scheduleAtFixedRate(entityThread, 30, 30, TimeUnit.MILLISECONDS);
-		
 	}
 
 	/**
