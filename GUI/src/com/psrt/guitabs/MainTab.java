@@ -15,6 +15,6 @@ public class MainTab {
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
 		edit.add(new TextComponent("NA", "speed_display", (Label) n));
-		edit.add(new TimingComponent(500, TimingType.ASTABLE));
+		//edit.add(new TimingComponent(500, TimingType.ASTABLE));
 	}
 }

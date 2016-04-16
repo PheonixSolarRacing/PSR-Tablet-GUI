@@ -13,7 +13,11 @@
 	<classpathentry exported="true" kind="lib" path="src/com/psrt/main/lib/slf4j-api-1.7.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/com/psrt/main/lib/webcam-capture-0.3.10.jar" sourcepath="src/com/psrt/main/lib/webcam-capture-0.3.10.jar"/>
 	<classpathentry kind="lib" path="src/com/psrt/main/lib/commons-collections4-4.1-javadoc.jar"/>
-	<classpathentry exported="true" kind="lib" path="src/com/psrt/main/lib/commons-collections4-4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="src/com/psrt/main/lib/commons-collections4-4.1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="https://commons.apache.org/proper/commons-collections/apidocs/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="src/com/psrt/main/lib/RXTX32comm.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/com/psrt/main/lib/jssc.jar" sourcepath="src/com/psrt/main/lib/jssc-2.7.0-src.jar">
 		<attributes>

@@ -63,6 +63,7 @@ public class ValueSystem extends EntitySystem {
 	float voltage = 0.0f;
 	boolean toggle = true;
 	
+	@SuppressWarnings("unchecked")
 	private void process(int entityId){
 		Entity e = world.getEntity(entityId);
 		//just for testing purposes
@@ -70,6 +71,7 @@ public class ValueSystem extends EntitySystem {
 		ProgressComponent pc = (tc == null) ? pm.getSafe(entityId) : null;
 		TimingComponent t = timeM.getSafe(entityId);
 		
+		//@SuppressWarnings("rawtypes")
 		@SuppressWarnings("rawtypes")
 		ValueComponent v = null;
 		
@@ -88,6 +90,14 @@ public class ValueSystem extends EntitySystem {
 				main.sendToUI(e);
 			}
 			v.reset();
+		}
+		
+		//System.out.println("No");
+		if(v.timeOut() > 0){
+			//System.out.println("Yes");
+			if(System.currentTimeMillis() - v.lastWrite() > v.timeOut()){
+				v.setValue(v.getInitialValue());
+			}
 		}
 	}
 }

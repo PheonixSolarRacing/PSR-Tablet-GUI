@@ -350,7 +350,7 @@
                         <Font name="Arial Black" size="21.0" />
                      </font>
                   </Label>
-                  <Label id="battery_1_percent" fx:id="battery_1_percentage" layoutX="184.0" layoutY="145.0" prefHeight="22.0" prefWidth="71.0" text="98%">
+                  <Label id="battery_1_percentage" fx:id="battery_1_percentage" layoutX="184.0" layoutY="145.0" prefHeight="22.0" prefWidth="71.0" text="98%">
                      <font>
                         <Font name="Arial Black" size="21.0" />
                      </font>

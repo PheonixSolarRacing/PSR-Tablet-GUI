@@ -124,9 +124,9 @@ public class Main extends Application{
 								//System.out.println("True");
 								tc.setValue(""+ticks);
 							}if(tc.getReference().equals("battery_1_voltage")){
-								tc.setValue(""+(50 - ticks));
+								//tc.setValue(""+(50 - ticks));
 							}if(tc.getReference().equals("battery_2_voltage")){
-								tc.setValue(""+ticks);
+								//tc.setValue(""+ticks);
 							}
 							if(tc.getReference().equals("SOC_Label")){
 								tc.setValue(ticks * 2 + "%");

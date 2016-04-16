@@ -16,7 +16,6 @@ public class TimingSystem extends EntitySystem{
 	@SuppressWarnings("rawtypes")
 	ComponentMapper<ValueComponent> vm;
 	
-		
 	long ticks = 0;
 
 	public TimingSystem() {
@@ -40,12 +39,8 @@ public class TimingSystem extends EntitySystem{
 				process(b.get(i));
 			}
 		}
-		
 		ticks++;
 	}
-	int count = 38;
-	float voltage = 0.0f;
-	boolean toggle = true;
 	
 	private void process(int entityId){
 		TimingComponent timeC = timeM.getSafe(entityId);

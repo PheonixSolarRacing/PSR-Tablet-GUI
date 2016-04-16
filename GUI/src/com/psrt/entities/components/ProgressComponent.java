@@ -6,9 +6,14 @@ import javafx.scene.control.ProgressBar;
 public class ProgressComponent extends ValueComponent<Number, ProgressBar> {
 
 	public ProgressComponent(double value, String reference, ProgressBar bar) {
-		super(new SimpleDoubleProperty(), bar, reference);
+		this(value, reference, bar, -1);
+	}
+	
+	public ProgressComponent(double value, String reference, ProgressBar bar, int timeout){
+		super(new SimpleDoubleProperty(value), bar, reference, timeout);
 		setValue(value);
 	}
+
 	@Override
 	public void update() {
 		ProgressBar p = super.element;
@@ -17,11 +22,4 @@ public class ProgressComponent extends ValueComponent<Number, ProgressBar> {
 		if(p == null) System.out.println("ProgressComponent: bar is null");
 		p.setProgress(n.doubleValue());
 	}
-	
-	@Override 
-	public void setValue(Number n){
-		//System.out.println("ProgressComponent: setting progress to " + n.doubleValue());
-		super.element.setProgress(n.doubleValue());
-	}
-	
 }

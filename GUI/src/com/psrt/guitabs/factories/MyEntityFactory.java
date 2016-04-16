@@ -18,6 +18,15 @@ public class MyEntityFactory {
 		ImageView;
 	}
 	
+	/**
+	 * Used to easily create entities for the GUI
+	 * @param world - entity system's world object
+	 * @param n - Node; how the GUI element is represented on the GUI (JavaFX crap)
+	 * @param elementType - Just specifies how to cast the Node object properly.
+	 * @param initValue - Can be used to set the default value (when the object isn't receiving data)
+	 * @param name - name of the element (must match the name given in the GUI)
+	 * @return
+	 */
 	public static Entity createEntity(com.artemis.World world, Node n, ElementType elementType, String initValue, String name){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
@@ -38,9 +47,23 @@ public class MyEntityFactory {
 		return e;
 	}
 	
+	/**
+	 * Just adds a timed updater to the component. Should be unnecessary, but could be useful later
+	 * @param e - the entity object for the GUI node
+	 * @param delay - a delay to specify
+	 * @param t - Two types of timers, I guess...
+	 * @return
+	 */
 	public static Entity addTimer(Entity e, int delay, TimingType t){
 		e.edit().add(new TimingComponent(delay, t));
 		return e;
 	}
+	
+	public static Entity addTimer(Entity e, int delay){
+		e.edit().add(new TimingComponent(delay, TimingType.ASTABLE));
+		return e;
+	}
+	
+	
 	
 }

@@ -92,7 +92,7 @@ public class UIThread implements Runnable{
         			for(int j = 0; j < children.size(); j++){
         				Node n = children.get(j);
         				System.out.println("\tAnchorPane[" + i + "]: ID: " + n.getId());
-        				if_tree_of_doom(n);  //Oh the if hierarchies...
+        				if_tree_of_doom(n);  //Oh the if hierarchies... This should only run once
         			}
         		}
         	}
@@ -205,62 +205,15 @@ public class UIThread implements Runnable{
 	}
 	
 	
-	private Service<Void> backgroundThread;
+	//private Service<Void> backgroundThread;
 	
 	@Override
 	public void run() {
 		//temporary
 		
-		world.process();
+		world.process(); //Runs all the data for the entity system. Should always be pretty fast.
 		
-		
-		if(entityQueue.size() > 0){
-			
-			/*
-			Entity e = null;
-    		try {
-    			e = pull();
-    		} catch (InterruptedException e1) {
-    			e1.printStackTrace();
-    		}
-    		TextComponent tc = tm.getSafe(e);
-    		
-			
-			backgroundThread = new Service<Void>(){
-				@Override
-				protected Task<Void> createTask(){
-					return new Task<Void>(){
-
-						@Override
-						protected Void call() throws Exception {
-							
-							System.out.println("Setting value of: " + tc.getValue());
-				            //tc.getLabel().setText(tc.getValue());
-							updateMessage(tc.getValue());
-							return null;
-						}
-						
-					};
-				}
-			};
-			
-    		
-			backgroundThread.setOnSucceeded(new EventHandler<WorkerStateEvent>(){
-				@Override
-				public void handle(WorkerStateEvent arg0) {
-					System.out.println("Done");
-					tc.getLabel().textProperty().unbind();
-				}
-			});
-			
-			tc.getLabel().textProperty().bind(backgroundThread.messageProperty());
-			
-			backgroundThread.restart();
-			*/
-		}
-		
-		
-		if(entityQueue.size() > 0){
+		if(entityQueue.size() > 0){ //sends entity data to GUI!
 			Platform.runLater(new Runnable(){
 				@Override
 	            public void run() {
@@ -285,7 +238,5 @@ public class UIThread implements Runnable{
 	            }
 	        });	
 		}
-		
-		
 	}
 }
