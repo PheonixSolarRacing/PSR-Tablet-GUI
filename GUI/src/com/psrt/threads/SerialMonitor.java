@@ -1,18 +1,10 @@
 package com.psrt.threads;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Enumeration;
-
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
+import com.psrt.entities.systems.Bank;
 import com.psrt.main.Main;
 import com.psrt.serial.SerialParser;
 import com.psrt.serial.SerialReader2;
-
-import gnu.io.CommPortIdentifier;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
 
 public class SerialMonitor  {
 	private SerialReader2 sr; //Reads and cuts serial; sort of
@@ -23,6 +15,10 @@ public class SerialMonitor  {
 	private boolean running = false;
 	public static final int MAX_CHECK_SIZE = 1000;
 	public static final int TIMEOUT = 1000;
+	
+	public static Object lock = new Object();
+	
+	private Bank bank;
 	
 	/*/
 	 * Possible error states:
@@ -36,13 +32,14 @@ public class SerialMonitor  {
 	 * Class for holding all serial crap. Reading, cutting, parsing, etc. Monitors everything and handles all threads.  (Of which there should be 2)
 	 * Ideally there should only be one instance of this class.
 	 */
-	public SerialMonitor(com.artemis.World world){
+	public SerialMonitor(com.artemis.World world, Bank bank){
 		log("Serial monitor started.");
 	    this.world = world;
+	    this.bank = bank;
 		internalBuffer = new CircularFifoQueue<Integer>(1024);
 		
 		
-		sp = new SerialParser(world, internalBuffer);
+		sp = new SerialParser(world, internalBuffer, bank);
 		Thread parser = new Thread("Serial Parsing"){
 			@Override
 			public void run(){
@@ -89,10 +86,7 @@ public class SerialMonitor  {
 		sr.close();
 		running = false;
 	}
-	
-	 //------------------------------------###########################################-----------------------------------------------//
-	 public static Object lock = new Object(); //Object for thread locking concurrency
-	 
+
 	 /**
 	  * Quick logger method
 	  * @param s
@@ -100,90 +94,6 @@ public class SerialMonitor  {
 	 public static void log(String s){ 
 		 if(Main.DEBUG) {
 			 System.out.println(s);
-		 }
-	 }
-	 
-
-	 /**
-	  * Old SerialReader class using RXTX.
-	  * @author Austin Dibble
-	  *
-	  */
-	 @Deprecated
-	 class SerialReader implements SerialPortEventListener{
-		SerialPort serialPort;
-		private static final int TIME_OUT = 2000;
-		private static final int DATA_RATE = 115200;
-		private InputStream in;
-		
-		public SerialReader(){
-			initialize();
-		    log("SerialReader started");
-		}
-
-		@SuppressWarnings("rawtypes")
-		public void initialize() {
-		    CommPortIdentifier portId = null;
-		    Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
-		
-		    //First, Find an instance of serial port as set in PORT_NAMES.
-		    while (portEnum.hasMoreElements()) {
-		        CommPortIdentifier currPortId = (CommPortIdentifier) portEnum.nextElement();
-		        for (String portName : new String[]{"Com6"}) {
-		            if (currPortId.getName().equals(portName)) {
-		                portId = currPortId;
-		                break;
-		            }
-		        }
-		    }
-		    if (portId == null) {
-		        System.out.println("Could not find COM port.");
-		        return;
-		    }
-		
-		    try {
-		        serialPort = (SerialPort) portId.open(this.getClass().getName(), TIME_OUT);
-		        serialPort.setSerialPortParams(DATA_RATE,
-		                SerialPort.DATABITS_8,
-		                SerialPort.STOPBITS_1,
-		                SerialPort.PARITY_NONE);
-			
-		        in = serialPort.getInputStream();
-		
-		        serialPort.addEventListener(this);
-		        serialPort.notifyOnDataAvailable(true);
-		    } catch (Exception e) {
-		        System.err.println(e.toString());
-		    }
-		}
-
-		public synchronized void close() {
-		    if (serialPort != null) {
-		        serialPort.removeEventListener();
-		        serialPort.close();
-		    }
-		}
-
-		public synchronized void serialEvent(SerialPortEvent oEvent) {
-		    if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
-		    	try {
-					if(running) read();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-		    }
-		    // Ignore all the other eventTypes, but you should consider the other ones.
-		}
-		 
-		 public void read() throws IOException{
-			 int i = 0;
-			 while(in.available() > 0 && i < MAX_CHECK_SIZE){
-				 int b = in.read();
-				 internalBuffer.offer(b);
-				 i++;
-			 }
-			 sp.cut();
-			 return;
 		 }
 	 }
 }

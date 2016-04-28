@@ -3,8 +3,6 @@ package com.psrt.guitabs;
 import com.artemis.Entity;
 import com.artemis.EntityEdit;
 import com.psrt.entities.components.TextComponent;
-import com.psrt.entities.components.TimingComponent;
-import com.psrt.entities.components.TimingComponent.TimingType;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;

@@ -4,8 +4,6 @@ import static com.psrt.threads.SerialMonitor.log;
 
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
-import com.psrt.threads.SerialMonitor;
-
 import jssc.SerialPortException;
 
 /**
@@ -26,27 +24,31 @@ public class SerialReader2 {
 	 
 	 private CircularFifoQueue<Integer> internalBuffer;
 
-	 private final String PORT_NAMES[] = {                 
-		"/dev/tty.usbserial-A9007UX1", // Mac OS X
-     	"/dev/ttyUSB0", // Linux
-     	"COM6" // Windows
-	 };
-		
+//	 private final String PORT_NAMES[] = {                 
+//		"/dev/tty.usbserial-A9007UX1", // Mac OS X
+//     	"/dev/ttyUSB0", // Linux
+//     	"COM6" // Windows
+//	 };
 	 
 	 public SerialReader2(SerialParser sp, CircularFifoQueue<Integer> internalBuffer){
 		 this.sp = sp;
 		 this.internalBuffer = internalBuffer;
 		 log("Opening serial reader.");
-		 openPort();
+		 findPort();
 	 }
 	 
-	 private void openPort(){
+	 private void findPort(){
 		 String[] portNames = jssc.SerialPortList.getPortNames();
 		 
 		 for(String port : portNames){
-			 if(port.equals(PORT_NAMES[2])) seport = new jssc.SerialPort(port);
+			 log("Port name: " + port);
+			 seport = new jssc.SerialPort(port);
+			 
+			 if(validatePort()) break;
 		 }
-		 
+	 }
+	 
+	 private boolean validatePort(){
 		 if(seport != null){
 			 try{
 				 log("Opening port");
@@ -57,10 +59,33 @@ public class SerialReader2 {
                         jssc.SerialPort.PARITY_NONE);
 			 }catch(jssc.SerialPortException e){
 				 log("Couldn't open serial port...");
+				 return false;
 			 }
 		 }else{
 			 log("Serial port not found. Aborting");
+			 return false;
 		 }
+		 
+		 if(!hasMarker()) return false;
+		 else return true;
+	 }
+	 
+	 private boolean hasMarker(){
+		 try {
+			if(seport.getInputBufferBytesCount() > 0){
+				 byte[] b = seport.readBytes(500);
+				 
+				 for(int i = 0; i < b.length; i++){
+					 if(marker_bytes(b, i)){
+						 return true;
+					 }
+				 }
+			 }
+		 } catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		 }
+		 return false;
 	 }
 	 
 	 /**
@@ -69,14 +94,12 @@ public class SerialReader2 {
 	  * input buffer that is checked by the SerialParser....
 	  */
 	 public void read(){
-		 int i = 0;
-		 try {
-			if(seport.getInputBufferBytesCount() > 0 && i < SerialMonitor.MAX_CHECK_SIZE){
+		try {
+			if(seport.getInputBufferBytesCount() > 0){
 				 byte[] b = seport.readBytes(1);
 				 int num = unsign(b[0]);
 				 //log("Reading[" + i + "]: " + num);
 				 internalBuffer.add(num);
-				 i++;
 			 }
 		} catch (SerialPortException e) {
 			e.printStackTrace();
@@ -102,6 +125,23 @@ public class SerialReader2 {
 	 * @return
 	 */
 	 private int unsign(byte b){ return b & 0xFF;}
-		
-		 
+	 
+	 
+	 private boolean marker_bytes(byte[] bytes, int i){
+			boolean end = false;
+			if(bytes[i]     == 0xFF &&
+			   bytes[i + 1] == 0xFF && 
+			   bytes[i + 2] == 0xFF &&
+			   bytes[i + 3] == 0xFF && 
+			   bytes[i + 4] == 0xFE &&
+			   bytes[i + 5] == 0xFE &&
+			   bytes[i + 6] == 0xFF &&
+			   bytes[i + 7] == 0xFF && 
+			   bytes[i + 8] == 0xFF &&
+			   bytes[i + 9] == 0xFF) 
+			{	
+				end = true;
+			}
+			return end;
+	 }
 }

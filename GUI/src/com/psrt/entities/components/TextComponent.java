@@ -4,13 +4,25 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Label;
 
 public class TextComponent extends ValueComponent<String, Label>{
+	private String suffix = "";
+	private String prefix = "";
 
 	public TextComponent(String text, String reference, Label label){
 		this(text, reference, label, -1);
 	}
 	
 	public TextComponent(String text, String reference, Label label, int timeout){
-		super(new SimpleStringProperty(text), label, reference, timeout);
+		this(text, reference, label, timeout, "");
+	}
+	
+	public TextComponent(String text, String reference, Label label, int timeout, String suffix){
+		this(text, reference, label, timeout, suffix, "");
+	}
+	
+	public TextComponent(String text, String reference, Label label, int timeout, String suffix, String prefix){
+		super(new SimpleStringProperty(text), label, reference, ComponentType.TEXT, timeout);
+		this.suffix = suffix;
+		this.prefix = prefix;
 		setValue(text);
 		SimpleStringProperty p = new SimpleStringProperty();
 		p.setValue(text);
@@ -19,6 +31,14 @@ public class TextComponent extends ValueComponent<String, Label>{
 
 	@Override
 	public void update() {
-		super.element.setText(super.getValue());
+		super.element.setText(prefix + super.getValue() + suffix);
+	}
+	
+	public void setSuffix(String s){
+		this.suffix = s;
+	}
+	
+	public void setPrefix(String p){
+		this.prefix = p;
 	}
 }

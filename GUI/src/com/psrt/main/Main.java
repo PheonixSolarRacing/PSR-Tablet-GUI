@@ -1,5 +1,8 @@
 package com.psrt.main;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -12,8 +15,11 @@ import com.artemis.WorldConfiguration;
 import com.artemis.utils.IntBag;
 import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextComponent;
+import com.psrt.entities.systems.Bank;
+import com.psrt.entities.systems.BankSystem;
 import com.psrt.entities.systems.TimingSystem;
 import com.psrt.entities.systems.ValueSystem;
+import com.psrt.parsers.DictionaryParser;
 import com.psrt.threads.SerialMonitor;
 import com.psrt.threads.UIThread;
 
@@ -24,7 +30,7 @@ public class Main extends Application{
 	
 	private static Main main;
 	
-    private static com.artemis.World world;
+    private com.artemis.World world;
     
     private UIThread uiThread;
     
@@ -34,8 +40,28 @@ public class Main extends Application{
    
     public static boolean DEBUG = true;
     
+    public Bank bank;
     
     private void initAll(Stage primaryStage){
+    	DictionaryParser parser = null;
+		try {
+			parser = new DictionaryParser("res/dictionary.csv");
+		} catch (FileNotFoundException | URISyntaxException e) {
+			System.out.println("Wow, couldn't open the dictionary file :/");
+			e.printStackTrace();
+		}
+    	if(parser != null ){
+    		parser.parseDictionary();
+    		bank = new Bank(parser);
+    		//TODO verify parser is working
+    	}
+    	else {
+    		try {
+				bank = new Bank();
+			} catch (FileNotFoundException | URISyntaxException e) {
+				e.printStackTrace();
+			}
+    	}
     	initConfig();
     	initUIThread(primaryStage);
     	initSerialMonitor();
@@ -43,7 +69,7 @@ public class Main extends Application{
     }
 
     private void initSerialMonitor() {
-    	m = new SerialMonitor(this.world);
+    	m = new SerialMonitor(this.world, bank);
 	}
 
 	/**
@@ -57,7 +83,7 @@ public class Main extends Application{
 	/**
 	 * @return the Entity system's controller, world. 
 	 */
-	public synchronized static World getWorld(){
+	public synchronized World getWorld(){
 		return world;
 	}
     
@@ -81,6 +107,7 @@ public class Main extends Application{
      */
     private void initConfig() {
     	WorldConfiguration config = new WorldConfiguration();
+    	config.setSystem(new BankSystem(bank));
     	config.setSystem(new ValueSystem(this));
     	config.setSystem(new TimingSystem());
     	//add systems here...

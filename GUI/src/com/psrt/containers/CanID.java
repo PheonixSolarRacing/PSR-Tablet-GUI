@@ -1,6 +1,6 @@
 package com.psrt.containers;
 
-public class CanID {
+public class CanID extends com.artemis.Component{
 	public int id;
 	public int function;
 	public int entry;
@@ -11,6 +11,10 @@ public class CanID {
 		this.entry = entry;
 	}
 	
+	public CanID() {
+		this(-1, -1, -1);
+	}
+
 	@Override
 	public boolean equals(Object obj){
 		if (obj == null || obj.getClass() != this.getClass()) {
@@ -26,7 +30,7 @@ public class CanID {
 	
 	@Override
 	public int hashCode(){
-		int hash = (id << 15) | (function << 7) | (entry);
+		int hash = (id << 16) | (function << 8) | (entry);
 		return hash;
 	}
 	

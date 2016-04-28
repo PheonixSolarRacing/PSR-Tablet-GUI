@@ -17,7 +17,6 @@ import com.psrt.main.Main;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Service;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -55,9 +54,12 @@ public class UIThread implements Runnable{
 		this.world = world;
 		
 		this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Tablet Telemetry GUI v1.4");
-        this.primaryStage.getIcons().add(new Image("file:../main/res/images/other/logo.png"));
-   
+        this.primaryStage.setTitle("Tablet Telemetry GUI v1.7");
+        try {
+			this.primaryStage.getIcons().add(new Image(Main.class.getResource("res/images/other/logo.png").openStream()));
+		} catch (IOException e) {
+			System.out.println("Couldn't load icon.");
+		}
         
         this.main = Main.getMain();
         

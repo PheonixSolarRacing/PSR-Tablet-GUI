@@ -6,6 +6,11 @@ import javafx.beans.property.Property;
 import javafx.scene.control.Control;
 
 public abstract class ValueComponent<V, T extends Control> extends Component {
+	public static enum ComponentType{
+		TEXT,
+		PROGRESS_BAR;
+	}
+	
 	protected Property<V> value;
 	protected Property<V> initialValue;
 	protected T element;
@@ -15,17 +20,20 @@ public abstract class ValueComponent<V, T extends Control> extends Component {
 	private int timeout;
 	private long lastWrite;
 	
-	public ValueComponent(Property<V> value, T element, String reference){
+	private ComponentType type;
+	
+	public ValueComponent(Property<V> value, T element, String reference, ComponentType type){
+		this(value, element, reference, type, -1);
+	}
+	
+	public ValueComponent(Property<V> value, T element, String reference, ComponentType type, int timeout){
 		this.value = value;
 		this.element = element;
 		this.reference = reference;
-		this.timeout = -1;
+		this.timeout = timeout;
+		this.type = type;
 	}
 	
-	public ValueComponent(Property<V> value, T element, String reference, int timeout){
-		this(value, element, reference);
-		this.timeout = timeout;
-	}
 	public T getElement(){ return this.element;}
 	
 	public synchronized void setValue(V value){
@@ -50,6 +58,8 @@ public abstract class ValueComponent<V, T extends Control> extends Component {
 	public boolean hasChanged(){
 		return this.hasChanged;
 	}
+	
+	public ComponentType getType(){return this.type;}
 
 	public String getReference(){return this.reference;}
 	

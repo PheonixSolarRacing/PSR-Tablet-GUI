@@ -30,7 +30,6 @@ public class ValueSystem extends EntitySystem {
 	@Override
 	protected void begin(){
 		sub = super.getSubscription();
-		
 	}
 
 	@Override
@@ -58,10 +57,6 @@ public class ValueSystem extends EntitySystem {
 			main.sendToUI(world.getEntity(b.get(i)));
 		}
 	}
-	
-	int count = 38;
-	float voltage = 0.0f;
-	boolean toggle = true;
 	
 	@SuppressWarnings("unchecked")
 	private void process(int entityId){
@@ -91,10 +86,7 @@ public class ValueSystem extends EntitySystem {
 			}
 			v.reset();
 		}
-		
-		//System.out.println("No");
 		if(v.timeOut() > 0){
-			//System.out.println("Yes");
 			if(System.currentTimeMillis() - v.lastWrite() > v.timeOut()){
 				v.setValue(v.getInitialValue());
 			}

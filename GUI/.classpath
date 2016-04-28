@@ -18,10 +18,14 @@
 			<attribute name="javadoc_location" value="https://commons.apache.org/proper/commons-collections/apidocs/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="src/com/psrt/main/lib/RXTX32comm.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/com/psrt/main/lib/jssc.jar" sourcepath="src/com/psrt/main/lib/jssc-2.7.0-src.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="file:/D:/austi/Documents/GoogleDrive/Programs/Java%20Libraries/jSSC-2.7.0-Release/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="src/com/psrt/main/lib/opencsv-3.7.jar" sourcepath="src/com/psrt/main/lib/opencsv-3.7-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://opencsv.sourceforge.net/apidocs/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>

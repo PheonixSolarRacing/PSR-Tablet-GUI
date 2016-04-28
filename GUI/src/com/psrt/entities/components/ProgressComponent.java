@@ -10,7 +10,7 @@ public class ProgressComponent extends ValueComponent<Number, ProgressBar> {
 	}
 	
 	public ProgressComponent(double value, String reference, ProgressBar bar, int timeout){
-		super(new SimpleDoubleProperty(value), bar, reference, timeout);
+		super(new SimpleDoubleProperty(value), bar, reference, ComponentType.PROGRESS_BAR, timeout);
 		setValue(value);
 	}
 

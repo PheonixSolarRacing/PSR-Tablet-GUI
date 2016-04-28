@@ -9,12 +9,16 @@ import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 import com.artemis.ComponentMapper;
 import com.artemis.EntitySubscription;
-import com.artemis.utils.IntBag;
 import com.psrt.containers.CanID;
+import com.psrt.containers.CanValue;
+import com.psrt.containers.CanValue.CanValueType;
+import com.psrt.containers.values.ByteValue;
+import com.psrt.containers.values.FloatValue;
+import com.psrt.entities.components.DepositBox;
 import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextComponent;
 import com.psrt.entities.components.TimingComponent;
-import com.psrt.entities.components.ValueComponent;
+import com.psrt.entities.systems.Bank;
 import com.psrt.entities.systems.ValueSystem;
 import com.psrt.threads.SerialMonitor;
 
@@ -51,8 +55,16 @@ import com.psrt.threads.SerialMonitor;
 	 ValueSystem v;
 	 EntitySubscription sub;
 	 
-	 public SerialParser(com.artemis.World world, CircularFifoQueue<Integer> internalBuffer){
+	 private Bank bank;
+	 
+	 private static final int ENTRY1 = 1;
+	 private static final int ENTRY2 = 2;
+	 private static final int ENTRY3 = 3;
+	 private static final int ENTRY4 = 4;
+	 
+	 public SerialParser(com.artemis.World world, CircularFifoQueue<Integer> internalBuffer, Bank bank){
 		 this.world = world;
+		 this.bank = bank;
 		 this.internalBuffer = internalBuffer;
 		 log("Initializing serialParser");
 		 initialize();
@@ -214,32 +226,6 @@ import com.psrt.threads.SerialMonitor;
 			return status;
 		}
 
-	 //---------------------------
-	 /**
-	  * Checks for a marker in a byte array.  Marker is FF FF FF FF FE FE FF FF FF FF
-	  * @param bytes
-	  * @param i
-	  * @return
-	  */
-	 @SuppressWarnings("unused")
-	 @Deprecated
-	 private boolean marker_bytes(byte[] bytes, int i){
-			boolean end = false;
-				if(bytes[i]     == 0xFF &&
-				   bytes[i + 1] == 0xFF && 
-				   bytes[i + 2] == 0xFF &&
-				   bytes[i + 3] == 0xFF && 
-				   bytes[i + 4] == 0xFE &&
-				   bytes[i + 5] == 0xFE &&
-				   bytes[i + 6] == 0xFF &&
-				   bytes[i + 7] == 0xFF && 
-				   bytes[i + 8] == 0xFF &&
-				   bytes[i + 9] == 0xFF) 
-				{	
-					end = true;
-				}
-			return end;
-		}
 	
 	 boolean parse_debug = false;
 	 
@@ -249,8 +235,8 @@ import com.psrt.threads.SerialMonitor;
 	  * The bytes that this parse function grabs should already have the end markers removed, and be cut into multiples of ten bytes (multiple messages)
 	  * then it takes those and cuts them into chunks of ten, and for every ten gets the info from them
 	  */
-	 @SuppressWarnings("unchecked")
-	 public void parse(){
+	 @SuppressWarnings("rawtypes")
+	public void parse(){
 		 //log("parsing");
 		 int l = parseBuffer.size();
 		 //if(parse_debug) log("Parsebuffer size: " + l);
@@ -261,6 +247,9 @@ import com.psrt.threads.SerialMonitor;
 				 
 				 int messages = bytes.length / 10;
 				 if(parse_debug) log("Num messages: " + messages); 
+				 
+				 DepositBox box = new DepositBox();
+				 
 				 for(int i = 0; i < messages; i++){
 					 String reference = "-1";
 					 String num = "null";
@@ -281,60 +270,56 @@ import com.psrt.threads.SerialMonitor;
 							 reference = "battery_2_voltage";
 							 if(parse_debug) log(reference + ": " + num);
 						 } 
-						 
-						 if(function < 4){ //0, 1, 2, 3...
-							 CanID c1 = new CanID(id, function, 1);
-							 
-							 CanID c2 = new CanID(id, function, 2);
-							 
-							 CanID c3 = new CanID(id, function, 3);
-							 //TODO decide on post office structure- 
-							 //do all systems access the post office, 
-							 //or does the parser use the post office to distribute the data?
-							 
-							 
-						 }else if(function >= 4 && function <= 16){
-							 
-						 }
-						 //etc...
-					 }//etc..
+					 }
 					// else continue; //temporary, to skip the stuff below...
+					 //log("Num entries active: " + bank.getDictionary().numActiveEntries());
+					 /*if(function < 4){ //0, 1, 2, 3...
+						 byte[] floatBytes = subArray(bytes, pos + 3, 4);
+						 
+						 for(int j = 1; j <= bank.getDictionary().numActiveEntries(); j++){
+							 CanID identifier = new CanID(id, function, j); 
+							 CanValue value = null; 
+							 if(j == ENTRY1){
+								value = new FloatValue(bytesToFloat(floatBytes, 0), floatBytes);
+							 }else if(j == ENTRY2){
+								 value = new ByteValue(bytes[7], subArray(bytes, pos + 7, 1));
+							 }
+							 else if(j == ENTRY3){
+								 value = new ByteValue(bytes[8], subArray(bytes, pos + 8, 1));
+							 }
+							 if(value != null) {
+								 box.put(identifier, value);
+								 if(parse_debug) System.out.println("SerialParser.parse(): " + identifier.hashCode());
+							 }
+						 }
+
+					 }else if(function >= 4 && function <= 16){
+						 
+					 }*/
 					 
-					
-					 //log("parse working...");
-					 IntBag b = sub.getEntities();
-					 //log("still working");
-					 for(int j = 0; j < b.size(); j++){
-						 int entityID = b.get(j);
-						 TextComponent tc = tm.getSafe(entityID);
-						 TimingComponent t = time.getSafe(entityID);
-						 ProgressComponent pc = (tc == null) ? pm.getSafe(entityID) : null;
-						 String name = "null";
-						 @SuppressWarnings("rawtypes")
-			        	 ValueComponent v = null;
-			        	 
-			        	 //if tc isn't null set it to v, if tc is null then set pc to v, if pc is null then set v to null
-			        	 v = ((tc != null) ? tc : ((pc != null) ? pc : null));
-						 if(v != null) name = v.getReference();
-						 else{
-							continue; 
-						 }
-						
-						 //log("Entity[" + i + "][" + j + "]: " + name);
+					 byte[] floatBytes = subArray(bytes, pos + 3, 4);
+					 
+					 for(int j = 1; j <= bank.getDictionary().numActiveEntries(); j++){
+						 CanID identifier = new CanID(id, function, j); 
+						 CanValue value = null; 
+						 CanValueType type = bank.getDictionary().getParsedDictionary().get(identifier);
+						 if(parse_debug) {
+							 log("SerialParser.parse() - CanID: ID = " + identifier.id + " | Function = " + identifier.function + " | Entry: " + identifier.entry);
 						 
-						 if(name.equals(reference)){
-							 //log("Entity name[" + i + "][" + j + "]: " + name);
-							 if(tc != null){
-								 tc.setValue(num);
-							 }else if(pc != null){
-								 pc.setValue(Double.parseDouble(num));
-							 } 
-							 
-							 break;
+							 if(type == null) log("SerialParser.parse() - Type null");
 						 }
-						 
+						 if(type == CanValueType.FLOAT){
+							value = new FloatValue(bytesToFloat(floatBytes, 0), floatBytes);
+						 }else if(type == CanValueType.BYTE){
+							 value = new ByteValue(bytes[7], subArray(bytes, pos + 7, 1));
+						 }
+						 if(value != null) {
+							 box.put(identifier, value);
+							 if(parse_debug) log("SerialParser.parse(): " + identifier.hashCode());
+						 }
 					 }
 				 }
+				 bank.addBox(box);
 			 }
 		 }
 	 }
@@ -405,6 +390,14 @@ import com.psrt.threads.SerialMonitor;
 		 }
 		 return num;
 	 }
+	
+	private byte[] subArray(byte[] b, int start, int len){
+		byte[] n = new byte[len];
+		for(int i = 0; i < len; i++){
+			n[i] = b[i + start];
+		}
+		return n;
+	}
 	 
 	/**
 	 * Does what it says. YAY GOOGLE
