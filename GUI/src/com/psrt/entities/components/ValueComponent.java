@@ -3,12 +3,13 @@ package com.psrt.entities.components;
 import com.artemis.Component;
 
 import javafx.beans.property.Property;
-import javafx.scene.control.Control;
+import javafx.scene.Node;
 
-public abstract class ValueComponent<V, T extends Control> extends Component {
+public abstract class ValueComponent<V, T extends Node> extends Component {
 	public static enum ComponentType{
 		TEXT,
-		PROGRESS_BAR;
+		PROGRESS_BAR,
+		IMAGE;
 	}
 	
 	protected Property<V> value;
@@ -38,7 +39,7 @@ public abstract class ValueComponent<V, T extends Control> extends Component {
 	
 	public synchronized void setValue(V value){
 		V oldValue = this.value.getValue();
-		//System.out.println("Old value: " + oldValue + ", new value: " + value);
+		//System.out.println("Old value: " + oldValue.toString() + ", new value: " + value.toString());
 		if(!oldValue.equals(value)){
 			//System.out.println(reference + "Has changed");
 			this.value.setValue(value);

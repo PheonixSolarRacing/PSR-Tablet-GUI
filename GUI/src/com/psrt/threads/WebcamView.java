@@ -29,7 +29,6 @@ import javafx.scene.layout.BorderPane;
 public class WebcamView {
 	
 	private class WebCamInfo {
-
 		private String webCamName;
 		private int webCamIndex;
 		private Dimension[] dimensions;
@@ -300,7 +299,6 @@ public class WebcamView {
 						if ((grabbedImage = selWebCam.getImage()) != null) {
 							
 							//grabbedImage.
-
 							Platform.runLater(new Runnable() {
 
 								@Override

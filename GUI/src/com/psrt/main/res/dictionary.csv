@@ -17,7 +17,7 @@ Power Distribution Board,1,12,,F,0,,Output 5 Current,Amps,,,,,,,B,5,LED Color,st
 Power Distribution Board,1,13,,F,0,,Output 6 Current,Amps,,,,,,,B,5,LED Color,state,,,,,,,,,,,,,,,,,,,,
 Power Distribution Board,1,14,,F,0,,Output 7 Current,Amps,,,,,,,B,5,LED Color,state,,,,,,,,,,,,,,,,,,,,
 Power Distribution Board,1,15,,F,0,,Output 8 Current,Amps,,,,,,,B,5,LED Color,state,,,,,,,,,,,,,,,,,,,,
-Power Distribution Board,1,16,,,,,,,,,,,,,b,5,LED error,T=1/F=0,,,,,,,,,,,,,,,,,,,,
+Power Distribution Board,1,16,,,,,,,,,,,,,B,5,LED error,T=1/F=0,,,,,,,,,,,,,,,,,,,,
 Power Distribution Board,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Power Distribution Board,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Power Distribution Board,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

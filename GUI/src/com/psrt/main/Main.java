@@ -13,12 +13,15 @@ import com.artemis.EntitySubscription;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
 import com.artemis.utils.IntBag;
+import com.psrt.containers.ImageHolder;
+import com.psrt.entities.components.ImageComponent;
 import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextComponent;
 import com.psrt.entities.systems.Bank;
 import com.psrt.entities.systems.BankSystem;
 import com.psrt.entities.systems.TimingSystem;
 import com.psrt.entities.systems.ValueSystem;
+import com.psrt.guitabs.factories.ValueFactory;
 import com.psrt.parsers.DictionaryParser;
 import com.psrt.threads.SerialMonitor;
 import com.psrt.threads.UIThread;
@@ -42,6 +45,19 @@ public class Main extends Application{
     
     public Bank bank;
     
+    private ImageHolder imageHolder;
+    
+    private ValueFactory valueFactory;
+    
+    
+    public ImageHolder getImages(){
+    	return this.imageHolder;
+    }
+    
+    public ValueFactory getValueFactory(){
+    	return this.valueFactory;
+    }
+    
     private void initAll(Stage primaryStage){
     	DictionaryParser parser = null;
 		try {
@@ -62,10 +78,27 @@ public class Main extends Application{
 				e.printStackTrace();
 			}
     	}
+    	imageHolder = new ImageHolder();
+    	loadResources();
     	initConfig();
+    	valueFactory = new ValueFactory(world);
     	initUIThread(primaryStage);
     	initSerialMonitor();
     	startThreads();
+    	
+    	try {
+			parser.close();
+		} catch (IOException e) {
+			System.out.println("Problem closing DictionaryParser FileStream");
+			e.printStackTrace();
+		}
+    }
+    
+    private void loadResources(){
+    	imageHolder.loadImage("res/images/battery_images/Green Light Medium.png", "green_light");
+    	imageHolder.loadImage("res/images/battery_images/Red Light Medium.png", "red_light");
+    	imageHolder.loadImage("res/images/battery_images/Yellow Light Medium.png", "yellow_light");
+    	imageHolder.loadImage("res/images/battery_images/Off Light Medium.png", "off_light");
     }
 
     private void initSerialMonitor() {
@@ -119,7 +152,7 @@ public class Main extends Application{
      * @param primaryStage
      */
     private void initUIThread(Stage primaryStage){
-    	uiThread = new UIThread(primaryStage, world);
+    	uiThread = new UIThread(primaryStage, world, this);
     }
     /**
      * Starts everything up, really. Probably starting the UI and backend (serial) threads. Who knows
@@ -130,6 +163,7 @@ public class Main extends Application{
 			long ticks = 0;
 			ComponentMapper<TextComponent> tm;
 			ComponentMapper<ProgressComponent> pm;
+			ComponentMapper<ImageComponent> im;
 			
 			@Override
 			public void run(){
@@ -139,6 +173,7 @@ public class Main extends Application{
 				if(ticks == 0){
 					tm = world.getMapper(TextComponent.class);
 					pm = world.getMapper(ProgressComponent.class);
+					im = world.getMapper(ImageComponent.class);
 				}
 				else{
 					IntBag b = sub.getEntities();
@@ -146,6 +181,9 @@ public class Main extends Application{
 						int id = b.get(i);
 						TextComponent tc = tm.getSafe(id);
 						ProgressComponent pc = pm.getSafe(id);
+						ImageComponent ic = im.getSafe(id);
+						
+						
 						if(tc != null){
 							if(tc.getReference().equals("speed_display")){
 								//System.out.println("True");
@@ -161,6 +199,10 @@ public class Main extends Application{
 						}else if(pc != null){
 							if(pc.getReference().equals("soc_indicator")){
 								pc.setValue((double) ticks / 50);
+							}
+						}else if(ic != null){
+							if(ic.getReference().equals("battery_1_led")){
+								//ic.setValue(1);
 							}
 						}
 					}
@@ -179,7 +221,7 @@ public class Main extends Application{
      */
     @Override
     public void start(Stage primaryStage) {
-        Main.main = new Main();
+        Main.main = this;
         this.initAll(primaryStage);
     }
     

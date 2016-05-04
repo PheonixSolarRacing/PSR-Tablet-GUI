@@ -9,11 +9,13 @@ import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 import com.artemis.ComponentMapper;
 import com.artemis.EntitySubscription;
+import com.psrt.containers.CanCSVInfo;
 import com.psrt.containers.CanID;
 import com.psrt.containers.CanValue;
 import com.psrt.containers.CanValue.CanValueType;
 import com.psrt.containers.values.ByteValue;
 import com.psrt.containers.values.FloatValue;
+import com.psrt.containers.values.IntValue;
 import com.psrt.entities.components.DepositBox;
 import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextComponent;
@@ -56,11 +58,6 @@ import com.psrt.threads.SerialMonitor;
 	 EntitySubscription sub;
 	 
 	 private Bank bank;
-	 
-	 private static final int ENTRY1 = 1;
-	 private static final int ENTRY2 = 2;
-	 private static final int ENTRY3 = 3;
-	 private static final int ENTRY4 = 4;
 	 
 	 public SerialParser(com.artemis.World world, CircularFifoQueue<Integer> internalBuffer, Bank bank){
 		 this.world = world;
@@ -257,61 +254,25 @@ import com.psrt.threads.SerialMonitor;
 					 int id = getID(bytes, pos);
 					 int function = getFunction(bytes, pos);
 					 if(parse_debug) log("Function: " + function);
-					 if(id == 1){ //Power distribution board
-						 if(function == 0){ //Battery 1 voltage; float
-							 num = bytesToFloat(bytes, pos + 3) + "v";
-							 
-							 reference = "battery_1_voltage";
-							 //num += bat_1_voltage;
-							 if(parse_debug) log(reference + ": " + num);
-						 }else if(function == 1){ //battery 2 voltage; float
-							 //num = bytesToFloat(bytes, pos + 3) + "v";
-							 num = bytesToFloat(bytes, pos + 3) + "v";
-							 reference = "battery_2_voltage";
-							 if(parse_debug) log(reference + ": " + num);
-						 } 
-					 }
-					// else continue; //temporary, to skip the stuff below...
-					 //log("Num entries active: " + bank.getDictionary().numActiveEntries());
-					 /*if(function < 4){ //0, 1, 2, 3...
-						 byte[] floatBytes = subArray(bytes, pos + 3, 4);
-						 
-						 for(int j = 1; j <= bank.getDictionary().numActiveEntries(); j++){
-							 CanID identifier = new CanID(id, function, j); 
-							 CanValue value = null; 
-							 if(j == ENTRY1){
-								value = new FloatValue(bytesToFloat(floatBytes, 0), floatBytes);
-							 }else if(j == ENTRY2){
-								 value = new ByteValue(bytes[7], subArray(bytes, pos + 7, 1));
-							 }
-							 else if(j == ENTRY3){
-								 value = new ByteValue(bytes[8], subArray(bytes, pos + 8, 1));
-							 }
-							 if(value != null) {
-								 box.put(identifier, value);
-								 if(parse_debug) System.out.println("SerialParser.parse(): " + identifier.hashCode());
-							 }
-						 }
-
-					 }else if(function >= 4 && function <= 16){
-						 
-					 }*/
-					 
-					 byte[] floatBytes = subArray(bytes, pos + 3, 4);
 					 
 					 for(int j = 1; j <= bank.getDictionary().numActiveEntries(); j++){
 						 CanID identifier = new CanID(id, function, j); 
 						 CanValue value = null; 
-						 CanValueType type = bank.getDictionary().getParsedDictionary().get(identifier);
+						 CanCSVInfo csvInfo = bank.getDictionary().getParsedDictionary().get(identifier);
+						 if(csvInfo == null) continue;
+						 CanValueType type = csvInfo.getType();
 						 if(parse_debug) {
-							 log("SerialParser.parse() - CanID: ID = " + identifier.id + " | Function = " + identifier.function + " | Entry: " + identifier.entry);
-						 
+							 log("SerialParser.parse() - CanID: ID = " + identifier.id + " | Function = " + identifier.function + " | Entry: " + identifier.entry + " | St. Index: " + csvInfo.startIndex());
 							 if(type == null) log("SerialParser.parse() - Type null");
 						 }
 						 if(type == CanValueType.FLOAT){
-							value = new FloatValue(bytesToFloat(floatBytes, 0), floatBytes);
+							 byte[] floatBytes = subArray(bytes, pos + csvInfo.startIndex(), 4);
+							 value = new FloatValue(bytesToFloat(floatBytes, 0), floatBytes);
+							 //log("FloatValue: " + value.getValue());
 						 }else if(type == CanValueType.BYTE){
-							 value = new ByteValue(bytes[7], subArray(bytes, pos + 7, 1));
+							 value = new IntValue(bytes[csvInfo.startIndex()] + 128, subArray(bytes, pos + csvInfo.startIndex(), 1));
+							 //log("ByteValue: " + (bytes[csvInfo.startIndex()] + 128));
+							 //log("ByteValue: " + (value.getValue().intValue()));
 						 }
 						 if(value != null) {
 							 box.put(identifier, value);
@@ -400,7 +361,7 @@ import com.psrt.threads.SerialMonitor;
 	}
 	 
 	/**
-	 * Does what it says. YAY GOOGLE
+	 * Does what it says. YAY GOOGLE. This piece of trash function took me 5 HOURS of Googling. 5!
 	 * @param bytes - byte array, suckah
 	 * @param index - index to start at in the byte array
 	 * @return

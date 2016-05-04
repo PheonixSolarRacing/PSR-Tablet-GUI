@@ -1,36 +1,40 @@
 package com.psrt.parsers;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import com.opencsv.CSVReader;
+import com.psrt.containers.CanCSVInfo;
 import com.psrt.containers.CanID;
 import com.psrt.containers.CanValue.CanValueType;
 import com.psrt.main.Main;
 
 public class DictionaryParser {
 	String csvFile;
-	HashMap<CanID, CanValueType> directory;
+	HashMap<CanID, CanCSVInfo> directory;
 	CSVReader reader;
 	int num_entries_active;
 	
-	boolean debug = false;
+	boolean debug = true;
 	
 	public static final String CAN_ID_STRING = "CAN ID";
 	public static final String CAN_FUNCTION_STRING = "Function";
 	public static final String CAN_ENTRY_STRING = "Entry";
 	
+	private InputStream stream;
+	
 	public DictionaryParser(String csvFile) throws FileNotFoundException, URISyntaxException{
 		this.csvFile = csvFile;
 		this.num_entries_active = -1;
-		directory = new HashMap<CanID, CanValueType>(100);
-		reader = new CSVReader(new FileReader(new File(Main.class.getResource(csvFile).toURI())));
+		directory = new HashMap<CanID, CanCSVInfo>(100);
+		stream = Main.class.getResourceAsStream(csvFile);
+		reader = new CSVReader(new InputStreamReader(stream));
 	}
 	
 	public void parseDictionary(){
@@ -66,12 +70,11 @@ public class DictionaryParser {
 	        }
 	    }
 	    
-	    
-	    
 	    for(int row = header_row + 1; row < lines.size(); row++){
 	    	String[] line = lines.get(row);
 	    	CanID id = new CanID();
 	    	CanValueType type = null;
+	    	int start_index = -1;
 	    	for(int col = 0; col < line.length; col++){
 	    		
 	    		try{
@@ -85,6 +88,10 @@ public class DictionaryParser {
 		    					id.entry = entry + 1;
 		    					
 		    					String data_type = line[col].toLowerCase();
+		    					String start_index_str = line[col + 1];
+		    					start_index = Integer.parseInt(start_index_str);
+		    					start_index += 3;
+		    					
 		    					if(data_type.equals("f")){
 		    						type = CanValueType.FLOAT;
 		    					}else if(data_type.equals("b")){
@@ -92,23 +99,18 @@ public class DictionaryParser {
 		    					}else if(data_type.equals("i") || data_type.equals("int")){
 		    						type = CanValueType.INT;
 		    					}
-		    					if(id.id != -1 && id.function != -1 && id.entry != -1 && type != null){
-					    			log("Row: " + (row + 1) + "; ID: " + id.id + ", " + id.function + ", " + id.entry + ";" + type.toString());
+		    					if(id.id != -1 && id.function != -1 && id.entry != -1 && type != null && start_index != -1){
+					    			log("Row: " + (row + 1) + "; ID: " + id.id + ", " + id.function + ", " + id.entry + ";" + type.toString() + "; " + start_index);
 					    			num_entries_active = (id.entry > num_entries_active) ? id.entry : num_entries_active;
-					    			directory.put(id, type);
+					    			directory.put(id, new CanCSVInfo(type, start_index));
 					    			type = null;
-					    			CanID old = id;
-					    			id = new CanID();
-					    			id.id = old.id;
-					    			id.function = old.function;
+					    			id = new CanID(id.id, id.function, -1);
 					    		}
 		    				}
 		    			}
-		    			
-		    			
 		    		}
 	    		}catch (NumberFormatException e){
-	    			log("Dictionary CSV Parser - ERROR - ID or function not a proper integer - Row: " + row + ", Col: " + col);
+	    			//log("Dictionary CSV Parser - ERROR - ID or function not a proper integer - Row: " + row + ", Col: " + col);
 	    		}	
     			//if(type != null) log("Row: " + (row + 1) + "; ID: " + id.id + ", " + id.function + ", " + id.entry + ";" + type.toString());
 	    	}
@@ -124,7 +126,7 @@ public class DictionaryParser {
 	    }
 	}
 	
-	public HashMap<CanID, CanValueType> getParsedDictionary(){
+	public HashMap<CanID, CanCSVInfo> getParsedDictionary(){
 		return this.directory;
 	}
 	
@@ -132,6 +134,9 @@ public class DictionaryParser {
 		return this.num_entries_active;
 	}
 	
+	public void close() throws IOException{
+		this.stream.close();
+	}
 	
 	private void log(String s){
 		if(debug) System.out.println(s);

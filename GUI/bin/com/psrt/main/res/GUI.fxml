@@ -66,20 +66,6 @@
             <AnchorPane id="status_anchor_pane" fx:id="status" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>
       </Tab>
-    <Tab id="bms_tab" fx:id="bms_tab" text="B-MO">
-      <content>
-        <AnchorPane id="bms_anchor_pane" fx:id="bms" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="16.0" layoutX="291.0" layoutY="231.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-                  <Label id="SOC_Label" layoutX="376.0" layoutY="331.0" prefHeight="93.0" prefWidth="245.0" text="80%">
-                     <font>
-                        <Font size="64.0" />
-                     </font>
-                  </Label>
-                  <ProgressBar id="soc_indicator" fx:id="soc_indicator" layoutX="225.0" layoutY="277.0" prefHeight="96.0" prefWidth="172.0" progress="0.83" rotate="-90.0" />
-               </children></AnchorPane>
-      </content>
-    </Tab>
       <Tab id="motors_tab" fx:id="motos_tab" text="Motors">
          <content>
             <AnchorPane id="motors_anchor_pane" fx:id="motors" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -255,7 +241,7 @@
                         <Image url="@images/battery_images/Red%20Light%20Medium.png" />
                      </image>
                   </ImageView>
-                  <ImageView id="battery_5_led" fx:id="dc_to_dc_voltage_led" fitHeight="40.0" fitWidth="40.0" layoutX="264.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="dc_dc_led" fx:id="dc_to_dc_voltage_led" fitHeight="40.0" fitWidth="40.0" layoutX="264.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/battery_images/Green%20Light%20Medium.png" />
                      </image>
@@ -310,7 +296,7 @@
                         <Image url="@images/battery_images/Off%20Light%20Medium.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="893.0" layoutY="422.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="error_led" fitHeight="40.0" fitWidth="40.0" layoutX="893.0" layoutY="422.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/battery_images/Green%20Light%20Medium.png" />
                      </image>
@@ -381,7 +367,13 @@
       </Tab>
       <Tab id="can_tab" fx:id="can_tab" text="CAN">
          <content>
-            <AnchorPane id="can_anchor_pane" fx:id="can" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            <AnchorPane id="can_anchor_pane" fx:id="can" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Box layoutX="320.0" layoutY="266.0" />
+                  <ColorPicker layoutX="383.0" layoutY="285.0" />
+                  <ProgressIndicator layoutX="156.0" layoutY="96.0" progress="0.0" />
+                  <Slider layoutX="302.0" layoutY="300.0" orientation="VERTICAL" />
+               </children></AnchorPane>
          </content>
       </Tab>
       <Tab id="indicators_tab" fx:id="indicators_tab" text="Indicators">
@@ -399,5 +391,19 @@
             <AnchorPane id="errors_anchor_pane" fx:id="errors" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>
       </Tab>
+    <Tab id="bms_tab" fx:id="bms_tab" text="B-MO">
+      <content>
+        <AnchorPane id="bms_anchor_pane" fx:id="bms" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="16.0" layoutX="291.0" layoutY="231.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
+                  <Label id="SOC_Label" layoutX="376.0" layoutY="331.0" prefHeight="93.0" prefWidth="245.0" text="80%">
+                     <font>
+                        <Font size="64.0" />
+                     </font>
+                  </Label>
+                  <ProgressBar id="soc_indicator" fx:id="soc_indicator" layoutX="225.0" layoutY="277.0" prefHeight="96.0" prefWidth="172.0" progress="0.83" rotate="-90.0" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
   </tabs>
 </TabPane>

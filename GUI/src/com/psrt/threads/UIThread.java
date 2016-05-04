@@ -10,9 +10,7 @@ import com.artemis.World;
 import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextComponent;
 import com.psrt.entities.components.ValueComponent;
-import com.psrt.guitabs.BMSTab;
-import com.psrt.guitabs.MainTab;
-import com.psrt.guitabs.PDBTab;
+import com.psrt.guitabs.factories.ValueFactory;
 import com.psrt.main.Main;
 
 import javafx.application.Platform;
@@ -47,7 +45,7 @@ public class UIThread implements Runnable{
      * @param primaryStage - javaFX main stage
      * @param world - entity system's main controller, world
      */
-	public UIThread(Stage primaryStage, World world){
+	public UIThread(Stage primaryStage, World world, Main main){
 		System.out.println("Initializing UIThread");
 		System.out.println("Launching UI");
 		entityQueue = new ArrayBlockingQueue<Entity>(1024);
@@ -61,7 +59,7 @@ public class UIThread implements Runnable{
 			System.out.println("Couldn't load icon.");
 		}
         
-        this.main = Main.getMain();
+        this.main = main;
         
         tm = world.getMapper(TextComponent.class);
         pm = world.getMapper(ProgressComponent.class);
@@ -94,65 +92,15 @@ public class UIThread implements Runnable{
         			for(int j = 0; j < children.size(); j++){
         				Node n = children.get(j);
         				System.out.println("\tAnchorPane[" + i + "]: ID: " + n.getId());
-        				if_tree_of_doom(n);  //Oh the if hierarchies... This should only run once
+        				ValueFactory.if_tree_of_doom(n, main);  //Oh the if hierarchies... This should only run once
         			}
         		}
         	}
         }
 	}
 
+	 
 	
-	 private void if_tree_of_doom(Node n) {
-			if(n.getId() != null){ //Example of retrieving all elements automatically... Could be easier? Hmm
-				switch (n.getId()){
-					case "battery_1_voltage":
-						PDBTab.battery_1_voltage(world, n);
-						break;
-					case "SOC_Label":
-						BMSTab.SOC_Label(world, n);
-						break;
-					case "speed_display":
-						MainTab.speed_display(world, n);
-						break;
-					case "battery_2_voltage":
-						PDBTab.battery_2_voltage(world, n);
-						break;
-					case "soc_indicator":
-						BMSTab.soc_indicator(world, n);
-						break;
-					case "SOC_label":
-						BMSTab.SOC_Label(world, n);
-				}
-			}
-	}
-	 
-	 
-	public Node getItem(String name){
-		 ObservableList<Tab> tabs = tabOverview.getTabs();
-	        System.out.println("Tabs: " + tabs.size());
-	        for(int i = 0; i < tabs.size(); i++){
-	        	Tab t = tabs.get(i);
-	        	String id = t.getId();
-	        	System.out.println(id);
-	        	if(id.contains("tab")){
-	        		Node c = t.getContent();
-	        		if(c.getId().contains("anchor")){
-	        			AnchorPane ap = (AnchorPane)c;
-	        			ObservableList<Node> children = ap.getChildren();
-	        			for(int j = 0; j < children.size(); j++){
-	        				Node n = children.get(j);
-	        				System.out.println("\tAnchorPane[" + i + "]: ID: " + n.getId());
-	        				if(n.getId() != null && n.getId().equals(name)){
-	        					return n;
-	        				}
-	        			}
-	        		}
-	        	}
-	        	
-	        }
-	        System.out.println("UIThread getItem(): no item of that name found");
-	        return null;
-	}
 
 	private void initRootLayout() {
         try {
@@ -212,30 +160,31 @@ public class UIThread implements Runnable{
 	@Override
 	public void run() {
 		//temporary
-		
 		world.process(); //Runs all the data for the entity system. Should always be pretty fast.
 		
 		if(entityQueue.size() > 0){ //sends entity data to GUI!
 			Platform.runLater(new Runnable(){
 				@Override
 	            public void run() {
-					int num = Math.min(10, entityQueue.size());
+					int num = Math.min(50, entityQueue.size());
+					
 					for(int i = 0; i < num; i++){
 						Entity e = null;
 		        		try {
+		        			
 		        			e = pull();
 		        		} catch (InterruptedException e1) {
 		        			e1.printStackTrace();
 		        		}
-		        		TextComponent tc = tm.getSafe(e);
-		        		ProgressComponent pc = (tc == null) ? pm.getSafe(e) : null;
 		        		
 		        		@SuppressWarnings("rawtypes")
 		        		ValueComponent v = null;
-		        		
-		        		//if tc isn't null set it to v, if tc is null then set pc to v, if pc is null then set v to null
-		        		v = ((tc != null) ? tc : ((pc != null) ? pc : null));
-		        		v.update();
+		        		if(e != null) v = main.getValueFactory().getValue(e);
+						
+		        		if(v != null) {
+		        			//System.out.println(v.getReference());
+		        			v.update();
+		        		}
 					}
 	            }
 	        });	

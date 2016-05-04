@@ -93,12 +93,13 @@ public class SerialReader2 {
 	  * Just gets byte data from the COM port and passes it to the 
 	  * input buffer that is checked by the SerialParser....
 	  */
+	 //int i = 0;
 	 public void read(){
 		try {
 			if(seport.getInputBufferBytesCount() > 0){
 				 byte[] b = seport.readBytes(1);
 				 int num = unsign(b[0]);
-				 //log("Reading[" + i + "]: " + num);
+				 //log("Reading: " + num);
 				 internalBuffer.add(num);
 			 }
 		} catch (SerialPortException e) {
