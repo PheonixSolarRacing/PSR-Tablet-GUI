@@ -5,8 +5,10 @@ import com.artemis.ComponentMapper;
 import com.artemis.EntitySubscription;
 import com.artemis.EntitySystem;
 import com.artemis.utils.IntBag;
-import com.psrt.containers.CanID;
-import com.psrt.containers.CanValue;
+import com.psrt.containers.AbstractID;
+import com.psrt.containers.AbstractValue;
+import com.psrt.containers.BMSID;
+import com.psrt.containers.PSRID;
 import com.psrt.entities.components.DepositBox;
 import com.psrt.entities.components.ImageComponent;
 import com.psrt.entities.components.ProgressComponent;
@@ -15,7 +17,8 @@ import com.psrt.entities.components.TextComponent;
 public class BankSystem extends EntitySystem {
 	EntitySubscription sub;
 	
-	ComponentMapper<CanID> cm;
+	ComponentMapper<PSRID> cm;
+	ComponentMapper<BMSID> bm;
 	ComponentMapper<TextComponent> tm;
 	ComponentMapper<ProgressComponent> pm;
 	ComponentMapper<ImageComponent> im;
@@ -26,7 +29,7 @@ public class BankSystem extends EntitySystem {
 	private boolean debug = false;
 
 	public BankSystem(Bank b) {
-		super(Aspect.all(CanID.class));
+		super(Aspect.one(PSRID.class, BMSID.class));
 		this.bank = b;
 	}
 	
@@ -38,7 +41,8 @@ public class BankSystem extends EntitySystem {
 	@Override
 	protected void processSystem() {
 		if(ticks == 0){
-			cm = world.getMapper(CanID.class);
+			cm = world.getMapper(PSRID.class);
+			bm = world.getMapper(BMSID.class);
 			tm = world.getMapper(TextComponent.class);
 			pm = world.getMapper(ProgressComponent.class);
 			im = world.getMapper(ImageComponent.class);
@@ -58,15 +62,21 @@ public class BankSystem extends EntitySystem {
 	
 	@SuppressWarnings("rawtypes")
 	private void process(int entityId, DepositBox box){
-		CanID id = cm.getSafe(entityId);
-		CanValue value = null;
+		AbstractID id = null;
+		
+		PSRID pid = cm.getSafe(entityId);
+		BMSID bid = bm.getSafe(entityId);
+		AbstractValue value = null;
+		
+		if(pid != null) id = pid;
+		else if(bid != null) id = bid;
+		
 		if(id != null) {
 			value = box.get(id);
 		}
 		TextComponent tc = tm.getSafe(entityId);
 		ProgressComponent pc = pm.getSafe(entityId);
 		ImageComponent ic = im.getSafe(entityId);
-		
 		
 		if(value != null){
 			if(tc != null){
@@ -77,9 +87,7 @@ public class BankSystem extends EntitySystem {
 			}else if(ic != null){
 				//System.out.println("Image: " + ic.getReference());
 				ic.setValue(value.getValue());
-				
 			}
 		}
-		
 	}
 }

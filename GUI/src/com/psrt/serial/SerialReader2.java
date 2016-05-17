@@ -23,6 +23,9 @@ public class SerialReader2 {
 	 public SerialParser sp;
 	 
 	 private CircularFifoQueue<Integer> internalBuffer;
+	 
+	 public long lastUpdate;
+	 //public long updateDelta = 0;
 
 //	 private final String PORT_NAMES[] = {                 
 //		"/dev/tty.usbserial-A9007UX1", // Mac OS X
@@ -35,17 +38,31 @@ public class SerialReader2 {
 		 this.internalBuffer = internalBuffer;
 		 log("Opening serial reader.");
 		 findPort();
+		 lastUpdate = System.currentTimeMillis();
+		 log("Port opened.");
 	 }
 	 
-	 private void findPort(){
+	 public boolean findPort(){
 		 String[] portNames = jssc.SerialPortList.getPortNames();
 		 
-		 for(String port : portNames){
-			 log("Port name: " + port);
-			 seport = new jssc.SerialPort(port);
-			 
-			 if(validatePort()) break;
+		 if(portNames.length > 0){
+			 for(String port : portNames){
+				 if(!port.equals("COM3")){
+					 log("Port name: " + port);
+					 seport = new jssc.SerialPort(port);
+					 
+					 if(validatePort()) break;
+				 }else{
+					 log("Got port 3. Skipping.");
+				 }
+			 }
+		 }else{
+			 log("No ports...");
 		 }
+		 
+		 
+		
+		return true;
 	 }
 	 
 	 private boolean validatePort(){
@@ -58,6 +75,7 @@ public class SerialReader2 {
                         jssc.SerialPort.STOPBITS_1,
                         jssc.SerialPort.PARITY_NONE);
 			 }catch(jssc.SerialPortException e){
+				 //e.printStackTrace();
 				 log("Couldn't open serial port...");
 				 return false;
 			 }
@@ -101,9 +119,15 @@ public class SerialReader2 {
 				 int num = unsign(b[0]);
 				 //log("Reading: " + num);
 				 internalBuffer.add(num);
-			 }
+				 //updateDelta = System.currentTimeMillis() - lastUpdate;
+				 lastUpdate = System.currentTimeMillis();
+			}else{
+				//updateDelta = System.currentTimeMillis() - lastUpdate;
+				
+			}
 		} catch (SerialPortException e) {
 			e.printStackTrace();
+			log("Couldn't read data.");
 		}
 		sp.cut();
 	 }
@@ -115,7 +139,7 @@ public class SerialReader2 {
 		 try {
 			if(seport != null) seport.closePort();
 		 } catch (SerialPortException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			log("Couldn't close port.");
 		 }
 	 }

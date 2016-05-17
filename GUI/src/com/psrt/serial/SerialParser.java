@@ -9,19 +9,19 @@ import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 import com.artemis.ComponentMapper;
 import com.artemis.EntitySubscription;
-import com.psrt.containers.CanCSVInfo;
-import com.psrt.containers.CanID;
-import com.psrt.containers.CanValue;
-import com.psrt.containers.CanValue.CanValueType;
-import com.psrt.containers.values.ByteValue;
-import com.psrt.containers.values.FloatValue;
-import com.psrt.containers.values.IntValue;
+import com.psrt.containers.PSRCSVInfo;
+import com.psrt.containers.PSRID;
+import com.psrt.containers.PSRValue;
+import com.psrt.containers.PSRValue.PSRValueType;
+import com.psrt.containers.values.PSRFloatValue;
+import com.psrt.containers.values.PSRIntValue;
 import com.psrt.entities.components.DepositBox;
 import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextComponent;
 import com.psrt.entities.components.TimingComponent;
 import com.psrt.entities.systems.Bank;
 import com.psrt.entities.systems.ValueSystem;
+import com.psrt.guitabs.BMSTab;
 import com.psrt.threads.SerialMonitor;
 
 
@@ -252,31 +252,42 @@ import com.psrt.threads.SerialMonitor;
 					 String num = "null";
 					 int pos = i * 10;
 					 int id = getID(bytes, pos);
-					 int function = getFunction(bytes, pos);
-					 if(parse_debug) log("Function: " + function);
 					 
-					 for(int j = 1; j <= bank.getDictionary().numActiveEntries(); j++){
-						 CanID identifier = new CanID(id, function, j); 
-						 CanValue value = null; 
-						 CanCSVInfo csvInfo = bank.getDictionary().getParsedDictionary().get(identifier);
-						 if(csvInfo == null) continue;
-						 CanValueType type = csvInfo.getType();
-						 if(parse_debug) {
-							 log("SerialParser.parse() - CanID: ID = " + identifier.id + " | Function = " + identifier.function + " | Entry: " + identifier.entry + " | St. Index: " + csvInfo.startIndex());
-							 if(type == null) log("SerialParser.parse() - Type null");
-						 }
-						 if(type == CanValueType.FLOAT){
-							 byte[] floatBytes = subArray(bytes, pos + csvInfo.startIndex(), 4);
-							 value = new FloatValue(bytesToFloat(floatBytes, 0), floatBytes);
-							 //log("FloatValue: " + value.getValue());
-						 }else if(type == CanValueType.BYTE){
-							 value = new IntValue(bytes[csvInfo.startIndex()] + 128, subArray(bytes, pos + csvInfo.startIndex(), 1));
-							 //log("ByteValue: " + (bytes[csvInfo.startIndex()] + 128));
-							 //log("ByteValue: " + (value.getValue().intValue()));
-						 }
-						 if(value != null) {
-							 box.put(identifier, value);
-							 if(parse_debug) log("SerialParser.parse(): " + identifier.hashCode());
+					 if(parse_debug) log("ID: " + id);
+					 
+					 if(id >= 0x600 /*1536*/&& id <= 0x6FF /*1791*/){ //BMS Crap
+						 if(parse_debug) log("BMS ID found " + id);
+						 
+						 byte[] data_bytes = subArray(bytes, pos + 2, 8);
+						 BMSTab.BMS_TREE(id, data_bytes, box);
+						 
+					 }else{ //PSRCan crap
+						 int function = getFunction(bytes, pos);
+						 if(parse_debug) log("Function: " + function);
+						 
+						 for(int j = 1; j <= bank.getDictionary().numActiveEntries(); j++){
+							 PSRID identifier = new PSRID(id, function, j); 
+							 PSRValue value = null; 
+							 PSRCSVInfo csvInfo = bank.getDictionary().getParsedDictionary().get(identifier);
+							 if(csvInfo == null) continue;
+							 PSRValueType type = csvInfo.getType();
+							 if(parse_debug) {
+								 log("SerialParser.parse() - CanID: ID = " + identifier.id + " | Function = " + identifier.function + " | Entry: " + identifier.entry + " | St. Index: " + csvInfo.startIndex());
+								 if(type == null) log("SerialParser.parse() - Type null");
+							 }
+							 if(type == PSRValueType.FLOAT){
+								 byte[] floatBytes = subArray(bytes, pos + csvInfo.startIndex(), 4);
+								 value = new PSRFloatValue(bytesToFloat(floatBytes, 0), floatBytes);
+								 //log("FloatValue: " + value.getValue());
+							 }else if(type == PSRValueType.BYTE){
+								 value = new PSRIntValue(bytes[csvInfo.startIndex()] + 128, subArray(bytes, pos + csvInfo.startIndex(), 1));
+								 //log("ByteValue: " + (bytes[csvInfo.startIndex()] + 128));
+								 //log("ByteValue: " + (value.getValue().intValue()));
+							 }
+							 if(value != null) {
+								 box.put(identifier, value);
+								 if(parse_debug) log("SerialParser.parse(): " + identifier.hashCode());
+							 }
 						 }
 					 }
 				 }
@@ -325,7 +336,7 @@ import com.psrt.threads.SerialMonitor;
 		 //bytes[pos], bytes[pos+1]
 		 byte id1 = bytes[pos]; //0011
 		 byte id2 = bytes[pos + 1]; //1010   		 -> \
-		 int int_id1 = (id1 + 128) << 4; //0011 0000     \
+		 int int_id1 = (id1 + 128) << 8; //0011 0000     \
 		 int id = int_id1 | (id2 + 128); //0011 1010 <-*
 		 //byte b_combo = (byte)combo;
 		 if(parse_debug){

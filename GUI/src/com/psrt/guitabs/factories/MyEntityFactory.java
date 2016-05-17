@@ -3,7 +3,7 @@ package com.psrt.guitabs.factories;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.EntityEdit;
-import com.psrt.containers.CanID;
+import com.psrt.containers.PSRID;
 import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextComponent;
 import com.psrt.entities.components.TimingComponent;
@@ -68,7 +68,7 @@ public class MyEntityFactory {
 	}
 	
 	public static void addID(Entity e, int id, int function, int entry){
-		e.edit().add(new CanID(id, function, entry));
+		e.edit().add(new PSRID(id, function, entry));
 	}
 	
 	public static void addPrefix(com.artemis.World world, Entity e, String p){

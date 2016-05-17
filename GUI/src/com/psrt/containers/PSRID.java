@@ -1,17 +1,18 @@
 package com.psrt.containers;
 
-public class CanID extends com.artemis.Component{
-	public int id;
+public class PSRID extends AbstractID{
+//	public int id;
 	public int function;
 	public int entry;
 	
-	public CanID(int id, int function, int entry){
+	public PSRID(int id, int function, int entry){
+		super(id, ID_TYPE.PSR);
 		this.id = id;
 		this.function = function;
 		this.entry = entry;
 	}
 	
-	public CanID() {
+	public PSRID() {
 		this(-1, -1, -1);
 	}
 
@@ -20,7 +21,7 @@ public class CanID extends com.artemis.Component{
 		if (obj == null || obj.getClass() != this.getClass()) {
 			return false;
 		}else{
-			CanID c = (CanID) obj;
+			PSRID c = (PSRID) obj;
 			if(this.id == c.id && this.function == c.function && this.entry == c.entry){
 				return true;
 			}
@@ -36,6 +37,6 @@ public class CanID extends com.artemis.Component{
 	
 	@Override
 	public String toString(){
-		return "CanID: " + id + " " + function + " " + entry + " " + this.hashCode();
+		return "CanID: " + id + ", " + function + ", " + entry + ", #" + this.hashCode();
 	}
 }

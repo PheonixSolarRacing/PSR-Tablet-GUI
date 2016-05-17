@@ -10,14 +10,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.opencsv.CSVReader;
-import com.psrt.containers.CanCSVInfo;
-import com.psrt.containers.CanID;
-import com.psrt.containers.CanValue.CanValueType;
+import com.psrt.containers.PSRCSVInfo;
+import com.psrt.containers.PSRID;
+import com.psrt.containers.PSRValue.PSRValueType;
 import com.psrt.main.Main;
 
 public class DictionaryParser {
 	String csvFile;
-	HashMap<CanID, CanCSVInfo> directory;
+	HashMap<PSRID, PSRCSVInfo> directory;
 	CSVReader reader;
 	int num_entries_active;
 	
@@ -32,7 +32,7 @@ public class DictionaryParser {
 	public DictionaryParser(String csvFile) throws FileNotFoundException, URISyntaxException{
 		this.csvFile = csvFile;
 		this.num_entries_active = -1;
-		directory = new HashMap<CanID, CanCSVInfo>(100);
+		directory = new HashMap<PSRID, PSRCSVInfo>(100);
 		stream = Main.class.getResourceAsStream(csvFile);
 		reader = new CSVReader(new InputStreamReader(stream));
 	}
@@ -72,8 +72,8 @@ public class DictionaryParser {
 	    
 	    for(int row = header_row + 1; row < lines.size(); row++){
 	    	String[] line = lines.get(row);
-	    	CanID id = new CanID();
-	    	CanValueType type = null;
+	    	PSRID id = new PSRID();
+	    	PSRValueType type = null;
 	    	int start_index = -1;
 	    	for(int col = 0; col < line.length; col++){
 	    		
@@ -93,18 +93,18 @@ public class DictionaryParser {
 		    					start_index += 3;
 		    					
 		    					if(data_type.equals("f")){
-		    						type = CanValueType.FLOAT;
+		    						type = PSRValueType.FLOAT;
 		    					}else if(data_type.equals("b")){
-		    						type = CanValueType.BYTE;
+		    						type = PSRValueType.BYTE;
 		    					}else if(data_type.equals("i") || data_type.equals("int")){
-		    						type = CanValueType.INT;
+		    						type = PSRValueType.INT;
 		    					}
 		    					if(id.id != -1 && id.function != -1 && id.entry != -1 && type != null && start_index != -1){
 					    			log("Row: " + (row + 1) + "; ID: " + id.id + ", " + id.function + ", " + id.entry + ";" + type.toString() + "; " + start_index);
 					    			num_entries_active = (id.entry > num_entries_active) ? id.entry : num_entries_active;
-					    			directory.put(id, new CanCSVInfo(type, start_index));
+					    			directory.put(id, new PSRCSVInfo(type, start_index));
 					    			type = null;
-					    			id = new CanID(id.id, id.function, -1);
+					    			id = new PSRID(id.id, id.function, -1);
 					    		}
 		    				}
 		    			}
@@ -126,7 +126,7 @@ public class DictionaryParser {
 	    }
 	}
 	
-	public HashMap<CanID, CanCSVInfo> getParsedDictionary(){
+	public HashMap<PSRID, PSRCSVInfo> getParsedDictionary(){
 		return this.directory;
 	}
 	

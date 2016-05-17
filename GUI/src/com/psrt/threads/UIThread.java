@@ -22,7 +22,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class UIThread implements Runnable{
@@ -31,7 +30,6 @@ public class UIThread implements Runnable{
 	World world;
 	
 	private Stage primaryStage;
-    private BorderPane rootLayout;
     private TabPane tabOverview;
     private Scene mainScene;
     
@@ -64,7 +62,6 @@ public class UIThread implements Runnable{
         tm = world.getMapper(TextComponent.class);
         pm = world.getMapper(ProgressComponent.class);
         
-        initRootLayout();
         loadGUI();
         
         System.out.println("UIThread initialized.");
@@ -75,8 +72,6 @@ public class UIThread implements Runnable{
          * each tab, then the elements from each anchorpane, and so on. Only issue is converting from Node objects to the correct scene objects (ie. Label, ImageView, etc.)
          * But that could be done with a little naming magic, perhaps.
          */
-       
-        
         ObservableList<Tab> tabs = tabOverview.getTabs();
         System.out.println("Tabs: " + tabs.size());
         for(int i = 0; i < tabs.size(); i++){
@@ -92,32 +87,16 @@ public class UIThread implements Runnable{
         			for(int j = 0; j < children.size(); j++){
         				Node n = children.get(j);
         				System.out.println("\tAnchorPane[" + i + "]: ID: " + n.getId());
-        				ValueFactory.if_tree_of_doom(n, main);  //Oh the if hierarchies... This should only run once
+        				ValueFactory.if_tree_of_doom(n, main, this);  //Oh the if hierarchies... This should only run once
         			}
         		}
         	}
         }
-	}
-
-	 
+	}	
 	
-
-	private void initRootLayout() {
-        try {
-            // Load root layout from fxml file.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("res/RootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
-
-            // Show the scene containing the root layout.
-            mainScene = new Scene(rootLayout);
-            primaryStage.setScene(mainScene);
-            primaryStage.centerOnScreen();
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	public TabPane getRoot(){
+		return this.tabOverview;
+	}
     /**
      * Shows the tab overview inside the root layout.
      */
@@ -129,7 +108,14 @@ public class UIThread implements Runnable{
             tabOverview = (TabPane) loader.load();
             
             // Set person overview into the center of root layout.
-            rootLayout.setCenter(tabOverview);
+//            rootLayout.setCenter(tabOverview);
+
+            
+            mainScene = new Scene(tabOverview);
+            primaryStage.setScene(mainScene);
+//          //primaryStage.setFullScreen(true);
+          	primaryStage.centerOnScreen();
+          	primaryStage.show();
             
             new WebcamView(loader, tabOverview, world);
         } catch (IOException e) {
@@ -166,7 +152,7 @@ public class UIThread implements Runnable{
 			Platform.runLater(new Runnable(){
 				@Override
 	            public void run() {
-					int num = Math.min(50, entityQueue.size());
+					int num = Math.min(30, entityQueue.size());
 					
 					for(int i = 0; i < num; i++){
 						Entity e = null;

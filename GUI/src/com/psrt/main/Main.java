@@ -41,7 +41,7 @@ public class Main extends Application{
     
     public final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
    
-    public static boolean DEBUG = true;
+    public static boolean DEBUG = false;
     
     public Bank bank;
     
@@ -194,11 +194,11 @@ public class Main extends Application{
 								//tc.setValue(""+ticks);
 							}
 							if(tc.getReference().equals("SOC_Label")){
-								tc.setValue(ticks * 2 + "%");
+								//tc.setValue(ticks * 2 + "%");
 							}
 						}else if(pc != null){
 							if(pc.getReference().equals("soc_indicator")){
-								pc.setValue((double) ticks / 50);
+								//pc.setValue((double) ticks / 50);
 							}
 						}else if(ic != null){
 							if(ic.getReference().equals("battery_1_led")){

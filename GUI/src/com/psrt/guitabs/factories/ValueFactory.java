@@ -11,6 +11,7 @@ import com.psrt.guitabs.BMSTab;
 import com.psrt.guitabs.MainTab;
 import com.psrt.guitabs.PDBTab;
 import com.psrt.main.Main;
+import com.psrt.threads.UIThread;
 
 import javafx.scene.Node;
 
@@ -54,7 +55,7 @@ public class ValueFactory {
 		return v;
 	}
 	
-	public static void if_tree_of_doom(Node n, Main main) {
+	public static void if_tree_of_doom(Node n, Main main, UIThread ui) {
 		World world = main.getWorld();
 		if(n.getId() != null){ //Example of retrieving all elements automatically... Could be easier? Hmm
 			switch (n.getId()){
@@ -177,6 +178,12 @@ public class ValueFactory {
 					break;
 				case "battery_4_percentage":
 					PDBTab.battery_4_percentage(world, n);
+					break;
+				case "btn_quit":
+					MainTab.btn_quit(ui.getPrimaryStage(), n);
+					break;
+				case "btn_fullscreen":
+					MainTab.btn_fullscreen(ui, n);
 					break;
 			}
 		}
