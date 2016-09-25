@@ -59,9 +59,6 @@ public class SerialReader2 {
 		 }else{
 			 log("No ports...");
 		 }
-		 
-		 
-		
 		return true;
 	 }
 	 

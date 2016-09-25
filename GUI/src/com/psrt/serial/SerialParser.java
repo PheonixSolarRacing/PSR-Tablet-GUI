@@ -9,10 +9,10 @@ import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 import com.artemis.ComponentMapper;
 import com.artemis.EntitySubscription;
-import com.psrt.containers.PSRCSVInfo;
-import com.psrt.containers.PSRID;
+import com.psrt.containers.PDBCSVInfo;
+import com.psrt.containers.PDBID;
 import com.psrt.containers.PSRValue;
-import com.psrt.containers.PSRValue.PSRValueType;
+import com.psrt.containers.PSRValue.PDBValueType;
 import com.psrt.containers.values.PSRFloatValue;
 import com.psrt.containers.values.PSRIntValue;
 import com.psrt.entities.components.DepositBox;
@@ -266,20 +266,20 @@ import com.psrt.threads.SerialMonitor;
 						 if(parse_debug) log("Function: " + function);
 						 
 						 for(int j = 1; j <= bank.getDictionary().numActiveEntries(); j++){
-							 PSRID identifier = new PSRID(id, function, j); 
+							 PDBID identifier = new PDBID(id, function, j); 
 							 PSRValue value = null; 
-							 PSRCSVInfo csvInfo = bank.getDictionary().getParsedDictionary().get(identifier);
+							 PDBCSVInfo csvInfo = bank.getDictionary().getParsedDictionary().get(identifier);
 							 if(csvInfo == null) continue;
-							 PSRValueType type = csvInfo.getType();
+							 PDBValueType type = csvInfo.getType();
 							 if(parse_debug) {
 								 log("SerialParser.parse() - CanID: ID = " + identifier.id + " | Function = " + identifier.function + " | Entry: " + identifier.entry + " | St. Index: " + csvInfo.startIndex());
 								 if(type == null) log("SerialParser.parse() - Type null");
 							 }
-							 if(type == PSRValueType.FLOAT){
+							 if(type == PDBValueType.FLOAT){
 								 byte[] floatBytes = subArray(bytes, pos + csvInfo.startIndex(), 4);
 								 value = new PSRFloatValue(bytesToFloat(floatBytes, 0), floatBytes);
 								 //log("FloatValue: " + value.getValue());
-							 }else if(type == PSRValueType.BYTE){
+							 }else if(type == PDBValueType.BYTE){
 								 value = new PSRIntValue(bytes[csvInfo.startIndex()] + 128, subArray(bytes, pos + csvInfo.startIndex(), 1));
 								 //log("ByteValue: " + (bytes[csvInfo.startIndex()] + 128));
 								 //log("ByteValue: " + (value.getValue().intValue()));

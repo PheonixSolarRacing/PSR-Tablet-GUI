@@ -59,6 +59,9 @@ public class Main extends Application{
     }
     
     private void initAll(Stage primaryStage){
+    	String user_dir = System.getProperty("user.dir");
+    	System.out.println(user_dir);
+    	
     	DictionaryParser parser = null;
 		try {
 			parser = new DictionaryParser("res/dictionary.csv");
@@ -99,6 +102,8 @@ public class Main extends Application{
     	imageHolder.loadImage("res/images/battery_images/Red Light Medium.png", "red_light");
     	imageHolder.loadImage("res/images/battery_images/Yellow Light Medium.png", "yellow_light");
     	imageHolder.loadImage("res/images/battery_images/Off Light Medium.png", "off_light");
+    	imageHolder.loadImage("res/images/battery_images/relay on.png", "relay_on");
+    	imageHolder.loadImage("res/images/battery_images/relay off.png", "relay_off");
     }
 
     private void initSerialMonitor() {
@@ -183,7 +188,6 @@ public class Main extends Application{
 						ProgressComponent pc = pm.getSafe(id);
 						ImageComponent ic = im.getSafe(id);
 						
-						
 						if(tc != null){
 							if(tc.getReference().equals("speed_display")){
 								//System.out.println("True");
@@ -201,8 +205,13 @@ public class Main extends Application{
 								//pc.setValue((double) ticks / 50);
 							}
 						}else if(ic != null){
-							if(ic.getReference().equals("battery_1_led")){
-								//ic.setValue(1);
+							if(ic.getReference().equals("x6F7_u8_0_x08")){
+								//ic.setValue(0);
+								if(ic.getValue().intValue() == 0){
+									ic.setValue(1);
+								}else{
+									ic.setValue(0);
+								}
 							}
 						}
 					}

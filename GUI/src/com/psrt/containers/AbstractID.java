@@ -7,7 +7,7 @@ public abstract class AbstractID  extends com.artemis.Component{
 	public static enum ID_TYPE{
 		BMS,
 		MOTOR_CONTROLLERS,
-		PSR;
+		PDB;
 	}
 	
 	public AbstractID(int id, ID_TYPE type){

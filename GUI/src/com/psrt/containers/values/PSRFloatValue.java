@@ -4,6 +4,6 @@ import com.psrt.containers.PSRValue;
 
 public class PSRFloatValue extends PSRValue<Float> {
 	public PSRFloatValue(float floatValue, byte[] bytes) {
-		super(PSRValueType.FLOAT, floatValue, bytes);
+		super(PDBValueType.FLOAT, floatValue, bytes);
 	}
 }

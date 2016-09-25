@@ -8,7 +8,7 @@ import com.artemis.utils.IntBag;
 import com.psrt.containers.AbstractID;
 import com.psrt.containers.AbstractValue;
 import com.psrt.containers.BMSID;
-import com.psrt.containers.PSRID;
+import com.psrt.containers.PDBID;
 import com.psrt.entities.components.DepositBox;
 import com.psrt.entities.components.ImageComponent;
 import com.psrt.entities.components.ProgressComponent;
@@ -17,7 +17,7 @@ import com.psrt.entities.components.TextComponent;
 public class BankSystem extends EntitySystem {
 	EntitySubscription sub;
 	
-	ComponentMapper<PSRID> cm;
+	ComponentMapper<PDBID> cm;
 	ComponentMapper<BMSID> bm;
 	ComponentMapper<TextComponent> tm;
 	ComponentMapper<ProgressComponent> pm;
@@ -29,7 +29,7 @@ public class BankSystem extends EntitySystem {
 	private boolean debug = false;
 
 	public BankSystem(Bank b) {
-		super(Aspect.one(PSRID.class, BMSID.class));
+		super(Aspect.one(PDBID.class, BMSID.class));
 		this.bank = b;
 	}
 	
@@ -41,7 +41,7 @@ public class BankSystem extends EntitySystem {
 	@Override
 	protected void processSystem() {
 		if(ticks == 0){
-			cm = world.getMapper(PSRID.class);
+			cm = world.getMapper(PDBID.class);
 			bm = world.getMapper(BMSID.class);
 			tm = world.getMapper(TextComponent.class);
 			pm = world.getMapper(ProgressComponent.class);
@@ -60,11 +60,20 @@ public class BankSystem extends EntitySystem {
 		ticks++;
 	}
 	
-	@SuppressWarnings("rawtypes")
+	/**
+	 * Unfortunately, in order to deal with non-numerical values (strings) each component type must be handled separately here.
+	 * This may be handled later as it is in {@link ValueSystem}, but for now this is how it be.
+	 * When adding new component types remember to add a component getter here along with its mapper, as is done with 
+	 * examples below. Remember to also put the paper initialization method in procesSystem
+	 * Ex: ExampleComponent ec = exampleMapper.getSafe(entityId);
+	 * This also takes place in the {@link ValueFactory} in the getValue method.
+	 * @param entityId
+	 * @param box
+	 */
 	private void process(int entityId, DepositBox box){
 		AbstractID id = null;
 		
-		PSRID pid = cm.getSafe(entityId);
+		PDBID pid = cm.getSafe(entityId);
 		BMSID bid = bm.getSafe(entityId);
 		AbstractValue value = null;
 		

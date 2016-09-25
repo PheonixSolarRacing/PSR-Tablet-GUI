@@ -16,11 +16,11 @@
 <?import javafx.scene.text.*?>
 <?import com.psrt.main.*?>
 
-<TabPane id="main_tabs" fx:id="main_tabs" snapToPixel="false" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="1.7976931348623157E100" tabMaxWidth="1.7976931348623157E100" tabMinHeight="40.0" tabMinWidth="100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<TabPane id="main_tabs" fx:id="main_tabs" prefHeight="800.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="1.7976931348623157E100" tabMaxWidth="1.7976931348623157E100" tabMinHeight="60.0" tabMinWidth="100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <tabs>
     <Tab id="main_tab" fx:id="main_tab" closable="false" text="Main">
       <content>
-        <AnchorPane id="main_anchor_pane" fx:id="main" minHeight="0.0" minWidth="0.0">
+        <AnchorPane id="main_anchor_pane" fx:id="main" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <Label id="speed_display" fx:id="speed_display" alignment="CENTER" layoutX="867.0" layoutY="420.0" opacity="0.5" prefHeight="292.0" prefWidth="414.0" text="35">
                      <tooltip>
@@ -58,16 +58,6 @@
                   <ComboBox id="cbResolutionOptions" layoutX="197.0" layoutY="1.0" prefHeight="41.0" prefWidth="360.0" />
                   <Label layoutX="567.0" layoutY="12.0" text="(Not guaranteed)" />
                   <Accordion layoutX="867.0" layoutY="118.0" />
-                  <Button id="btn_quit" defaultButton="true" layoutX="1090.0" layoutY="17.0" mnemonicParsing="false" prefHeight="83.0" prefWidth="163.0" text="QUIT" underline="true">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </Button>
-                  <Button id="btn_fullscreen" layoutX="1107.0" layoutY="118.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="129.0" text="Full Screen">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Button>
                </children></AnchorPane>
       </content>
     </Tab>
@@ -76,6 +66,666 @@
             <AnchorPane id="status_anchor_pane" fx:id="status" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>
       </Tab>
+    <Tab id="bms_tab" fx:id="bms_tab" text="BMS">
+      <content>
+        <AnchorPane id="bms_anchor_pane" fx:id="bms" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d1ffba" height="39.0" layoutX="331.0" layoutY="155.0" stroke="BLACK" strokeType="INSIDE" width="235.0" />
+                  <ImageView fitHeight="713.0" fitWidth="678.0" layoutX="603.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/HV%20diagram%20GUI-8.png" />
+                     </image>
+                  </ImageView>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" height="460.0" layoutX="616.0" layoutY="208.0" opacity="0.46" stroke="BLACK" strokeType="INSIDE" width="294.0">
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="BLACK" />
+                              <Stop color="WHITE" offset="0.9885057471264367" />
+                              <Stop color="WHITE" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </fill></Rectangle>
+                  <Label id="x6F4_fp_1" layoutX="70.0" layoutY="58.0" prefHeight="91.0" prefWidth="232.0" text="76.0%">
+                     <font>
+                        <Font name="Arial" size="78.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6F4_fp_0" alignment="BOTTOM_CENTER" layoutX="101.0" layoutY="137.0" prefHeight="69.0" prefWidth="181.0" text="37.76AH">
+                     <font>
+                        <Font name="Arial Black" size="31.0" />
+                     </font>
+                  </Label>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fbff1f" height="43.0" layoutX="902.0" layoutY="22.0" stroke="BLACK" strokeType="INSIDE" width="147.0" />
+                  <Label id="x6FA_u32_0" fx:id="battery_1_voltage1" alignment="CENTER" layoutX="903.0" layoutY="25.0" prefHeight="38.0" prefWidth="145.0" text="102.141V">
+                     <font>
+                        <Font name="Arial Black" size="25.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <ImageView id="x6F7_u8_0_x20" fitHeight="68.0" fitWidth="77.0" layoutX="657.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/relay%20on.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="x6F7_u8_0_x08" fitHeight="68.0" fitWidth="77.0" layoutX="790.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/relay%20on.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="x6F7_u8_0_x04" fitHeight="68.0" fitWidth="77.0" layoutX="1123.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/relay%20on.png" />
+                     </image>
+                  </ImageView>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" height="459.0" layoutX="933.0" layoutY="209.0" opacity="0.46" stroke="BLACK" strokeType="INSIDE" width="294.0">
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="BLACK" />
+                              <Stop color="WHITE" offset="0.9885057471264367" />
+                              <Stop color="WHITE" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </fill>
+                  </Rectangle>
+                  <Label fx:id="battery_1_voltage12" layoutX="645.0" layoutY="69.0" prefHeight="36.0" prefWidth="42.0" text="3">
+                     <font>
+                        <Font name="Arial Black" size="19.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label fx:id="battery_1_voltage121" layoutX="777.0" layoutY="69.0" prefHeight="36.0" prefWidth="47.0" text="2">
+                     <font>
+                        <Font name="Arial" size="19.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label fx:id="battery_1_voltage122" layoutX="1109.0" layoutY="67.0" prefHeight="36.0" prefWidth="32.0" text="1">
+                     <font>
+                        <Font name="Arial Narrow" size="19.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label layoutX="851.0" layoutY="177.0" prefHeight="31.0" prefWidth="58.0" text="18003" textFill="#a80000">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x608_16_3" layoutX="749.0" layoutY="300.0" prefHeight="31.0" prefWidth="124.0" text="3.481">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x609_16_0" layoutX="749.0" layoutY="331.0" prefHeight="31.0" prefWidth="124.0" text="3.490">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x609_16_1" layoutX="749.0" layoutY="361.0" prefHeight="31.0" prefWidth="124.0" text="3.464">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x609_16_2" layoutX="749.0" layoutY="392.0" prefHeight="31.0" prefWidth="124.0" text="3.502">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x608_16_2" layoutX="749.0" layoutY="269.0" prefHeight="31.0" prefWidth="124.0" text="3.498">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x608_16_1" layoutX="749.0" layoutY="238.0" prefHeight="31.0" prefWidth="124.0" text="3.512">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x608_16_0" layoutX="749.0" layoutY="207.0" prefHeight="31.0" prefWidth="124.0" text="3.455">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x605_16_0" layoutX="749.0" layoutY="423.0" prefHeight="31.0" prefWidth="124.0" text="3.500">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x605_16_1" layoutX="749.0" layoutY="454.0" prefHeight="31.0" prefWidth="124.0" text="3.477">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x605_16_2" layoutX="749.0" layoutY="485.0" prefHeight="31.0" prefWidth="124.0" text="3.476">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x605_16_3" layoutX="749.0" layoutY="516.0" prefHeight="31.0" prefWidth="124.0" text="3.503">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x606_16_3" layoutX="749.0" layoutY="639.0" prefHeight="31.0" prefWidth="124.0" text="3.012">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x606_16_2" layoutX="749.0" layoutY="608.0" prefHeight="31.0" prefWidth="124.0" text="3.529">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x606_16_1" layoutX="749.0" layoutY="577.0" prefHeight="31.0" prefWidth="124.0" text="3.494">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x606_16_0" layoutX="749.0" layoutY="547.0" prefHeight="31.0" prefWidth="124.0" text="3.481">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1167.0" layoutY="177.0" prefHeight="31.0" prefWidth="58.0" text="18007" textFill="#a80000">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="851.0" layoutY="669.0" prefHeight="31.0" prefWidth="58.0" text="18002" textFill="#a80000">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1167.0" layoutY="669.0" prefHeight="31.0" prefWidth="58.0" text="17997" textFill="#a80000">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffc300" height="43.0" layoutX="950.0" layoutY="103.0" stroke="BLACK" strokeType="INSIDE" width="147.0" />
+                  <Label id="x6FA_u32_1" fx:id="battery_1_voltage11" alignment="CENTER" contentDisplay="CENTER" layoutX="951.0" layoutY="105.0" prefHeight="38.0" prefWidth="144.0" text="29.301A">
+                     <font>
+                        <Font name="Arial Black" size="25.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="640.0" prefHeight="31.0" prefWidth="26.0" text="7">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="393.0" prefHeight="31.0" prefWidth="26.0" text="6">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="361.0" prefHeight="31.0" prefWidth="26.0" text="5">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="330.0" prefHeight="31.0" prefWidth="26.0" text="4">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="300.0" prefHeight="31.0" prefWidth="26.0" text="3">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="207.0" prefHeight="31.0" prefWidth="26.0" text="0">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="238.0" prefHeight="31.0" prefWidth="26.0" text="1">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="269.0" prefHeight="31.0" prefWidth="26.0" text="2">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="484.0" prefHeight="31.0" prefWidth="26.0" text="2">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="453.0" prefHeight="31.0" prefWidth="26.0" text="1">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="422.0" prefHeight="31.0" prefWidth="26.0" text="0">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="515.0" prefHeight="31.0" prefWidth="26.0" text="3">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="545.0" prefHeight="31.0" prefWidth="26.0" text="4">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="576.0" prefHeight="31.0" prefWidth="26.0" text="5">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="608.0" prefHeight="31.0" prefWidth="26.0" text="6">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1027.0" layoutY="608.0" prefHeight="31.0" prefWidth="26.0" text="1">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1027.0" layoutY="576.0" prefHeight="31.0" prefWidth="26.0" text="2">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1027.0" layoutY="545.0" prefHeight="31.0" prefWidth="26.0" text="3">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1027.0" layoutY="515.0" prefHeight="31.0" prefWidth="26.0" text="4">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1027.0" layoutY="422.0" prefHeight="31.0" prefWidth="26.0" text="0">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1027.0" layoutY="453.0" prefHeight="31.0" prefWidth="26.0" text="6">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1027.0" layoutY="484.0" prefHeight="31.0" prefWidth="26.0" text="5">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1027.0" layoutY="269.0" prefHeight="31.0" prefWidth="26.0" text="5">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1027.0" layoutY="238.0" prefHeight="31.0" prefWidth="26.0" text="6">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1027.0" layoutY="207.0" prefHeight="31.0" prefWidth="26.0" text="7">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1027.0" layoutY="300.0" prefHeight="31.0" prefWidth="26.0" text="4">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1027.0" layoutY="330.0" prefHeight="31.0" prefWidth="26.0" text="3">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1027.0" layoutY="361.0" prefHeight="31.0" prefWidth="26.0" text="2">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1027.0" layoutY="393.0" prefHeight="31.0" prefWidth="26.0" text="1">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1027.0" layoutY="640.0" prefHeight="31.0" prefWidth="26.0" text="0">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label id="x60B_16_3" layoutX="1065.0" layoutY="547.0" prefHeight="31.0" prefWidth="124.0" text="3.481">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x60B_16_2" layoutX="1065.0" layoutY="577.0" prefHeight="31.0" prefWidth="124.0" text="3.494">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x60B_16_1" layoutX="1065.0" layoutY="608.0" prefHeight="31.0" prefWidth="124.0" text="3.529">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x60B_16_0" layoutX="1065.0" layoutY="639.0" prefHeight="31.0" prefWidth="124.0" text="3.012">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x60C_16_0" layoutX="1065.0" layoutY="516.0" prefHeight="31.0" prefWidth="124.0" text="3.503">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x60C_16_1" layoutX="1065.0" layoutY="485.0" prefHeight="31.0" prefWidth="124.0" text="3.476">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x60C_16_2" layoutX="1065.0" layoutY="454.0" prefHeight="31.0" prefWidth="124.0" text="3.477">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x602_16_0" layoutX="1065.0" layoutY="423.0" prefHeight="31.0" prefWidth="124.0" text="3.500">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x603_16_3" layoutX="1065.0" layoutY="207.0" prefHeight="31.0" prefWidth="124.0" text="3.455">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x603_16_2" layoutX="1065.0" layoutY="238.0" prefHeight="31.0" prefWidth="124.0" text="3.512">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x603_16_1" layoutX="1065.0" layoutY="269.0" prefHeight="31.0" prefWidth="124.0" text="3.498">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x602_16_1" layoutX="1065.0" layoutY="392.0" prefHeight="31.0" prefWidth="124.0" text="3.502">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x602_16_2" layoutX="1065.0" layoutY="361.0" prefHeight="31.0" prefWidth="124.0" text="3.464">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x602_16_3" layoutX="1065.0" layoutY="331.0" prefHeight="31.0" prefWidth="124.0" text="3.490">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x603_16_0" layoutX="1065.0" layoutY="300.0" prefHeight="31.0" prefWidth="124.0" text="3.481">
+                     <font>
+                        <Font name="Lucida Console" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="x607_16_3" alignment="CENTER" layoutX="770.0" layoutY="173.0" prefHeight="31.0" prefWidth="78.0" text="16.1°C">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#baefff" height="39.0" layoutX="331.0" layoutY="193.0" stroke="BLACK" strokeType="INSIDE" width="235.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#feffbd" height="39.0" layoutX="331.0" layoutY="85.0" stroke="BLACK" strokeType="INSIDE" width="235.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbaba" height="39.0" layoutX="331.0" layoutY="47.0" stroke="BLACK" strokeType="INSIDE" width="235.0" />
+                  <Label id="x6F9_u16_1" fx:id="battery_1_voltage131" alignment="CENTER_RIGHT" layoutX="415.0" layoutY="156.0" prefHeight="38.0" prefWidth="145.0" text="16.1°C">
+                     <font>
+                        <Font name="Arial Black" size="25.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label id="x6F8_u16_1" fx:id="battery_1_voltage132" alignment="CENTER_RIGHT" layoutX="415.0" layoutY="48.0" prefHeight="38.0" prefWidth="145.0" text="3.529V">
+                     <font>
+                        <Font name="Arial Black" size="25.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label id="x6F8_u16_0" fx:id="battery_1_voltage133" alignment="CENTER_RIGHT" layoutX="415.0" layoutY="87.0" prefHeight="38.0" prefWidth="145.0" text="3.012V">
+                     <font>
+                        <Font name="Arial Black" size="25.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label fx:id="battery_1_voltage1321" layoutX="339.0" layoutY="48.0" prefHeight="38.0" prefWidth="126.0" text="High cell:">
+                     <font>
+                        <Font name="Arial" size="25.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label fx:id="battery_1_voltage13211" layoutX="339.0" layoutY="87.0" prefHeight="38.0" prefWidth="127.0" text="Low cell:">
+                     <font>
+                        <Font name="Arial" size="25.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label id="x601_16_2" fx:id="battery_1_voltage1311" alignment="CENTER_RIGHT" layoutX="415.0" layoutY="194.0" prefHeight="38.0" prefWidth="145.0" text="10.9°C">
+                     <font>
+                        <Font name="Arial Black" size="25.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label fx:id="battery_1_voltage132111" alignment="CENTER_RIGHT" layoutX="331.0" layoutY="194.0" prefHeight="38.0" prefWidth="135.0" text="CMU temp:">
+                     <font>
+                        <Font name="Arial" size="25.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label fx:id="battery_1_voltage13212" layoutX="338.0" layoutY="156.0" prefHeight="38.0" prefWidth="128.0" text="Cell temp:">
+                     <font>
+                        <Font name="Arial" size="25.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label fx:id="battery_1_voltage13213" layoutX="686.0" layoutY="170.0" prefHeight="38.0" prefWidth="126.0" text="Cell Temp:">
+                     <font>
+                        <Font name="Arial" size="17.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label fx:id="battery_1_voltage132131" layoutX="687.0" layoutY="670.0" prefHeight="38.0" prefWidth="126.0" text="Cell Temp:">
+                     <font>
+                        <Font name="Arial" size="17.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label id="x604_16_3" alignment="CENTER" layoutX="770.0" layoutY="673.0" prefHeight="31.0" prefWidth="78.0" text="16.1°C">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="battery_1_voltage132132" layoutX="1002.0" layoutY="170.0" prefHeight="38.0" prefWidth="126.0" text="Cell Temp:">
+                     <font>
+                        <Font name="Arial" size="17.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label id="x601_16_3" alignment="CENTER" layoutX="1086.0" layoutY="173.0" prefHeight="31.0" prefWidth="78.0" text="16.1°C">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="battery_1_voltage132133" layoutX="1003.0" layoutY="670.0" prefHeight="38.0" prefWidth="126.0" text="Cell Temp:">
+                     <font>
+                        <Font name="Arial" size="17.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Label>
+                  <Label id="x60A_16_3" alignment="CENTER" layoutX="1086.0" layoutY="673.0" prefHeight="31.0" prefWidth="78.0" text="16.1°C">
+                     <font>
+                        <Font name="Verdana" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="628.0" layoutY="666.0" prefHeight="38.0" prefWidth="71.0" text="CMU 2" textFill="#a80000">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="628.0" layoutY="172.0" prefHeight="38.0" prefWidth="71.0" text="CMU 3" textFill="#a80000">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="945.0" layoutY="172.0" prefHeight="38.0" prefWidth="71.0" text="CMU 1" textFill="#a80000">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="945.0" layoutY="666.0" prefHeight="38.0" prefWidth="71.0" text="CMU 4" textFill="#a80000">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="453.0" fitWidth="521.0" layoutX="45.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/battery_images/LIST3.png" />
+                     </image>
+                  </ImageView>
+                  <Label id="x6F7_u8_1" layoutX="51.0" layoutY="265.0" prefHeight="24.0" prefWidth="513.0" text="Precharge state                Error">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FB_u16_0" layoutX="50.0" layoutY="287.0" prefHeight="24.0" prefWidth="514.0" text="Cell Balance Thresh High 3.600V">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FB_u8_5" layoutX="51.0" layoutY="333.0" prefHeight="24.0" prefWidth="515.0" text="BMS CMU Count              4">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FB_u16_1" layoutX="50.0" layoutY="311.0" prefHeight="24.0" prefWidth="513.0" text="Cell Balance Thresh Low  3.590V">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FD_u32_0_x0001" layoutX="51.0" layoutY="402.0" prefHeight="24.0" prefWidth="513.0" text="Error   x6FD_x0001          Cell Over Voltage" textFill="RED">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FD_u32_0_x0002" layoutX="51.0" layoutY="424.0" prefHeight="24.0" prefWidth="514.0" text="Error   x6FD_x0002          Cell Under Voltage" textFill="RED">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6F7_u8_0_x10 " layoutX="51.0" layoutY="378.0" prefHeight="24.0" prefWidth="515.0" text="Error   x6F7_x10              12V contactor supply voltage error" textFill="RED">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FB_u16_3" layoutX="51.0" layoutY="356.0" prefHeight="24.0" prefWidth="515.0" text="BMS BMU Firmware Ver  5532">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FD_u32_0_x0040" layoutX="51.0" layoutY="537.0" prefHeight="24.0" prefWidth="513.0" text="Flag    x6FD_x0040          BMU is in Setup mode" textFill="#0700ff">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FD_u32_0_x0080" layoutX="51.0" layoutY="560.0" prefHeight="24.0" prefWidth="515.0" text="Flag    x6FD_x0080          CMU CAN bus power on" textFill="#0700ff">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FD_u32_0_x0200" layoutX="51.0" layoutY="605.0" prefHeight="24.0" prefWidth="514.0" text="Error   x6FD_x0200          SOC measurement is not valid" textFill="RED">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FD_u32_0_x0100" layoutX="51.0" layoutY="582.0" prefHeight="24.0" prefWidth="516.0" text="Error   x6FD_x0100          Pack Isolation test failure" textFill="RED">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FD_u32_0_x0010" layoutX="51.0" layoutY="492.0" prefHeight="24.0" prefWidth="514.0" text="Error   x6FD_x0010          CMU Communications Timeout" textFill="RED">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FD_u32_0_x0020" layoutX="51.0" layoutY="515.0" prefHeight="24.0" prefWidth="514.0" text="Error   x6FD_x0020          Vehicle Communications Timeout (Master Node)" textFill="RED">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FD_u32_0_x0008" layoutX="51.0" layoutY="469.0" prefHeight="24.0" prefWidth="515.0" text="Error   x6FD_x0008          Measurement Untrusted (ADC mismatch)" textFill="RED">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FD_u32_0_x0004" layoutX="51.0" layoutY="447.0" prefHeight="24.0" prefWidth="515.0" text="Error   x6FD_x0004          Cell Over Temperature" textFill="RED">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FD_u32_0_x0800" layoutX="51.0" layoutY="650.0" prefHeight="24.0" prefWidth="515.0" text="Error   x6FD_x0800          A contactor is stuck / not engaged" textFill="RED">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FD_u32_0_x1000" layoutX="51.0" layoutY="672.0" prefHeight="24.0" prefWidth="514.0" text="Error   x6FD_x1000          A CMU has detected an extra cell present" textFill="RED">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label id="x6FD_u32_0_x0400" layoutX="51.0" layoutY="627.0" prefHeight="24.0" prefWidth="513.0" text="Error   x6FD_x0400          CAN 12V supply is low - about to shut down" textFill="RED">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+      </content>
+    </Tab>
       <Tab id="motors_tab" fx:id="motos_tab" text="Motors">
          <content>
             <AnchorPane id="motors_anchor_pane" fx:id="motors" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -88,6 +738,14 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </LineChart>
+               </children></AnchorPane>
+         </content>
+      </Tab>
+      <Tab id="solar_tab" fx:id="solar_tab" text="Solar">
+         <content>
+            <AnchorPane id="solar_anchor_pane" fx:id="solar" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Canvas height="551.0" layoutX="174.0" layoutY="109.0" width="982.0" />
                </children></AnchorPane>
          </content>
       </Tab>
@@ -233,17 +891,17 @@
                   </Label>
                   <ImageView id="battery_1_led" fx:id="battery_1_led" fitHeight="40.0" fitWidth="40.0" layoutX="264.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/battery_images/Green%20Light%20Medium.png" />
+                        <Image url="@images/battery_images/Red%20Light%20Medium.png" />
                      </image>
                   </ImageView>
                   <ImageView id="battery_2_led" fx:id="battery_2_led" fitHeight="40.0" fitWidth="40.0" layoutX="264.0" layoutY="228.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/battery_images/Green%20Light%20Medium.png" />
+                        <Image url="@images/battery_images/Red%20Light%20Medium.png" />
                      </image>
                   </ImageView>
                   <ImageView id="battery_3_led" fx:id="battery_3_led" fitHeight="40.0" fitWidth="40.0" layoutX="264.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/battery_images/Yellow%20Light%20Medium.png" />
+                        <Image url="@images/battery_images/Red%20Light%20Medium.png" />
                      </image>
                   </ImageView>
                   <ImageView id="battery_4_led" fx:id="battery_4_led" fitHeight="40.0" fitWidth="40.0" layoutX="264.0" layoutY="463.0" pickOnBounds="true" preserveRatio="true">
@@ -253,62 +911,62 @@
                   </ImageView>
                   <ImageView id="dc_dc_led" fx:id="dc_to_dc_voltage_led" fitHeight="40.0" fitWidth="40.0" layoutX="264.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/battery_images/Green%20Light%20Medium.png" />
+                        <Image url="@images/battery_images/Red%20Light%20Medium.png" />
                      </image>
                   </ImageView>
                   <ImageView id="output_8_led" fx:id="output_8_led" fitHeight="40.0" fitWidth="40.0" layoutX="598.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/battery_images/Off%20Light%20Medium.png" />
+                        <Image url="@images/battery_images/Red%20Light%20Medium.png" />
                      </image>
                   </ImageView>
                   <ImageView id="output_7_led" fx:id="output_7_led" fitHeight="40.0" fitWidth="40.0" layoutX="719.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/battery_images/Off%20Light%20Medium.png" />
+                        <Image url="@images/battery_images/Red%20Light%20Medium.png" />
                      </image>
                   </ImageView>
                   <ImageView id="output_5_led" fx:id="output_5_led" fitHeight="40.0" fitWidth="40.0" layoutX="960.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/battery_images/Green%20Light%20Medium.png" />
+                        <Image url="@images/battery_images/Red%20Light%20Medium.png" />
                      </image>
                   </ImageView>
                   <ImageView id="output_6_led" fx:id="output_6_led" fitHeight="40.0" fitWidth="40.0" layoutX="839.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/battery_images/Off%20Light%20Medium.png" />
+                        <Image url="@images/battery_images/Red%20Light%20Medium.png" />
                      </image>
                   </ImageView>
                   <ImageView id="output_2_led" fx:id="output_2_led" fitHeight="40.0" fitWidth="40.0" layoutX="839.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/battery_images/Green%20Light%20Medium.png" />
+                        <Image url="@images/battery_images/Red%20Light%20Medium.png" />
                      </image>
                   </ImageView>
                   <ImageView id="output_1_led" fx:id="output_1_led" fitHeight="40.0" fitWidth="40.0" layoutX="960.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/battery_images/Green%20Light%20Medium.png" />
+                        <Image url="@images/battery_images/Red%20Light%20Medium.png" />
                      </image>
                   </ImageView>
                   <ImageView id="output_3_led" fx:id="output_3_led" fitHeight="40.0" fitWidth="40.0" layoutX="719.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/battery_images/Off%20Light%20Medium.png" />
+                        <Image url="@images/battery_images/Red%20Light%20Medium.png" />
                      </image>
                   </ImageView>
                   <ImageView id="output_4_led" fx:id="output_4_led" fitHeight="40.0" fitWidth="40.0" layoutX="598.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/battery_images/Off%20Light%20Medium.png" />
+                        <Image url="@images/battery_images/Red%20Light%20Medium.png" />
                      </image>
                   </ImageView>
                   <ImageView id="batteries_all_current_led" fx:id="batteries_current_led" fitHeight="40.0" fitWidth="40.0" layoutX="565.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/battery_images/Green%20Light%20Medium.png" />
+                        <Image url="@images/battery_images/Red%20Light%20Medium.png" />
                      </image>
                   </ImageView>
                   <ImageView id="dc_to_dc_current_led" fx:id="dc_to_dc_current_led" fitHeight="40.0" fitWidth="40.0" layoutX="564.0" layoutY="417.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/battery_images/Off%20Light%20Medium.png" />
+                        <Image url="@images/battery_images/Red%20Light%20Medium.png" />
                      </image>
                   </ImageView>
                   <ImageView id="error_led" fitHeight="40.0" fitWidth="40.0" layoutX="893.0" layoutY="422.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/battery_images/Green%20Light%20Medium.png" />
+                        <Image url="@images/battery_images/Red%20Light%20Medium.png" />
                      </image>
                   </ImageView>
                   <Label id="battery_4_percentage" fx:id="battery_4_percentage" layoutX="184.0" layoutY="495.0" prefHeight="22.0" prefWidth="71.0" text="8%">
@@ -367,23 +1025,9 @@
                </children></AnchorPane>
          </content>
       </Tab>
-      <Tab id="solar_tab" fx:id="solar_tab" text="Solar">
-         <content>
-            <AnchorPane id="solar_anchor_pane" fx:id="solar" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Canvas height="551.0" layoutX="174.0" layoutY="109.0" width="982.0" />
-               </children></AnchorPane>
-         </content>
-      </Tab>
       <Tab id="can_tab" fx:id="can_tab" text="CAN">
          <content>
-            <AnchorPane id="can_anchor_pane" fx:id="can" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Box layoutX="320.0" layoutY="266.0" />
-                  <ColorPicker layoutX="383.0" layoutY="285.0" />
-                  <ProgressIndicator layoutX="156.0" layoutY="96.0" progress="0.0" />
-                  <Slider layoutX="302.0" layoutY="300.0" orientation="VERTICAL" />
-               </children></AnchorPane>
+            <AnchorPane id="can_anchor_pane" fx:id="can" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>
       </Tab>
       <Tab id="indicators_tab" fx:id="indicators_tab" text="Indicators">
@@ -401,19 +1045,5 @@
             <AnchorPane id="errors_anchor_pane" fx:id="errors" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>
       </Tab>
-    <Tab id="bms_tab" fx:id="bms_tab" text="B-MO">
-      <content>
-        <AnchorPane id="bms_anchor_pane" fx:id="bms" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="16.0" layoutX="291.0" layoutY="231.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-                  <Label id="SOC_Label" layoutX="376.0" layoutY="331.0" prefHeight="93.0" prefWidth="245.0" text="80%">
-                     <font>
-                        <Font size="64.0" />
-                     </font>
-                  </Label>
-                  <ProgressBar id="soc_indicator" fx:id="soc_indicator" layoutX="225.0" layoutY="277.0" prefHeight="96.0" prefWidth="172.0" progress="0.83" rotate="-90.0" />
-               </children></AnchorPane>
-      </content>
-    </Tab>
   </tabs>
 </TabPane>

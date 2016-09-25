@@ -38,13 +38,23 @@ public class ValueFactory {
 		return getValue(w.getEntity(entityId));
 	}
 	
-	
+	/**
+	 * IMPORTANT: When adding a new component type, you <b>MUST</b> include the code in this format here
+		ExampleComponent ec = exampleMapper.getSafe(e).
+		You <b>MUST</b> also include a mapper for that new component type here.
+		If you don't do this, <b>none</b> of the elements based on that component type will work.
+		In the same vein, the {@link BankSystem} also requires this level of customization. (See process method there)
+	 * @param e
+	 * @return
+	 */
 	@SuppressWarnings("rawtypes")
 	public synchronized ValueComponent getValue(Entity e){
 		TextComponent tc = tm.getSafe(e);
 		ProgressComponent pc = pm.getSafe(e);
 		//TimingComponent t = timeM.getSafe(entityId);
 		ImageComponent ic = im.getSafe(e);
+		
+		
 		
 		ValueComponent v = null;
 		//if tc isn't null set it to v, if tc is null then set pc to v, if pc is null then set v to null
@@ -62,9 +72,6 @@ public class ValueFactory {
 				case "battery_1_voltage":
 					PDBTab.battery_1_voltage(world, n);
 					break;
-				case "SOC_Label":
-					BMSTab.SOC_Label(world, n);
-					break;
 				case "speed_display":
 					MainTab.speed_display(world, n);
 					break;
@@ -74,11 +81,11 @@ public class ValueFactory {
 				case "battery_3_voltage":
 					PDBTab.battery_3_voltage(world, n);
 					break;
-				case "soc_indicator":
-					BMSTab.soc_indicator(world, n);
+				case "x6F4_fp_1": //SOC %
+					BMSTab.x6F4_fp_1(world, n);
 					break;
-				case "SOC_label":
-					BMSTab.SOC_Label(world, n);
+				case "x6F4_fp_0": //SOC Ah
+					BMSTab.x6F4_fp_0(world, n);
 					break;
 				case "dc_to_dc_voltage":
 					PDBTab.dc_to_dc_voltage(world, n);
@@ -185,6 +192,137 @@ public class ValueFactory {
 				case "btn_fullscreen":
 					MainTab.btn_fullscreen(ui, n);
 					break;
+				case "x6F7_u8_0_x08":
+					BMSTab.x6F7_u8_0_x08(world, n, main.getImages());
+					break;
+				case "x6F7_u8_0_x20":
+					BMSTab.x6F7_u8_0_x20(world, n, main.getImages());
+					break;
+				case "x6F7_u8_0_x04":
+					BMSTab.x6F7_u8_0_x04(world, n, main.getImages());
+					break;
+				case "x601_16_2": //cmu temp
+					BMSTab.x601_16_2(world, n);
+					break;
+				case "x6FA_u32_1": //cmu temp
+					BMSTab.x6FA_u32_1(world, n);
+					break;
+				case "x6FA_u32_0": //cmu temp
+					BMSTab.x6FA_u32_0(world, n);
+					break;
+				case "x6F9_u16_1": //cell temp
+					BMSTab.x6F9_u16_1(world, n);
+					break;
+				case "x6F8_u16_1": //max cell voltage
+					BMSTab.x6F8_u16_1(world, n);
+					break;
+				case "x6F8_u16_0": //min cell voltage
+					BMSTab.x6F8_u16_0(world, n);
+					break;
+				case "x608_16_0":
+					BMSTab.x608_16_0(world, n);
+					break;
+				case "x608_16_1":
+					BMSTab.x608_16_1(world, n);
+					break;
+				case "x608_16_2":
+					BMSTab.x608_16_2(world, n);
+					break;
+				case "x608_16_3":
+					BMSTab.x608_16_3(world, n);
+					break;
+				case "x609_16_0":
+					BMSTab.x609_16_0(world, n);
+					break;
+				case "x609_16_1":
+					BMSTab.x609_16_1(world, n);
+					break;
+				case "x609_16_2":
+					BMSTab.x609_16_2(world, n);
+					break;
+				case "x605_16_0":
+					BMSTab.x605_16_0(world, n);
+					break;
+				case "x605_16_1":
+					BMSTab.x605_16_1(world, n);
+					break;
+				case "x605_16_2":
+					BMSTab.x605_16_2(world, n);
+					break;
+				case "x605_16_3":
+					BMSTab.x605_16_3(world, n);
+					break;
+				case "x606_16_0":
+					BMSTab.x606_16_0(world, n);
+					break;
+				case "x606_16_1":
+					BMSTab.x606_16_1(world, n);
+					break;
+				case "x606_16_2":
+					BMSTab.x606_16_2(world, n);
+					break;
+				case "x606_16_3":
+					BMSTab.x606_16_3(world, n);
+					break;
+				case "x604_16_3":
+					BMSTab.x604_16_3(world, n);
+					break;
+				case "x60A_16_3":
+					BMSTab.x60A_16_3(world, n);
+					break;
+				case "x601_16_3":
+					BMSTab.x601_16_3(world, n);
+					break;
+				case "x607_16_3":
+					BMSTab.x607_16_3(world, n);
+					break;
+				case "x603_16_3":
+					BMSTab.x603_16_3(world, n);
+					break;
+				case "x603_16_2":
+					BMSTab.x603_16_2(world, n);
+					break;
+				case "x603_16_1":
+					BMSTab.x603_16_1(world, n);
+					break;
+				case "x603_16_0":
+					BMSTab.x603_16_0(world, n);
+					break;
+				case "x602_16_3":
+					BMSTab.x602_16_3(world, n);
+					//TODO
+					break;
+				case "x602_16_2":
+					BMSTab.x602_16_2(world, n);
+					break;
+				case "x602_16_1":
+					BMSTab.x602_16_1(world, n);
+					break;
+				case "x602_16_0":
+					BMSTab.x602_16_0(world, n);
+					break;
+				case "x60C_16_2":
+					BMSTab.x60C_16_2(world, n);
+					break;
+				case "x60C_16_1":
+					BMSTab.x60C_16_1(world, n);
+					break;
+				case "x60C_16_0":
+					BMSTab.x60C_16_0(world, n);
+					break;
+				case "x60B_16_3":
+					BMSTab.x60B_16_3(world, n);
+					break;
+				case "x60B_16_2":
+					BMSTab.x60B_16_2(world, n);
+					break;
+				case "x60B_16_1":
+					BMSTab.x60B_16_1(world, n);
+					break;
+				case "x60B_16_0":
+					BMSTab.x60B_16_0(world, n);
+					break;
+				
 			}
 		}
 	}	 

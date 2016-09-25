@@ -10,14 +10,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.opencsv.CSVReader;
-import com.psrt.containers.PSRCSVInfo;
-import com.psrt.containers.PSRID;
-import com.psrt.containers.PSRValue.PSRValueType;
+import com.psrt.containers.PDBCSVInfo;
+import com.psrt.containers.PDBID;
+import com.psrt.containers.PSRValue.PDBValueType;
 import com.psrt.main.Main;
 
 public class DictionaryParser {
 	String csvFile;
-	HashMap<PSRID, PSRCSVInfo> directory;
+	HashMap<PDBID, PDBCSVInfo> directory;
 	CSVReader reader;
 	int num_entries_active;
 	
@@ -32,7 +32,7 @@ public class DictionaryParser {
 	public DictionaryParser(String csvFile) throws FileNotFoundException, URISyntaxException{
 		this.csvFile = csvFile;
 		this.num_entries_active = -1;
-		directory = new HashMap<PSRID, PSRCSVInfo>(100);
+		directory = new HashMap<PDBID, PDBCSVInfo>(100);
 		stream = Main.class.getResourceAsStream(csvFile);
 		reader = new CSVReader(new InputStreamReader(stream));
 	}
@@ -72,8 +72,8 @@ public class DictionaryParser {
 	    
 	    for(int row = header_row + 1; row < lines.size(); row++){
 	    	String[] line = lines.get(row);
-	    	PSRID id = new PSRID();
-	    	PSRValueType type = null;
+	    	PDBID id = new PDBID();
+	    	PDBValueType type = null;
 	    	int start_index = -1;
 	    	for(int col = 0; col < line.length; col++){
 	    		
@@ -93,18 +93,18 @@ public class DictionaryParser {
 		    					start_index += 3;
 		    					
 		    					if(data_type.equals("f")){
-		    						type = PSRValueType.FLOAT;
+		    						type = PDBValueType.FLOAT;
 		    					}else if(data_type.equals("b")){
-		    						type = PSRValueType.BYTE;
+		    						type = PDBValueType.BYTE;
 		    					}else if(data_type.equals("i") || data_type.equals("int")){
-		    						type = PSRValueType.INT;
+		    						type = PDBValueType.INT;
 		    					}
 		    					if(id.id != -1 && id.function != -1 && id.entry != -1 && type != null && start_index != -1){
 					    			log("Row: " + (row + 1) + "; ID: " + id.id + ", " + id.function + ", " + id.entry + ";" + type.toString() + "; " + start_index);
 					    			num_entries_active = (id.entry > num_entries_active) ? id.entry : num_entries_active;
-					    			directory.put(id, new PSRCSVInfo(type, start_index));
+					    			directory.put(id, new PDBCSVInfo(type, start_index));
 					    			type = null;
-					    			id = new PSRID(id.id, id.function, -1);
+					    			id = new PDBID(id.id, id.function, -1);
 					    		}
 		    				}
 		    			}
@@ -126,7 +126,7 @@ public class DictionaryParser {
 	    }
 	}
 	
-	public HashMap<PSRID, PSRCSVInfo> getParsedDictionary(){
+	public HashMap<PDBID, PDBCSVInfo> getParsedDictionary(){
 		return this.directory;
 	}
 	

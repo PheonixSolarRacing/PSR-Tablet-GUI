@@ -4,7 +4,7 @@ import com.psrt.containers.PSRValue;
 
 public class PSRIntValue extends PSRValue<Integer>{
 	public PSRIntValue(int intValue, byte[] bytes) {
-		super(PSRValueType.INT, intValue, bytes);
+		super(PDBValueType.INT, intValue, bytes);
 		// TODO Auto-generated constructor stub
 	}
 }
