@@ -1,0 +1,17 @@
+!SESSION 2016-09-26 22:24:23.756 -----------------------------------------------
+eclipse.buildId=4.5.1.M20150904-0015
+java.version=1.8.0_101
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.ui 2 0 2016-09-26 22:25:38.975
+!MESSAGE The 'org.eclipse.ui.startup' extension from 'com.google.gdt.eclipse.designer' does not provide a 'class' attribute.
+This usage is deprecated and a 'class' attribute should be provided.
+The release after Mars (4.5) will no longer support the deprecated usage!
+
+!ENTRY org.eclipse.ui 2 0 2016-09-26 22:25:40.290
+!MESSAGE The 'org.eclipse.ui.startup' extension from 'com.google.gdt.eclipse.designer.UiBinder' does not provide a 'class' attribute.
+This usage is deprecated and a 'class' attribute should be provided.
+The release after Mars (4.5) will no longer support the deprecated usage!

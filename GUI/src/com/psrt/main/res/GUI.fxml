@@ -86,7 +86,7 @@
                            </stops>
                         </LinearGradient>
                      </fill></Rectangle>
-                  <Label id="x6F4_fp_1" layoutX="70.0" layoutY="58.0" prefHeight="91.0" prefWidth="232.0" text="76.0%">
+                  <Label id="x6F4_fp_1" layoutX="63.0" layoutY="58.0" prefHeight="91.0" prefWidth="232.0" text="76.0%">
                      <font>
                         <Font name="Arial" size="78.0" />
                      </font>

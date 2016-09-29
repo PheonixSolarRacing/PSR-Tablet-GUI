@@ -11,10 +11,10 @@ import com.artemis.ComponentMapper;
 import com.artemis.EntitySubscription;
 import com.psrt.containers.PDBCSVInfo;
 import com.psrt.containers.PDBID;
-import com.psrt.containers.PSRValue;
-import com.psrt.containers.PSRValue.PDBValueType;
-import com.psrt.containers.values.PSRFloatValue;
-import com.psrt.containers.values.PSRIntValue;
+import com.psrt.containers.PDBValue;
+import com.psrt.containers.PDBValue.PDBValueType;
+import com.psrt.containers.values.PDBFloatValue;
+import com.psrt.containers.values.PDBIntValue;
 import com.psrt.entities.components.DepositBox;
 import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextComponent;
@@ -261,13 +261,13 @@ import com.psrt.threads.SerialMonitor;
 						 byte[] data_bytes = subArray(bytes, pos + 2, 8);
 						 BMSTab.BMS_TREE(id, data_bytes, box);
 						 
-					 }else{ //PSRCan crap
+					 }else{ //PSRCAN crap
 						 int function = getFunction(bytes, pos);
 						 if(parse_debug) log("Function: " + function);
 						 
 						 for(int j = 1; j <= bank.getDictionary().numActiveEntries(); j++){
 							 PDBID identifier = new PDBID(id, function, j); 
-							 PSRValue value = null; 
+							 PDBValue value = null; 
 							 PDBCSVInfo csvInfo = bank.getDictionary().getParsedDictionary().get(identifier);
 							 if(csvInfo == null) continue;
 							 PDBValueType type = csvInfo.getType();
@@ -277,10 +277,10 @@ import com.psrt.threads.SerialMonitor;
 							 }
 							 if(type == PDBValueType.FLOAT){
 								 byte[] floatBytes = subArray(bytes, pos + csvInfo.startIndex(), 4);
-								 value = new PSRFloatValue(bytesToFloat(floatBytes, 0), floatBytes);
+								 value = new PDBFloatValue(bytesToFloat(floatBytes, 0), floatBytes);
 								 //log("FloatValue: " + value.getValue());
 							 }else if(type == PDBValueType.BYTE){
-								 value = new PSRIntValue(bytes[csvInfo.startIndex()] + 128, subArray(bytes, pos + csvInfo.startIndex(), 1));
+								 value = new PDBIntValue(bytes[csvInfo.startIndex()] + 128, subArray(bytes, pos + csvInfo.startIndex(), 1));
 								 //log("ByteValue: " + (bytes[csvInfo.startIndex()] + 128));
 								 //log("ByteValue: " + (value.getValue().intValue()));
 							 }
