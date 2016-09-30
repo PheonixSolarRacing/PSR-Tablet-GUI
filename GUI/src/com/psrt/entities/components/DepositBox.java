@@ -21,7 +21,7 @@ public class DepositBox {
 	//@SuppressWarnings("rawtypes")
 	public DepositBox(int size){
 		//box = new ArrayListValuedHashMap<CanID, CanValue>();
-		box = new HashMap<AbstractID, AbstractValue>(10);
+		box = new HashMap<AbstractID, AbstractValue>(size);
 		lock = new StampedLock();
 	}
 	

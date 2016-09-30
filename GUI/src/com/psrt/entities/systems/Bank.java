@@ -30,7 +30,7 @@ public class Bank {
 	DictionaryParser dictionary;
 	
 	public Bank(DictionaryParser dictionary){
-		boxes = new ArrayBlockingQueue<DepositBox>(500);
+		boxes = new ArrayBlockingQueue<DepositBox>(256);
 		lock = new StampedLock();
 		this.dictionary = dictionary;
 	}

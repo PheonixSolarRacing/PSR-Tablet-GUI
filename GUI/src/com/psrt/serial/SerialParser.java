@@ -245,7 +245,7 @@ import com.psrt.threads.SerialMonitor;
 				 int messages = bytes.length / 10;
 				 if(parse_debug) log("Num messages: " + messages); 
 				 
-				 DepositBox box = new DepositBox();
+				 DepositBox box = new DepositBox(messages);
 				 
 				 for(int i = 0; i < messages; i++){
 					 String reference = "-1";
