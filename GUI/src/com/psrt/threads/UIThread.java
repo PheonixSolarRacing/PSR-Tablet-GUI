@@ -81,7 +81,7 @@ public class UIThread implements Runnable{
         	if(id.contains("tab")){
         		Node c = t.getContent();
         		if(c.getId().contains("anchor")){
-        			AnchorPane ap = (AnchorPane)c;
+        			AnchorPane ap = (AnchorPane) c;
         			
         			ObservableList<Node> children = ap.getChildren();
         			for(int j = 0; j < children.size(); j++){

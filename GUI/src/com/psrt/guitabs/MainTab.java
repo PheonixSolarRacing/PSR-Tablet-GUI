@@ -2,6 +2,7 @@ package com.psrt.guitabs;
 
 import com.artemis.Entity;
 import com.artemis.EntityEdit;
+import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextComponent;
 import com.psrt.threads.UIThread;
 
@@ -10,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 
 public class MainTab {
@@ -40,5 +42,18 @@ public class MainTab {
 				th.getPrimaryStage().setFullScreen(!th.getPrimaryStage().isFullScreen());
 			}
 		});
+	}
+	
+	public static void test_label(com.artemis.World world, Node n){
+		Entity e = world.createEntity();
+		EntityEdit edit = e.edit();
+		edit.add(new TextComponent("NA", "test_label", (Label) n));
+		
+	}
+	
+	public static void test_bar(com.artemis.World world, Node n){
+		Entity e = world.createEntity();
+		EntityEdit edit = e.edit();
+		edit.add(new ProgressComponent(0.0d, "test_bar", (ProgressBar) n));
 	}
 }

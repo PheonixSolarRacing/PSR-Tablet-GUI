@@ -5,6 +5,12 @@ public class PDBID extends AbstractID{
 	public int function;
 	public int entry;
 	
+	/**
+	 * 
+	 * @param id - Identifier associated with the function. Given by the PSRCAN dictionary entry.
+	 * @param function
+	 * @param entry
+	 */
 	public PDBID(int id, int function, int entry){
 		super(id, ID_TYPE.PDB);
 		this.id = id;

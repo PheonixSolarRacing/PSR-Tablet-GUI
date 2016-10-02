@@ -69,6 +69,12 @@ public class ValueFactory {
 		World world = main.getWorld();
 		if(n.getId() != null){ //Example of retrieving all elements automatically... Could be easier? Hmm
 			switch (n.getId()){
+				case "test_label":
+					MainTab.test_label(world, n);
+					break;
+				case "test_bar":
+					MainTab.test_bar(world, n);
+					break;
 				case "battery_1_voltage":
 					PDBTab.battery_1_voltage(world, n);
 					break;

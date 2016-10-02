@@ -261,7 +261,7 @@ import com.psrt.threads.SerialMonitor;
 						 byte[] data_bytes = subArray(bytes, pos + 2, 8);
 						 BMSTab.BMS_TREE(id, data_bytes, box);
 						 
-					 }else{ //PSRCAN crap
+					 }else{ //PDBCAN crap
 						 int function = getFunction(bytes, pos);
 						 if(parse_debug) log("Function: " + function);
 						 
