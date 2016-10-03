@@ -200,9 +200,17 @@ public class Main extends Application{
 							if(tc.getReference().equals("SOC_Label")){
 								//tc.setValue(ticks * 2 + "%");
 							}
+							if(tc.getReference().equals("test_label")){
+								tc.setValue(""+ ticks * 2);
+							}
+							
+							
 						}else if(pc != null){
 							if(pc.getReference().equals("soc_indicator")){
 								//pc.setValue((double) ticks / 50);
+							}
+							if(pc.getReference().equals("test_bar")){
+								pc.setValue((double) ticks / 50);
 							}
 						}else if(ic != null){
 							if(ic.getReference().equals("x6F7_u8_0_x08")){
@@ -214,6 +222,7 @@ public class Main extends Application{
 								}
 							}
 						}
+						
 					}
 				}
 				if(ticks > 50) ticks = 0;

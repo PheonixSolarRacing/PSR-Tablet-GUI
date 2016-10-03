@@ -12,7 +12,7 @@ import java.util.List;
 import com.opencsv.CSVReader;
 import com.psrt.containers.PDBCSVInfo;
 import com.psrt.containers.PDBID;
-import com.psrt.containers.PSRValue.PDBValueType;
+import com.psrt.containers.PDBValue.PDBValueType;
 import com.psrt.main.Main;
 
 public class DictionaryParser {

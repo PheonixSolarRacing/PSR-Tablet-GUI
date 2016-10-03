@@ -5,7 +5,7 @@ import java.util.concurrent.locks.StampedLock;
 
 import com.psrt.containers.AbstractID;
 import com.psrt.containers.AbstractValue;
-import com.psrt.containers.PSRValue;
+import com.psrt.containers.PDBValue;
 
 
 public class DepositBox {
@@ -21,7 +21,7 @@ public class DepositBox {
 	//@SuppressWarnings("rawtypes")
 	public DepositBox(int size){
 		//box = new ArrayListValuedHashMap<CanID, CanValue>();
-		box = new HashMap<AbstractID, AbstractValue>(10);
+		box = new HashMap<AbstractID, AbstractValue>(size);
 		lock = new StampedLock();
 	}
 	
@@ -40,7 +40,7 @@ public class DepositBox {
 	
 	/**
 	 * Gets the value out of the box based on the given key. This is allowed to 
-	 * return a <b>null</b> {@link PSRValue} in the case that the value isn't found or given that the
+	 * return a <b>null</b> {@link PDBValue} in the case that the value isn't found or given that the
 	 * box is currently being accessed (usually written to) by another thread
 	 * 
 	 * @param key - Key to unlock the box and get the value

@@ -111,15 +111,4 @@ public class SerialMonitor  {
 			 System.out.println(s);
 		 }
 	 }
-	 
-	 private static String formatHttpStream(String serverAddress, int serverPort) {
-	        StringBuilder sb = new StringBuilder(60);
-	        sb.append(":sout=#duplicate{dst=std{access=http,mux=ts,");
-	        sb.append("dst=");
-	        sb.append(serverAddress);
-	        sb.append(':');
-	        sb.append(serverPort);
-	        sb.append("}}");
-	        return sb.toString();
-	    }
 }

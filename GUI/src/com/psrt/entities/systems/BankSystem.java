@@ -50,6 +50,14 @@ public class BankSystem extends EntitySystem {
 		else{
 			IntBag b = sub.getEntities();
 			DepositBox box = bank.getTop();
+			
+			/*
+			 * Note here: Needing to cycle through each entity against every HashMap of data that comes through
+			 * sucks and is inefficient.  However, if I used only one HashMap total it would have to be constantly cleared and recreated anyway.
+			 * Also, behavior is undefined if the HashMaps were allowed to contain data from multiple data packets, since there could be multiple pieces
+			 * of data that refer to the same GUI object (multiple datas with the same key-hash combo). Which would be recieved? For now, this is probably the best solution. 
+			 */
+			
 			for(int i = 0; i < b.size(); i++){
 				if(box != null) process(b.get(i), box);
 				else {

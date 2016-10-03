@@ -1,6 +1,6 @@
 package com.psrt.containers;
 
-import com.psrt.containers.PSRValue.PDBValueType;
+import com.psrt.containers.PDBValue.PDBValueType;
 
 public class PDBCSVInfo {
 	PDBValueType type;

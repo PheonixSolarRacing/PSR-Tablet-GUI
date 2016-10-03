@@ -1,6 +1,6 @@
 package com.psrt.containers;
 
-public abstract class PSRValue<V extends Number> extends AbstractValue{
+public abstract class PDBValue<V extends Number> extends AbstractValue{
 	public static enum PDBValueType{
 		FLOAT,
 		BYTE,
@@ -10,7 +10,7 @@ public abstract class PSRValue<V extends Number> extends AbstractValue{
 	//protected byte[] bytes;
 	protected V value;
 	
-	public PSRValue(PDBValueType type, V value, byte[] bytes){
+	public PDBValue(PDBValueType type, V value, byte[] bytes){
 		super(bytes);
 		this.type = type;
 		this.value = value;
