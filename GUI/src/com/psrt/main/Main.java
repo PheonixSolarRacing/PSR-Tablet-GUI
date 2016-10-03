@@ -97,6 +97,7 @@ public class Main extends Application{
 		}
     }
     
+    //Hello
     private void loadResources(){
     	imageHolder.loadImage("res/images/battery_images/Green Light Medium.png", "green_light");
     	imageHolder.loadImage("res/images/battery_images/Red Light Medium.png", "red_light");
