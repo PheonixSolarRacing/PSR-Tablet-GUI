@@ -50,7 +50,7 @@ public class UIThread implements Runnable{
 		this.world = world;
 		
 		this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Tablet Telemetry GUI v1.7");
+        this.primaryStage.setTitle("Tablet Telemetry GUI v1.7.3");
         try {
 			this.primaryStage.getIcons().add(new Image(Main.class.getResource("res/images/other/logo.png").openStream()));
 		} catch (IOException e) {
