@@ -7,8 +7,6 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
-import com.artemis.ComponentMapper;
-import com.artemis.EntitySubscription;
 import com.psrt.containers.PDBCSVInfo;
 import com.psrt.containers.PDBID;
 import com.psrt.containers.PDBValue;
@@ -16,11 +14,7 @@ import com.psrt.containers.PDBValue.PDBValueType;
 import com.psrt.containers.values.PDBFloatValue;
 import com.psrt.containers.values.PDBIntValue;
 import com.psrt.entities.components.DepositBox;
-import com.psrt.entities.components.ProgressComponent;
-import com.psrt.entities.components.TextComponent;
-import com.psrt.entities.components.TimingComponent;
 import com.psrt.entities.systems.Bank;
-import com.psrt.entities.systems.ValueSystem;
 import com.psrt.guitabs.BMSTab;
 import com.psrt.threads.SerialMonitor;
 
@@ -47,40 +41,59 @@ import com.psrt.threads.SerialMonitor;
 	 	 IS_MARKER,
 	 	 END_OF_BUFFER;
 	 }
-	 com.artemis.World world;
-	 ComponentMapper<TextComponent> tm;
-	 ComponentMapper<ProgressComponent> pm;
-	 ComponentMapper<TimingComponent> time;
+	 
+	 /*************************************
+	 			PRIVATE FIELDS
+	 **************************************/
+
 	 private CircularFifoQueue<Integer> internalBuffer;
 	 private CircularFifoQueue<byte[]> parseBuffer;
 	 
-	 ValueSystem v;
-	 EntitySubscription sub;
 	 
 	 private Bank bank;
 	 
-	 public SerialParser(com.artemis.World world, CircularFifoQueue<Integer> internalBuffer, Bank bank){
-		 this.world = world;
+	 /*************************************
+				PUBLIC FIELDS
+	 **************************************/
+	 public static final boolean SERIAL_PARSE_DEBUG = false;
+	 public static final boolean SERIAL_CUT_DEBUG = false;
+	 
+	 
+	 
+	 /**
+	  * Creates a new SerialParser instance.  These objects should be monitored within the SerialMonitor class (though there should
+	  * likely be only one instance of this).  It should also be given its own thread.  Overall, its two main functions are cutting
+	  * and parsing the serial data read into the {@link CircularFifoQueue} <b>internalBuffer</b> by another class, probably the closely-related
+	  * {@link SerialReader2} class.  
+	  * @param internalBuffer - buffer that will hold the data to be parsed/cut.
+	  * @param bank - {@link Bank} object for placing parsed data.
+	  */
+	 public SerialParser(CircularFifoQueue<Integer> internalBuffer, Bank bank){
 		 this.bank = bank;
 		 this.internalBuffer = internalBuffer;
 		 log("Initializing serialParser");
 		 initialize();
 	 }
 	 
+	 /**
+	  * Starts things going. Should be called in the constructor. 
+	  * <p> List of items also initialized here:</p>
+	  * <p><ul>
+	  * <li>{@link CircularFifoQueue} reference, parseBuffer
+	  * </ul></p>
+	  */
 	 private void initialize(){
 		 parseBuffer = new CircularFifoQueue<byte[]>(512);
-		 v = world.getSystem(ValueSystem.class);
-		 sub = v.getSubscription();
-		 tm = world.getMapper(TextComponent.class);
-		 pm = world.getMapper(ProgressComponent.class);
-		 time = world.getMapper(TimingComponent.class);
 	 }
-	 //---------------------------
+	 
+		
+	 /**************************************************************************
+									BYTE ARRAY CUTTING
+	 ***************************************************************************/
+	 
 	 int m1 = -1;
 	 int m2 = -1;
 	 int index = 0;
-	 
-	 boolean cut_debug = false;
 	 
 	 /**
 	  * Attempts to cuts the serial data lying in the internalBuffer. 
@@ -88,47 +101,45 @@ import com.psrt.threads.SerialMonitor;
 	  */
 	 public void cut(){
 		 //log("Frames in parseBuffer: " + parseBuffer.size());
-		 if(m1 != -1 && cut_debug) {
+		 if(SERIAL_CUT_DEBUG) {
 			 log("Mark1: " + m1);
-		 }
-		 if(m2 != -1 && cut_debug) {
 			 log("Mark2: " + m2);
 		 }
 		 if(!internalBuffer.isEmpty()){
 			 for(; true; ){
-				 if(cut_debug) {
+				 if(SERIAL_CUT_DEBUG) {
 					 log("Checking index: " + index);
 				 }
 				 MarkerState mark1 = marker(internalBuffer, index);
 				 if(mark1 == MarkerState.END_OF_BUFFER) {
-					 if(cut_debug) {
+					 if(SERIAL_CUT_DEBUG) {
 						 log("End of buffer...");
 					 }
 					 //index++;
 					 break;
 				 }
 				 else if(mark1 == MarkerState.IS_MARKER) {
-					 if(cut_debug) {
+					 if(SERIAL_CUT_DEBUG) {
 						 print_range(index, index + 10);
 					 }
 					 if(m1 == -1) {
 						 m1 = index + 10;
-						 if(cut_debug) {
+						 if(SERIAL_CUT_DEBUG) {
 							 log("Found mark1 at " + m1);
 						 }
 						 index = m1;
 					 }
 					 else {
 						 m2 = index + 10;
-						 if(cut_debug) {
+						 if(SERIAL_CUT_DEBUG) {
 							 log("Found mark2 at " + m2);
 						 }
 						 int delta = (m2 - m1) - 10;
-						 if(cut_debug) {
+						 if(SERIAL_CUT_DEBUG) {
 							 log("M1: " + m1 + ", M2: " + m2 + " - delta: " + delta);
 						 }
 						 if(delta % 10 == 0){
-							 if(cut_debug) {
+							 if(SERIAL_CUT_DEBUG) {
 								 log("Adding byte array to parseBuffer of length " + delta);
 							 }
 							 byte[] temp = new byte[delta];
@@ -139,7 +150,7 @@ import com.psrt.threads.SerialMonitor;
 								 temp[i] = temp_byte;
 							 }
 							 parseBuffer.add(temp);
-							 if(cut_debug) log("Parsebuffer size; cut: " + parseBuffer.size());
+							 if(SERIAL_CUT_DEBUG) log("Parsebuffer size; cut: " + parseBuffer.size());
 							 for(int i = 0; i < m2 - 10; i++){
 								 internalBuffer.remove();
 							 }
@@ -147,7 +158,7 @@ import com.psrt.threads.SerialMonitor;
 							 m1 = 10;
 							 m2 = -1;
 						 }else{
-							 if(cut_debug) {
+							 if(SERIAL_CUT_DEBUG) {
 								 log("Data not a multiple of 10. Discarding frame.");
 							 }
 							 //delete index 0 through (m2 - 10)
@@ -162,14 +173,14 @@ import com.psrt.threads.SerialMonitor;
 				 }
 				 else if(mark1 == MarkerState.NOT_MARKER) {
 					 if(m1 == -1){
-						 if(cut_debug) {
+						 if(SERIAL_CUT_DEBUG) {
 							 log("Not found+pl: " + internalBuffer.poll());
 						 }else{
 							 internalBuffer.poll();
 						 }
 						 index = 0;
 					 }else{
-						 if(cut_debug) {
+						 if(SERIAL_CUT_DEBUG) {
 							 log("Not found+pk: " + internalBuffer.get(index));
 						 }
 						 index++;
@@ -196,7 +207,7 @@ import com.psrt.threads.SerialMonitor;
 			MarkerState status = MarkerState.NOT_MARKER;
 				try{
 					if(bytes.get(i)  == 0xFF){
-						if(cut_debug) log("Found FF, checking bytes...");
+						if(SERIAL_CUT_DEBUG) log("Found FF, checking bytes...");
 				 		if(bytes.get(i + 1) == 0xFF && 
 						   bytes.get(i + 2) == 0xFF &&
 						   bytes.get(i + 3) == 0xFF && 
@@ -222,10 +233,13 @@ import com.psrt.threads.SerialMonitor;
 				}
 			return status;
 		}
-
-	
-	 boolean parse_debug = false;
 	 
+	 
+		
+	 /**************************************************************************
+							10-BYTE PARSING AND PACKAGING
+	 ***************************************************************************/
+
 	 /**
 	  * Esta es muy complicado. 
 	  * Not really, I guess.
@@ -239,31 +253,31 @@ import com.psrt.threads.SerialMonitor;
 		 //if(parse_debug) log("Parsebuffer size: " + l);
 		 if(l > 0){
 			 byte[] bytes = parseBuffer.poll();
-			 if(parse_debug) print_array(bytes);
+			 if(SERIAL_PARSE_DEBUG) print_array(bytes);
 			 if(bytes != null){
 				 
 				 int messages = bytes.length / 10;
-				 if(parse_debug) log("Num messages: " + messages); 
+				 if(SERIAL_PARSE_DEBUG) log("Num messages: " + messages); 
 				 
 				 DepositBox box = new DepositBox(messages);
 				 
 				 for(int i = 0; i < messages; i++){
-					 String reference = "-1";
-					 String num = "null";
+					 //String reference = "-1";
+					 //String num = "null";
 					 int pos = i * 10;
 					 int id = getID(bytes, pos);
 					 
-					 if(parse_debug) log("ID: " + id);
+					 if(SERIAL_PARSE_DEBUG) log("ID: " + id);
 					 
 					 if(id >= 0x600 /*1536*/&& id <= 0x6FF /*1791*/){ //BMS Crap
-						 if(parse_debug) log("BMS ID found " + id);
+						 if(SERIAL_PARSE_DEBUG) log("BMS ID found " + id);
 						 
 						 byte[] data_bytes = subArray(bytes, pos + 2, 8);
 						 BMSTab.BMS_TREE(id, data_bytes, box);
 						 
 					 }else{ //PDBCAN crap
 						 int function = getFunction(bytes, pos);
-						 if(parse_debug) log("Function: " + function);
+						 if(SERIAL_PARSE_DEBUG) log("Function: " + function);
 						 
 						 for(int j = 1; j <= bank.getDictionary().numActiveEntries(); j++){
 							 PDBID identifier = new PDBID(id, function, j); 
@@ -271,7 +285,7 @@ import com.psrt.threads.SerialMonitor;
 							 PDBCSVInfo csvInfo = bank.getDictionary().getParsedDictionary().get(identifier);
 							 if(csvInfo == null) continue;
 							 PDBValueType type = csvInfo.getType();
-							 if(parse_debug) {
+							 if(SERIAL_PARSE_DEBUG) {
 								 log("SerialParser.parse() - CanID: ID = " + identifier.id + " | Function = " + identifier.function + " | Entry: " + identifier.entry + " | St. Index: " + csvInfo.startIndex());
 								 if(type == null) log("SerialParser.parse() - Type null");
 							 }
@@ -286,7 +300,7 @@ import com.psrt.threads.SerialMonitor;
 							 }
 							 if(value != null) {
 								 box.put(identifier, value);
-								 if(parse_debug) log("SerialParser.parse(): " + identifier.hashCode());
+								 if(SERIAL_PARSE_DEBUG) log("SerialParser.parse(): " + identifier.hashCode());
 							 }
 						 }
 					 }
@@ -295,26 +309,12 @@ import com.psrt.threads.SerialMonitor;
 			 }
 		 }
 	 }
+
 	 
-	 
-	 private void print_range(int start, int end){
-		 log("Printing range [" + start + ", " + end + "]: ");
-		 for(int i = start; i < end; i++){
-			 log("\t[" + i + "]: " + internalBuffer.get(i));
-		 }
-	 }
-	 
-	 public static void print_array(byte[] a){
-		 log("Printing out byte array: ");
-		 if(a != null){
-			 for(int i = 0; i < a.length; i++){
-				 log("\t[" + i + "]: " + a[i]);
-			 }
-		 }else{
-			 log("Byte array is null. skipping print");
-		 }
-	 }
-	 
+		
+	 /**************************************************************************
+								UTILITIES (BYTE ARRAY PARSING)
+	 ***************************************************************************/
 	 
 	 /**
 	  * GET THE FUNCTION DATA!!! Grabs the function data. Out of a 10 byte message, it should be the 2nd from the 0 position (index 2, in arrays)
@@ -339,7 +339,7 @@ import com.psrt.threads.SerialMonitor;
 		 int int_id1 = (id1 + 128) << 8; //0011 0000     \
 		 int id = int_id1 | (id2 + 128); //0011 1010 <-*
 		 //byte b_combo = (byte)combo;
-		 if(parse_debug){
+		 if(SERIAL_PARSE_DEBUG){
 			 log("ID1: " + id1);
 			 log("ID2: " + id2);
 			 log("int_id1: " + int_id1);
@@ -348,6 +348,11 @@ import com.psrt.threads.SerialMonitor;
 		return id;
 	}
 
+	
+	 /**************************************************************************
+								UTILITIES (BYTE MANIPULATION)
+	 ***************************************************************************/
+	
 	/**
 	 * Does what it says, though I have no idea if it works yet. Stay tuned
 	 * @param bytes
@@ -379,5 +384,37 @@ import com.psrt.threads.SerialMonitor;
 	 */
 	 public static float bytesToFloat(byte[] bytes, int index){
 		 return Float.intBitsToFloat(((bytes[index] + 128) << 24) | (((bytes[index + 1] + 128)) << 16) | (((bytes[index + 2] + 128)) << 8) | ((bytes[index + 3] + 128)));
+	 }
+	 
+	 
+	 /**************************************************************************
+	 							UTILITIES (DEBUG)
+	 ***************************************************************************/
+	 
+	 /**
+	  * Utility function for printing a range out of the {@link CircularFifoQueue} internalBuffer.
+	  * @param start
+	  * @param end
+	  */
+	 private void print_range(int start, int end){
+		 log("Printing range [" + start + ", " + end + "]: ");
+		 for(int i = start; i < end; i++){
+			 log("\t[" + i + "]: " + internalBuffer.get(i));
+		 }
+	 }
+	 
+	 /**
+	  * Utility function for printing arrays out in debug in a nice form.
+	  * @param a - byte array to print
+	  */
+	 public static void print_array(byte[] a){
+		 log("Printing out byte array: ");
+		 if(a != null){
+			 for(int i = 0; i < a.length; i++){
+				 log("\t[" + i + "]: " + a[i]);
+			 }
+		 }else{
+			 log("Byte array is null. skipping print");
+		 }
 	 }
  }

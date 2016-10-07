@@ -39,7 +39,7 @@ public class SerialMonitor  {
 		internalBuffer = new CircularFifoQueue<Integer>(1024);
 		
 		
-		sp = new SerialParser(world, internalBuffer, bank);
+		sp = new SerialParser(internalBuffer, bank);
 		Thread parser = new Thread("Serial Parsing"){
 			@Override
 			public void run(){

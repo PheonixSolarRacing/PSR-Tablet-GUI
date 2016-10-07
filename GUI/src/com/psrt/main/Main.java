@@ -74,13 +74,14 @@ public class Main extends Application{
         this.initAll(primaryStage);
     }
     
-    
     /**
      * <p>Initializes all the special stuff.  Here are the things that are initialized here:</p>
-     * <p>-{@link DictionaryParser}
-     * -{@link Bank}
-     * -{@link ImageHolder}
-     * -{@link ValueFactory}</p>
+     * <p><ul>
+     * <li>-{@link DictionaryParser}
+     * <li>-{@link Bank}
+     * <li>-{@link ImageHolder}
+     * <li>-{@link ValueFactory}
+     * </ul></p>
      * 
      * <p>Some other method calls for loading specific sections of code are also here:</p>
      * <p>loadResources(), initConfig(), initUIThread(), initSerialMonitor(), startThreads()</p>
@@ -125,7 +126,10 @@ public class Main extends Application{
 		}
     }
     
-    //Hello
+    /**
+     * Loads images into RAM (probably not very efficient, but it is faster than reading from disk) for access
+     * by the GUI elements.  Uses a hashmap structure {@link ImageHolder} for storage, placement, and retrieval of said images.
+     */
     private void loadResources(){
     	imageHolder.loadImage("res/images/battery_images/Green Light Medium.png", "green_light");
     	imageHolder.loadImage("res/images/battery_images/Red Light Medium.png", "red_light");
@@ -146,7 +150,6 @@ public class Main extends Application{
     	//add systems here...
     	world = new com.artemis.World(config);
 	}
-    
     
     /**
      * This initializes the UI thread but doesn't start running it (updating it). That's in {@link startThreads()}
@@ -234,7 +237,6 @@ public class Main extends Application{
     	//scheduler.scheduleAtFixedRate(entityThread, 30, 30, TimeUnit.MILLISECONDS);
 	}
 
-
 	/**
 	 * Send entity data from anywhere else to the UI thread.
 	 * @param e
@@ -270,6 +272,10 @@ public class Main extends Application{
     }
     
     
+    /***************************************************************************
+     * 								GETTERS
+     ***************************************************************************/
+    
     /**
      * 
      * @return {@link ImageHolder} (of which there should only be one instance)
@@ -280,7 +286,7 @@ public class Main extends Application{
     
     /**
      * 
-     * @return {@link ValueFactory} (of which there should only be one instance)
+     * @return The {@link ValueFactory} (of which there should only be one instance)
      */
     public ValueFactory getValueFactory(){
     	return this.valueFactory;
@@ -300,6 +306,4 @@ public class Main extends Application{
 	public synchronized World getWorld(){
 		return world;
 	}
-    
-    
 }
