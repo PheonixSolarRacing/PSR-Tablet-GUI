@@ -31,6 +31,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application{
 	
+	/*************************************
+				PRIVATE FIELDS
+	**************************************/	
 	private static Main main;
 	
     private com.artemis.World world;
@@ -39,25 +42,55 @@ public class Main extends Application{
     
     private SerialMonitor m;
     
-    public final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
-   
-    public static boolean DEBUG = false;
-    
-    public Bank bank;
-    
     private ImageHolder imageHolder;
     
     private ValueFactory valueFactory;
     
+
+    /*************************************
+				PUBLIC FIELDS
+ 	**************************************/	
+    public final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
+   
+    public static boolean DEBUG = false; //Note, all Global static (public static) variables should be in caps
     
-    public ImageHolder getImages(){
-    	return this.imageHolder;
+    public Bank bank;
+    
+    /**
+     * As in all Java programs, the code starts here.
+     * "launch(args);" Calls the JavaFX API and starts that magic.
+     * @param args
+     */
+    public static void main(String[] args) {  //Note: main should go at the top of the class
+    	System.out.println("Starting");
+        launch(args);
+        System.out.println("Clean exit");
     }
     
-    public ValueFactory getValueFactory(){
-    	return this.valueFactory;
+	/**
+     * Called by the JavaFX API after it's done with its magic.
+     * All I've got here is a call to the "Main" constructor and, after that, a call to a method which starts
+     * initializing the UI.
+     */
+    @Override
+    public void start(Stage primaryStage) {
+        Main.main = this;
+        this.initAll(primaryStage);
     }
     
+    /**
+     * <p>Initializes all the special stuff.  Here are the things that are initialized here:</p>
+     * <p><ul>
+     * <li>-{@link DictionaryParser}
+     * <li>-{@link Bank}
+     * <li>-{@link ImageHolder}
+     * <li>-{@link ValueFactory}
+     * </ul></p>
+     * 
+     * <p>Some other method calls for loading specific sections of code are also here:</p>
+     * <p>loadResources(), initConfig(), initUIThread(), initSerialMonitor(), startThreads()</p>
+     * @param primaryStage - {@link Stage} that the GUI is built on.
+     */
     private void initAll(Stage primaryStage){
     	String user_dir = System.getProperty("user.dir");
     	System.out.println(user_dir);
@@ -97,7 +130,10 @@ public class Main extends Application{
 		}
     }
     
-    //Hello
+    /**
+     * Loads images into RAM (probably not very efficient, but it is faster than reading from disk) for access
+     * by the GUI elements.  Uses a hashmap structure {@link ImageHolder} for storage, placement, and retrieval of said images.
+     */
     private void loadResources(){
     	imageHolder.loadImage("res/images/battery_images/Green Light Medium.png", "green_light");
     	imageHolder.loadImage("res/images/battery_images/Red Light Medium.png", "red_light");
@@ -105,40 +141,6 @@ public class Main extends Application{
     	imageHolder.loadImage("res/images/battery_images/Off Light Medium.png", "off_light");
     	imageHolder.loadImage("res/images/battery_images/relay on.png", "relay_on");
     	imageHolder.loadImage("res/images/battery_images/relay off.png", "relay_off");
-    }
-
-    private void initSerialMonitor() {
-    	m = new SerialMonitor(this.world, bank);
-	}
-
-	/**
-     * Get this class, which there should only be one instance of in existence.
-     * @return the Main object
-     */
-	public synchronized static Main getMain(){
-    	return main;
-    }
-	
-	/**
-	 * @return the Entity system's controller, world. 
-	 */
-	public synchronized World getWorld(){
-		return world;
-	}
-    
-	/**
-	 * Send entity data from anywhere else to the UI thread.
-	 * @param e
-	 */
-    public synchronized void sendToUI(Entity e){
-    	try {
-    		if(uiThread != null)
-    			uiThread.inject(e);
-    		else
-    			System.out.println("Main: UIThread not initialized. Can't pass data from " + e.toString());
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
     }
     
     /**
@@ -160,6 +162,12 @@ public class Main extends Application{
     private void initUIThread(Stage primaryStage){
     	uiThread = new UIThread(primaryStage, world, this);
     }
+    
+
+    private void initSerialMonitor() {
+    	m = new SerialMonitor(bank);
+	}
+
     /**
      * Starts everything up, really. Probably starting the UI and backend (serial) threads. Who knows
      */
@@ -234,16 +242,20 @@ public class Main extends Application{
 	}
 
 	/**
-     * Called by the JavaFX API after it's done with its magic.
-     * All I've got here is a call to the "Main" constructor and, after that, a call to a method which starts
-     * initializing the UI.
-     */
-    @Override
-    public void start(Stage primaryStage) {
-        Main.main = this;
-        this.initAll(primaryStage);
+	 * Send entity data from anywhere else to the UI thread.
+	 * @param e
+	 */
+    public synchronized void sendToUI(Entity e){
+    	try {
+    		if(uiThread != null)
+    			uiThread.inject(e);
+    		else
+    			System.out.println("Main: UIThread not initialized. Can't pass data from " + e.toString());
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
     }
-    
+  
     /**
      * Called when the GUI is closed.  Right now it is used to close the ThreadPoolExecutor which is running different threads. 
      * It also closes down the serial monitor and ports.
@@ -262,15 +274,40 @@ public class Main extends Application{
     	}
     	m.close();
     }
-
+    
+    
+    /***************************************************************************
+     * 								GETTERS
+     ***************************************************************************/
+    
     /**
-     * As in all Java programs, the code starts here.
-     * "launch(args);" Calls the JavaFX API and starts that magic.
-     * @param args
+     * 
+     * @return {@link ImageHolder} (of which there should only be one instance)
      */
-    public static void main(String[] args) {
-    	System.out.println("Starting");
-        launch(args);
-        System.out.println("Clean exit");
+    public ImageHolder getImages(){
+    	return this.imageHolder;
     }
+    
+    /**
+     * 
+     * @return The {@link ValueFactory} (of which there should only be one instance)
+     */
+    public ValueFactory getValueFactory(){
+    	return this.valueFactory;
+    }
+    
+	/**
+     * Get this class, which there should only be one instance of in existence.
+     * @return the Main object
+     */
+	public synchronized static Main getMain(){
+    	return main;
+    }
+	
+	/**
+	 * @return the Entity system's controller, {@link com.artemis.World} 
+	 */
+	public synchronized World getWorld(){
+		return world;
+	}
 }

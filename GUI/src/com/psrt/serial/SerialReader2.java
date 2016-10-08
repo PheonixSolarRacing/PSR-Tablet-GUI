@@ -4,6 +4,8 @@ import static com.psrt.threads.SerialMonitor.log;
 
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
+import com.psrt.threads.SerialMonitor;
+
 import jssc.SerialPortException;
 
 /**
@@ -19,19 +21,20 @@ import jssc.SerialPortException;
  *
  */
 public class SerialReader2 {
+	
+	/*************************************
+				PRIVATE FIELDS
+	**************************************/	
+	 private CircularFifoQueue<Integer> internalBuffer;
+	
+    /*************************************
+				PUBLIC FIELDS
+ 	**************************************/		 
 	 public jssc.SerialPort seport;
 	 public SerialParser sp;
-	 
-	 private CircularFifoQueue<Integer> internalBuffer;
-	 
 	 public long lastUpdate;
 	 //public long updateDelta = 0;
-
-//	 private final String PORT_NAMES[] = {                 
-//		"/dev/tty.usbserial-A9007UX1", // Mac OS X
-//     	"/dev/ttyUSB0", // Linux
-//     	"COM6" // Windows
-//	 };
+	 
 	 
 	 public SerialReader2(SerialParser sp, CircularFifoQueue<Integer> internalBuffer){
 		 this.sp = sp;
@@ -88,7 +91,7 @@ public class SerialReader2 {
 	 private boolean hasMarker(){
 		 try {
 			if(seport.getInputBufferBytesCount() > 0){
-				 byte[] b = seport.readBytes(500);
+				 byte[] b = seport.readBytes(SerialMonitor.MAX_CHECK_SIZE);
 				 
 				 for(int i = 0; i < b.length; i++){
 					 if(marker_bytes(b, i)){
@@ -141,6 +144,12 @@ public class SerialReader2 {
 		 }
 	 }
 	 
+	 
+	 
+	 /**************************************************************************
+									UTILITIES (Byte interpretation)
+	 ***************************************************************************/
+	
 	 /**
 	 * Does what it says. But it turns the byte into an int. Java doesn't have unsigned bytes. Wow
 	 * @param b
