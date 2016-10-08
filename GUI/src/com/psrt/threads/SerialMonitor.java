@@ -7,19 +7,24 @@ import com.psrt.serial.SerialParser;
 import com.psrt.serial.SerialReader2;
 
 public class SerialMonitor  {
+	
+	/*************************************
+				PRIVATE FIELDS
+	**************************************/	
 	private SerialReader2 sr; //Reads and cuts serial; sort of
 	private SerialParser sp; //Cuts and parses serial. there's some overlap with the reader
 	private CircularFifoQueue<Integer> internalBuffer;
-	private com.artemis.World world;
-	
-	
 	private boolean running = false;
-	public static final int MAX_CHECK_SIZE = 1000;
+	
+    /*************************************
+				PUBLIC FIELDS
+ 	**************************************/		
+	public static final int MAX_CHECK_SIZE = 500;
 	public static final int TIMEOUT = 1500;
 	
 	public static Object lock = new Object();
 	
-	private Bank bank;
+	
 	/*/
 	 * Possible error states:
 	 * -All 0 bytes : ?
@@ -29,16 +34,14 @@ public class SerialMonitor  {
 	 */
 
 	/**
-	 * Class for holding all serial crap. Reading, cutting, parsing, etc. Monitors everything and handles all threads.  (Of which there should be 2)
+	 * Class for holding all serial crap. Reading, cutting, parsing, etc. Monitors everything and handles all serial threads.  (Of which there should be 2)
 	 * Ideally there should only be one instance of this class.
 	 */
-	public SerialMonitor(com.artemis.World world, Bank bank){
+	public SerialMonitor(Bank bank){
 		log("Serial monitor started.");
-	    this.world = world;
-	    this.bank = bank;
 		internalBuffer = new CircularFifoQueue<Integer>(1024);
 		
-		
+		//Parse and organize data
 		sp = new SerialParser(internalBuffer, bank);
 		Thread parser = new Thread("Serial Parsing"){
 			@Override
@@ -56,6 +59,7 @@ public class SerialMonitor  {
 		};
 		parser.setDaemon(true);
 		parser.start();
+		
 		//Read and cut data
 		Thread reader = new Thread("SerialReader"){
 			@Override
@@ -78,7 +82,6 @@ public class SerialMonitor  {
 						try {
 							Thread.sleep(100);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -87,7 +90,6 @@ public class SerialMonitor  {
 			}
 		};
 		
-		reader.setDaemon(true);
 		reader.start();
 		
 		running = true;

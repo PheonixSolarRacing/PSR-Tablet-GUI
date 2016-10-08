@@ -31,7 +31,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application{
 	
-	//Private Fields
+	/*************************************
+				PRIVATE FIELDS
+	**************************************/	
 	private static Main main;
 	
     private com.artemis.World world;
@@ -45,7 +47,9 @@ public class Main extends Application{
     private ValueFactory valueFactory;
     
 
-    //Public Fields
+    /*************************************
+				PUBLIC FIELDS
+ 	**************************************/	
     public final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
    
     public static boolean DEBUG = false; //Note, all Global static (public static) variables should be in caps
@@ -161,7 +165,7 @@ public class Main extends Application{
     
 
     private void initSerialMonitor() {
-    	m = new SerialMonitor(this.world, bank);
+    	m = new SerialMonitor(bank);
 	}
 
     /**
