@@ -4,10 +4,10 @@ This is the repo for the GUI on the PSR Windows 10 tablet, written entirely in J
 ------------------------
 
 3rd Party Libraries and API's used in this project: 
-* JSSC (Java Simple Serial Connector) v2.7
-* Apache Commons API v4.1
-* OpenCSV v3.7
-* Artemis-odb v0.12.1
+* [JSSC (Java Simple Serial Connector) v2.7](https://github.com/scream3r/java-simple-serial-connector)
+* [Apache Commons API v4.1](https://commons.apache.org/)
+* [OpenCSV v3.7](http://opencsv.sourceforge.net/)
+* [Artemis-odb v0.12.1](https://github.com/junkdog/artemis-odb)
 * Webcam-capture API v0.3.10
 
 ------------------------
