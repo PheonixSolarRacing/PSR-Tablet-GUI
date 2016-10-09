@@ -15,20 +15,39 @@ import com.psrt.containers.PDBID;
 import com.psrt.containers.PDBValue.PDBValueType;
 import com.psrt.main.Main;
 
+/**
+ * Class for interpreting the PSRCAN dictionary .csv file.  Uses the data from there to help the SerialParser know where data is assigned.
+ * @author Austin Dibble
+ *
+ */
 public class DictionaryParser {
-	String csvFile;
-	HashMap<PDBID, PDBCSVInfo> directory;
-	CSVReader reader;
-	int num_entries_active;
 	
-	boolean debug = true;
+	/*************************************
+	            PRIVATE FIELDS
+	**************************************/	
+	private InputStream stream;
+	private String csvFile;
+	private HashMap<PDBID, PDBCSVInfo> directory;
+	private CSVReader reader;
 	
+	private int num_entries_active;
+	private boolean debug = true;
+	
+	
+	
+	/*************************************
+	             PUBLIC FIELDS
+	**************************************/	
 	public static final String CAN_ID_STRING = "CAN ID";
 	public static final String CAN_FUNCTION_STRING = "Function";
 	public static final String CAN_ENTRY_STRING = "Entry";
 	
-	private InputStream stream;
-	
+	/**
+	 * This constructor takes in a String that gives the path relative to the {@link Main} class in the file system where the dictionary file resides. 
+	 * @param csvFile
+	 * @throws FileNotFoundException
+	 * @throws URISyntaxException
+	 */
 	public DictionaryParser(String csvFile) throws FileNotFoundException, URISyntaxException{
 		this.csvFile = csvFile;
 		this.num_entries_active = -1;
@@ -37,12 +56,17 @@ public class DictionaryParser {
 		reader = new CSVReader(new InputStreamReader(stream));
 	}
 	
+	/**
+	 * This function uses an algorithm and the {@link CSVReader} to attach information to each {@link PDBID} by using each PDBID as a key and each
+	 * {@link PDBCSVInfo} as the value in a {@link HashMap}.  The PDBCSVInfo holds information about the type of data and start of the data in the
+	 * data frame in {@link SerialParser#parse()}
+	 */
 	public void parseDictionary(){
 		
 		int id_col = -1;
 		int function_col = -1;
 		int header_row = -1;
-		//int num_entries = -1;
+
 		List<String[]> lines = null;
 		try {
 			lines = reader.readAll();

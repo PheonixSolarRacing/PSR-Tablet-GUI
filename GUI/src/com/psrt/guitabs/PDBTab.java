@@ -22,7 +22,7 @@ public class PDBTab {
 	public static void battery_1_voltage(com.artemis.World world, Node n){
 		Entity e2 = world.createEntity();
 		EntityEdit edit2 = e2.edit();
-		edit2.add(new TextComponent("NA", "battery_1_voltage", (Label) n, timeout, "v"));
+		edit2.add(new TextComponent("NA", "battery_1_voltage", (Label) n, timeout, "V"));
 		edit2.add(new PDBID(1, 0, 1));
 	}
 	
@@ -30,19 +30,19 @@ public class PDBTab {
 		Entity e = MyEntityFactory.createEntity(world, n, ElementType.Label, "NA", "battery_2_voltage", timeout);
 		MyEntityFactory.addID(e, 1, 1, 1);
 		//MyEntityFactory.addTimer(e, timeout);
-		MyEntityFactory.addSuffix(world, e, "v");
+		MyEntityFactory.addSuffix(world, e, "V");
 	}
 	
 	public static void battery_3_voltage(com.artemis.World world, Node n){
 		Entity e = MyEntityFactory.createEntity(world, n, ElementType.Label, "NA", "battery_3_voltage", timeout);
 		MyEntityFactory.addID(e, 1, 2, 1);
-		MyEntityFactory.addSuffix(world, e, "v");
+		MyEntityFactory.addSuffix(world, e, "V");
 	}
 	
 	public static void battery_4_voltage(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "battery_4_voltage", (Label) n, timeout, "v"));
+		edit.add(new TextComponent("NA", "battery_4_voltage", (Label) n, timeout, "V"));
 		edit.add(new PDBID(1, 3, 1));
 	}
 	
@@ -56,13 +56,13 @@ public class PDBTab {
 	public static void dc_to_dc_voltage(com.artemis.World world, Node n){
 		Entity e = MyEntityFactory.createEntity(world, n, ElementType.Label, "NA", "dc_to_dc_voltage", timeout);
 		MyEntityFactory.addID(e, 1, 4, 1);
-		MyEntityFactory.addSuffix(world, e, "v");
+		MyEntityFactory.addSuffix(world, e, "V");
 	}
 	
 	public static void dc_to_dc_current(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "dc_to_dc_voltage", (Label) n, timeout, "A"));
+		edit.add(new TextComponent("NA", "dc_to_dc_voltage", (Label) n, timeout, "V"));
 		edit.add(new PDBID(1, 6, 1));
 	}
 	
@@ -103,8 +103,8 @@ public class PDBTab {
 	public static void output_5_current(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		//edit.add(new TextComponent("NA", "output_5_current", (Label) n, timeout, "A"));
-		//edit.add(new CanID(1, 12, 1));
+		edit.add(new TextComponent("NA", "output_5_current", (Label) n, timeout, "A"));
+		edit.add(new PDBID(1, 12, 1));
 	}
 
 	public static void output_6_current(World world, Node n) {

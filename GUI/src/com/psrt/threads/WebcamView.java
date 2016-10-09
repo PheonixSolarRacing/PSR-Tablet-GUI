@@ -31,7 +31,7 @@ public class WebcamView {
 	private class WebCamInfo {
 		private String webCamName;
 		private int webCamIndex;
-		private Dimension[] dimensions;
+		//private Dimension[] dimensions;
 
 		public String getWebCamName() {
 			return webCamName;
@@ -48,9 +48,9 @@ public class WebcamView {
 		public void setWebCamIndex(int webCamIndex) {
 			this.webCamIndex = webCamIndex;
 		}
-		public void setDimensions(Dimension[] dimensions){ this.dimensions = dimensions;}
+		//public void setDimensions(Dimension[] dimensions){ this.dimensions = dimensions;}
 		
-		public Dimension[] getDimensions(){return this.dimensions;}
+		//public Dimension[] getDimensions(){return this.dimensions;}
 
 		@Override
 		public String toString() {
@@ -155,7 +155,7 @@ public class WebcamView {
 			System.out.println("Cams: " + webCamInfo.webCamName);
 			webCamInfo.setWebCamIndex(webCamCounter);
 			webCamInfo.setWebCamName(webcam.getName());
-			webCamInfo.setDimensions(webcam.getViewSizes());
+			//webCamInfo.setDimensions(webcam.getViewSizes());
 			options.add(webCamInfo);
 			webCamCounter++;
 		}
@@ -289,7 +289,7 @@ public class WebcamView {
 		stopCamera = false;
 		Task<Void> task = new Task<Void>() {
 			
-			long ticks = 0;
+			//long ticks = 0;
 
 			@Override
 			protected Void call() throws Exception {
