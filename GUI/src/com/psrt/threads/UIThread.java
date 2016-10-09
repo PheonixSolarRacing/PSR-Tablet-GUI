@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.World;
-import com.psrt.entities.components.ProgressComponent;
-import com.psrt.entities.components.TextComponent;
 import com.psrt.entities.components.ValueComponent;
 import com.psrt.guitabs.factories.ValueFactory;
 import com.psrt.main.Main;
@@ -24,10 +21,19 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+/**
+ * Class for handling updating the GUI interface.  Other classes place entities in queue for pushing
+ * to the UI thread.
+ * @author Austin Dibble
+ */
 public class UIThread implements Runnable{
 	
-	BlockingQueue<Entity> entityQueue;
-	World world;
+	
+	/*************************************
+                PRIVATE FIELDS
+	**************************************/		
+	private BlockingQueue<Entity> entityQueue;
+	private World world;
 	
 	private Stage primaryStage;
     private TabPane tabOverview;
@@ -35,8 +41,13 @@ public class UIThread implements Runnable{
     
     private Main main;
     
-    ComponentMapper<TextComponent> tm;
-    ComponentMapper<ProgressComponent> pm;
+	/*************************************
+				PUBLIC FIELDS
+	**************************************/	
+    
+    
+    
+    
 	
     /**
      * UIThread runs all the updating GUI elements. It receives entities from around the program and puts them to the UI.
@@ -58,9 +69,6 @@ public class UIThread implements Runnable{
 		}
         
         this.main = main;
-        
-        tm = world.getMapper(TextComponent.class);
-        pm = world.getMapper(ProgressComponent.class);
         
         loadGUI();
         
@@ -93,10 +101,7 @@ public class UIThread implements Runnable{
         	}
         }
 	}	
-	
-	public TabPane getRoot(){
-		return this.tabOverview;
-	}
+
     /**
      * Shows the tab overview inside the root layout.
      */
@@ -109,8 +114,6 @@ public class UIThread implements Runnable{
             
             // Set person overview into the center of root layout.
 //            rootLayout.setCenter(tabOverview);
-
-            
             mainScene = new Scene(tabOverview);
             primaryStage.setScene(mainScene);
 //          //primaryStage.setFullScreen(true);
@@ -123,31 +126,16 @@ public class UIThread implements Runnable{
         }
     }
 
-    /**
-     * Returns the main stage.
-     * @return
-     */
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-	
-	
-	public synchronized void inject(Entity e) throws InterruptedException{
-		entityQueue.put(e);
-	}
-	
-	public synchronized Entity pull() throws InterruptedException{
-		return entityQueue.poll();
-	}
-	
-	
-	//private Service<Void> backgroundThread;
-	
+	/**
+	 * Overriden from {@link Thread#run()}.  With each call to run() on the thread, this function
+	 * updates all entities on the update queue.
+	 */
 	@Override
 	public void run() {
 		//temporary
 		world.process(); //Runs all the data for the entity system. Should always be pretty fast.
 		
+		//A better way to do this with JavaFX Service's exists. But this works for now.
 		if(entityQueue.size() > 0){ //sends entity data to GUI!
 			Platform.runLater(new Runnable(){
 				@Override
@@ -157,7 +145,6 @@ public class UIThread implements Runnable{
 					for(int i = 0; i < num; i++){
 						Entity e = null;
 		        		try {
-		        			
 		        			e = pull();
 		        		} catch (InterruptedException e1) {
 		        			e1.printStackTrace();
@@ -176,4 +163,48 @@ public class UIThread implements Runnable{
 	        });	
 		}
 	}
+	
+	/**************************************************************************
+                                  UTILITIES (Queue Accessors)
+	***************************************************************************/
+
+
+    /**
+     * Puts entity into update queue for GUI retrieval.  This method is synchronized. 
+     * See {@link BlockingQueue#poll()}
+     * @param e - {@link Entity} to push onto queue.
+     * @throws InterruptedException
+     */
+	public synchronized void inject(Entity e) throws InterruptedException{
+		entityQueue.put(e);
+	}
+	
+	/**
+	 * Retrieves and removes the head of the queue of entities. See {@link BlockingQueue#poll()}
+	 * @return {@link Entity} 
+	 * @throws InterruptedException
+	 */
+	public synchronized Entity pull() throws InterruptedException{
+		return entityQueue.poll();
+	}
+	
+	
+    
+	
+    /***************************************************************************
+                                       GETTERS
+     ***************************************************************************/
+	
+    /**
+     * Returns the main stage.
+     * @return
+     */
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+	
+	public TabPane getRoot(){
+		return this.tabOverview;
+	}
+	
 }
