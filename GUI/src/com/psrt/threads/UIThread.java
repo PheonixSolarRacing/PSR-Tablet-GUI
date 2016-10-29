@@ -10,6 +10,7 @@ import com.artemis.World;
 import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextComponent;
 import com.psrt.entities.components.ValueComponent;
+import com.psrt.entities.systems.LogMonitor;
 import com.psrt.guitabs.factories.ValueFactory;
 import com.psrt.main.Main;
 
@@ -44,8 +45,9 @@ public class UIThread implements Runnable{
      * @param world - entity system's main controller, world
      */
 	public UIThread(Stage primaryStage, World world, Main main){
-		System.out.println("Initializing UIThread");
-		System.out.println("Launching UI");
+		//print("Initializing UIThread");
+		LogMonitor.log("test string", LogMonitor.LogType.UITHREAD);
+		LogMonitor.print("Launching UI");
 		entityQueue = new ArrayBlockingQueue<Entity>(1024);
 		this.world = world;
 		
@@ -54,7 +56,7 @@ public class UIThread implements Runnable{
         try {
 			this.primaryStage.getIcons().add(new Image(Main.class.getResource("res/images/other/logo.png").openStream()));
 		} catch (IOException e) {
-			System.out.println("Couldn't load icon.");
+			LogMonitor.print("Couldn't load icon.");
 		}
         
         this.main = main;
@@ -64,7 +66,7 @@ public class UIThread implements Runnable{
         
         loadGUI();
         
-        System.out.println("UIThread initialized.");
+        LogMonitor.print("UIThread initialized.");
         
         /*
          * Once the number of GUI elements gets out of hand (which will be soon) this process will hold the key to extracting and automating the 
@@ -73,11 +75,11 @@ public class UIThread implements Runnable{
          * But that could be done with a little naming magic, perhaps.
          */
         ObservableList<Tab> tabs = tabOverview.getTabs();
-        System.out.println("Tabs: " + tabs.size());
+        LogMonitor.print("Tabs: " + tabs.size());
         for(int i = 0; i < tabs.size(); i++){
         	Tab t = tabs.get(i);
         	String id = t.getId();
-        	System.out.println(id);
+        	LogMonitor.print(id);
         	if(id.contains("tab")){
         		Node c = t.getContent();
         		if(c.getId().contains("anchor")){
@@ -86,7 +88,7 @@ public class UIThread implements Runnable{
         			ObservableList<Node> children = ap.getChildren();
         			for(int j = 0; j < children.size(); j++){
         				Node n = children.get(j);
-        				System.out.println("\tAnchorPane[" + i + "]: ID: " + n.getId());
+        				LogMonitor.print("\tAnchorPane[" + i + "]: ID: " + n.getId());
         				ValueFactory.if_tree_of_doom(n, main, this);  //Oh the if hierarchies... This should only run once
         			}
         		}
@@ -168,7 +170,7 @@ public class UIThread implements Runnable{
 		        		if(e != null) v = main.getValueFactory().getValue(e);
 						
 		        		if(v != null) {
-		        			//System.out.println(v.getReference());
+		        			//print(v.getReference());
 		        			v.update();
 		        		}
 					}

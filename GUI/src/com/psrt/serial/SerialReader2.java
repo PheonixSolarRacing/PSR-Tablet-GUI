@@ -1,9 +1,10 @@
 package com.psrt.serial;
 
-import static com.psrt.threads.SerialMonitor.log;
+//import static com.psrt.threads.SerialMonitor.log;
 
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
+import com.psrt.entities.systems.LogMonitor;
 import com.psrt.threads.SerialMonitor;
 
 import jssc.SerialPortException;
@@ -39,10 +40,10 @@ public class SerialReader2 {
 	 public SerialReader2(SerialParser sp, CircularFifoQueue<Integer> internalBuffer){
 		 this.sp = sp;
 		 this.internalBuffer = internalBuffer;
-		 log("Opening serial reader.");
+		 LogMonitor.log("Opening serial reader.", LogMonitor.LogType.SERIAL_READER);
 		 findPort();
 		 lastUpdate = System.currentTimeMillis();
-		 log("Port opened.");
+		 LogMonitor.log("Port opened.", LogMonitor.LogType.SERIAL_READER);
 	 }
 	 
 	 public boolean findPort(){
@@ -51,16 +52,16 @@ public class SerialReader2 {
 		 if(portNames.length > 0){
 			 for(String port : portNames){
 				 if(!port.equals("COM3")){
-					 log("Port name: " + port);
+					 LogMonitor.log("Port name: " + port, LogMonitor.LogType.SERIAL_READER);
 					 seport = new jssc.SerialPort(port);
 					 
 					 if(validatePort()) break;
 				 }else{
-					 log("Got port 3. Skipping.");
+					 LogMonitor.log("Got port 3. Skipping.", LogMonitor.LogType.SERIAL_READER);
 				 }
 			 }
 		 }else{
-			 log("No ports...");
+			 LogMonitor.log("No ports...", LogMonitor.LogType.SERIAL_READER);
 		 }
 		return true;
 	 }
@@ -68,7 +69,7 @@ public class SerialReader2 {
 	 private boolean validatePort(){
 		 if(seport != null){
 			 try{
-				 log("Opening port");
+				 LogMonitor.log("Opening port", LogMonitor.LogType.SERIAL_READER);
 				 seport.openPort();
 				 seport.setParams(jssc.SerialPort.BAUDRATE_115200, 
                         jssc.SerialPort.DATABITS_8,
@@ -76,11 +77,11 @@ public class SerialReader2 {
                         jssc.SerialPort.PARITY_NONE);
 			 }catch(jssc.SerialPortException e){
 				 //e.printStackTrace();
-				 log("Couldn't open serial port...");
+				 LogMonitor.log("Couldn't open serial port...", LogMonitor.LogType.SERIAL_READER);
 				 return false;
 			 }
 		 }else{
-			 log("Serial port not found. Aborting");
+			 LogMonitor.log("Serial port not found. Aborting", LogMonitor.LogType.SERIAL_READER);
 			 return false;
 		 }
 		 
@@ -127,7 +128,7 @@ public class SerialReader2 {
 			}
 		} catch (SerialPortException e) {
 			e.printStackTrace();
-			log("Couldn't read data.");
+			LogMonitor.log("Couldn't read data.", LogMonitor.LogType.SERIAL_READER);
 		}
 		sp.cut();
 	 }
@@ -140,7 +141,7 @@ public class SerialReader2 {
 			if(seport != null) seport.closePort();
 		 } catch (SerialPortException e) {
 			//e.printStackTrace();
-			log("Couldn't close port.");
+			LogMonitor.log("Couldn't close port.", LogMonitor.LogType.SERIAL_READER);
 		 }
 	 }
 	 
