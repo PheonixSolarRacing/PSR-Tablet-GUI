@@ -61,7 +61,7 @@ public class BankSystem extends EntitySystem {
 			for(int i = 0; i < b.size(); i++){
 				if(box != null) process(b.get(i), box);
 				else {
-					if(debug) LogMonitor.print("Top box is null, ");
+					if(debug) LogMonitor.log("Top box is null, ", LogMonitor.LogType.BANK_SYSTEM);
 				}
 			}
 		}

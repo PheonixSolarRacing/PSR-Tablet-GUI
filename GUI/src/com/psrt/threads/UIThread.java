@@ -56,7 +56,7 @@ public class UIThread implements Runnable{
         try {
 			this.primaryStage.getIcons().add(new Image(Main.class.getResource("res/images/other/logo.png").openStream()));
 		} catch (IOException e) {
-			LogMonitor.print("Couldn't load icon.");
+			LogMonitor.log("Couldn't load icon.", LogMonitor.LogType.UITHREAD);
 		}
         
         this.main = main;
@@ -66,7 +66,7 @@ public class UIThread implements Runnable{
         
         loadGUI();
         
-        LogMonitor.print("UIThread initialized.");
+        LogMonitor.log("UIThread initialized.", LogMonitor.LogType.UITHREAD);
         
         /*
          * Once the number of GUI elements gets out of hand (which will be soon) this process will hold the key to extracting and automating the 
@@ -75,11 +75,11 @@ public class UIThread implements Runnable{
          * But that could be done with a little naming magic, perhaps.
          */
         ObservableList<Tab> tabs = tabOverview.getTabs();
-        LogMonitor.print("Tabs: " + tabs.size());
+        LogMonitor.log("Tabs: " + tabs.size(), LogMonitor.LogType.UITHREAD);
         for(int i = 0; i < tabs.size(); i++){
         	Tab t = tabs.get(i);
         	String id = t.getId();
-        	LogMonitor.print(id);
+        	LogMonitor.log(id, LogMonitor.LogType.UITHREAD);
         	if(id.contains("tab")){
         		Node c = t.getContent();
         		if(c.getId().contains("anchor")){
@@ -88,7 +88,7 @@ public class UIThread implements Runnable{
         			ObservableList<Node> children = ap.getChildren();
         			for(int j = 0; j < children.size(); j++){
         				Node n = children.get(j);
-        				LogMonitor.print("\tAnchorPane[" + i + "]: ID: " + n.getId());
+        				LogMonitor.log("\tAnchorPane[" + i + "]: ID: " + n.getId(), LogMonitor.LogType.UITHREAD);
         				ValueFactory.if_tree_of_doom(n, main, this);  //Oh the if hierarchies... This should only run once
         			}
         		}
