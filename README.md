@@ -19,3 +19,7 @@ If you want to commit changes to this repo, please make sure your classes are st
 * 5.) Utility Functions (Such as functions that do a certain calculation)
 * 6.) Setters
 * 7.) Getters
+
+
+------------------------
+Contributors to this project can find toolchain setup instructions [here](https://drive.google.com/file/d/0B1nYM6El6gsiSzR6Q0lfRWFLN0U/view?usp=sharing).
