@@ -61,7 +61,7 @@ public class BankSystem extends EntitySystem {
 			for(int i = 0; i < b.size(); i++){
 				if(box != null) process(b.get(i), box);
 				else {
-					if(debug) System.out.println("Top box is null, ");
+					if(debug) LogMonitor.log("Top box is null, ", LogMonitor.LogType.BANK_SYSTEM);
 				}
 			}
 		}
@@ -98,7 +98,7 @@ public class BankSystem extends EntitySystem {
 		if(value != null){
 			if(tc != null){
 				tc.setValue("" + value.getValue());
-				if(debug) System.out.println("BankSystem.process(): Value - " + value.getValue() + ", Hash: " + id.hashCode());
+				if(debug) LogMonitor.print("BankSystem.process(): Value - " + value.getValue() + ", Hash: " + id.hashCode());
 			}else if(pc != null){
 				pc.setValue(value.getValue());
 			}else if(ic != null){

@@ -1,6 +1,7 @@
 package com.psrt.serial;
 
-import static com.psrt.threads.SerialMonitor.log;
+//import static com.psrt.threads.SerialMonitor.log;
+//import static com.psrt.entities.systems.LogMonitor.log;
 
 import java.nio.ByteBuffer;
 import java.util.NoSuchElementException;
@@ -15,6 +16,7 @@ import com.psrt.containers.values.PDBFloatValue;
 import com.psrt.containers.values.PDBIntValue;
 import com.psrt.entities.components.DepositBox;
 import com.psrt.entities.systems.Bank;
+import com.psrt.entities.systems.LogMonitor;
 import com.psrt.guitabs.BMSTab;
 import com.psrt.threads.SerialMonitor;
 
@@ -71,7 +73,7 @@ import com.psrt.threads.SerialMonitor;
 	 public SerialParser(CircularFifoQueue<Integer> internalBuffer, Bank bank){
 		 this.bank = bank;
 		 this.internalBuffer = internalBuffer;
-		 log("Initializing serialParser");
+		 LogMonitor.log("Initializing serialParser", LogMonitor.LogType.SERIAL_PARSER_PARSE);
 		 initialize();
 	 }
 	 
@@ -100,20 +102,20 @@ import com.psrt.threads.SerialMonitor;
 	  * Must I explain this? I barely remember how it works. Maybe later
 	  */
 	 public void cut(){
-		 //log("Frames in parseBuffer: " + parseBuffer.size());
+		 //LogMonitor.log("Frames in parseBuffer: " + parseBuffer.size());
 		 if(SERIAL_CUT_DEBUG) {
-			 log("Mark1: " + m1);
-			 log("Mark2: " + m2);
+			 LogMonitor.log("Mark1: " + m1, LogMonitor.LogType.SERIAL_PARSER_PARSE);
+			 LogMonitor.log("Mark2: " + m2, LogMonitor.LogType.SERIAL_PARSER_PARSE);
 		 }
 		 if(!internalBuffer.isEmpty()){
 			 for(; true; ){
 				 if(SERIAL_CUT_DEBUG) {
-					 log("Checking index: " + index);
+					 LogMonitor.log("Checking index: " + index, LogMonitor.LogType.SERIAL_PARSER_PARSE);
 				 }
 				 MarkerState mark1 = marker(internalBuffer, index);
 				 if(mark1 == MarkerState.END_OF_BUFFER) {
 					 if(SERIAL_CUT_DEBUG) {
-						 log("End of buffer...");
+						 LogMonitor.log("End of buffer...", LogMonitor.LogType.SERIAL_PARSER_PARSE);
 					 }
 					 //index++;
 					 break;
@@ -125,22 +127,22 @@ import com.psrt.threads.SerialMonitor;
 					 if(m1 == -1) {
 						 m1 = index + 10;
 						 if(SERIAL_CUT_DEBUG) {
-							 log("Found mark1 at " + m1);
+							 LogMonitor.log("Found mark1 at " + m1, LogMonitor.LogType.SERIAL_PARSER_PARSE);
 						 }
 						 index = m1;
 					 }
 					 else {
 						 m2 = index + 10;
 						 if(SERIAL_CUT_DEBUG) {
-							 log("Found mark2 at " + m2);
+							 LogMonitor.log("Found mark2 at " + m2, LogMonitor.LogType.SERIAL_PARSER_PARSE);
 						 }
 						 int delta = (m2 - m1) - 10;
 						 if(SERIAL_CUT_DEBUG) {
-							 log("M1: " + m1 + ", M2: " + m2 + " - delta: " + delta);
+							 LogMonitor.log("M1: " + m1 + ", M2: " + m2 + " - delta: " + delta, LogMonitor.LogType.SERIAL_PARSER_PARSE);
 						 }
 						 if(delta % 10 == 0){
 							 if(SERIAL_CUT_DEBUG) {
-								 log("Adding byte array to parseBuffer of length " + delta);
+								 LogMonitor.log("Adding byte array to parseBuffer of length " + delta, LogMonitor.LogType.SERIAL_PARSER_PARSE);
 							 }
 							 byte[] temp = new byte[delta];
 							 for(int i = 0; i < delta; i++){
@@ -150,7 +152,7 @@ import com.psrt.threads.SerialMonitor;
 								 temp[i] = temp_byte;
 							 }
 							 parseBuffer.add(temp);
-							 if(SERIAL_CUT_DEBUG) log("Parsebuffer size; cut: " + parseBuffer.size());
+							 if(SERIAL_CUT_DEBUG) LogMonitor.log("Parsebuffer size; cut: " + parseBuffer.size(), LogMonitor.LogType.SERIAL_PARSER_PARSE);
 							 for(int i = 0; i < m2 - 10; i++){
 								 internalBuffer.remove();
 							 }
@@ -159,7 +161,7 @@ import com.psrt.threads.SerialMonitor;
 							 m2 = -1;
 						 }else{
 							 if(SERIAL_CUT_DEBUG) {
-								 log("Data not a multiple of 10. Discarding frame.");
+								 LogMonitor.log("Data not a multiple of 10. Discarding frame.", LogMonitor.LogType.SERIAL_PARSER_PARSE);
 							 }
 							 //delete index 0 through (m2 - 10)
 							 for(int i = 0; i < m2 - 10; i++){
@@ -174,19 +176,19 @@ import com.psrt.threads.SerialMonitor;
 				 else if(mark1 == MarkerState.NOT_MARKER) {
 					 if(m1 == -1){
 						 if(SERIAL_CUT_DEBUG) {
-							 log("Not found+pl: " + internalBuffer.poll());
+							 LogMonitor.log("Not found+pl: " + internalBuffer.poll(), LogMonitor.LogType.SERIAL_PARSER_PARSE);
 						 }else{
 							 internalBuffer.poll();
 						 }
 						 index = 0;
 					 }else{
 						 if(SERIAL_CUT_DEBUG) {
-							 log("Not found+pk: " + internalBuffer.get(index));
+							 LogMonitor.log("Not found+pk: " + internalBuffer.get(index), LogMonitor.LogType.SERIAL_PARSER_PARSE);
 						 }
 						 index++;
 						 if(index - m1 >= SerialMonitor.MAX_CHECK_SIZE){
-							 log("Error in SerialParser.cut(): Distance between current index and 1st check marker is greater than max check size (" + SerialMonitor.MAX_CHECK_SIZE + ")");
-							 log("Starting frame check over.");
+							 LogMonitor.log("Error in SerialParser.cut(): Distance between current index and 1st check marker is greater than max check size (" + SerialMonitor.MAX_CHECK_SIZE + ")", LogMonitor.LogType.SERIAL_PARSER_PARSE);
+							 LogMonitor.log("Starting frame check over.", LogMonitor.LogType.SERIAL_PARSER_PARSE);
 							 index = 0; 
 							 m1 = -1; 
 							 m2 = -1;
@@ -207,7 +209,7 @@ import com.psrt.threads.SerialMonitor;
 			MarkerState status = MarkerState.NOT_MARKER;
 				try{
 					if(bytes.get(i)  == 0xFF){
-						if(SERIAL_CUT_DEBUG) log("Found FF, checking bytes...");
+						if(SERIAL_CUT_DEBUG) LogMonitor.log("Found FF, checking bytes...", LogMonitor.LogType.SERIAL_PARSER_PARSE);
 				 		if(bytes.get(i + 1) == 0xFF && 
 						   bytes.get(i + 2) == 0xFF &&
 						   bytes.get(i + 3) == 0xFF && 
@@ -227,7 +229,7 @@ import com.psrt.threads.SerialMonitor;
 					}
 							  
 				}catch(NoSuchElementException e){
-					//log("Reached the end of the buffer in marker, waiting...");
+					//LogMonitor.log("Reached the end of the buffer in marker, waiting...");
 					status = MarkerState.END_OF_BUFFER;
 					return status;
 				}
@@ -248,16 +250,17 @@ import com.psrt.threads.SerialMonitor;
 	  */
 	 @SuppressWarnings("rawtypes")
 	public void parse(){
-		 //log("parsing");
+		 //LogMonitor.log("parsing");
 		 int l = parseBuffer.size();
-		 //if(parse_debug) log("Parsebuffer size: " + l);
+		 //if(parse_debug) LogMonitor.log("Parsebuffer size: " + l);
 		 if(l > 0){
 			 byte[] bytes = parseBuffer.poll();
 			 if(SERIAL_PARSE_DEBUG) print_array(bytes);
 			 if(bytes != null){
 				 
 				 int messages = bytes.length / 10;
-				 if(SERIAL_PARSE_DEBUG) log("Num messages: " + messages); 
+				 // use this as a template for the rest of the implemenatinos
+				 LogMonitor.log("Num messages: " + messages, LogMonitor.LogType.SERIAL_PARSER_PARSE); 
 				 
 				 DepositBox box = new DepositBox(messages);
 				 
@@ -267,17 +270,17 @@ import com.psrt.threads.SerialMonitor;
 					 int pos = i * 10;
 					 int id = getID(bytes, pos);
 					 
-					 if(SERIAL_PARSE_DEBUG) log("ID: " + id);
+					 if(SERIAL_PARSE_DEBUG) LogMonitor.log("ID: " + id, LogMonitor.LogType.SERIAL_PARSER_PARSE);
 					 
 					 if(id >= 0x600 /*1536*/&& id <= 0x6FF /*1791*/){ //BMS Crap
-						 if(SERIAL_PARSE_DEBUG) log("BMS ID found " + id);
+						 if(SERIAL_PARSE_DEBUG) LogMonitor.log("BMS ID found " + id, LogMonitor.LogType.SERIAL_PARSER_PARSE);
 						 
 						 byte[] data_bytes = subArray(bytes, pos + 2, 8);
 						 BMSTab.BMS_TREE(id, data_bytes, box);
 						 
 					 }else{ //PDBCAN crap
 						 int function = getFunction(bytes, pos);
-						 if(SERIAL_PARSE_DEBUG) log("Function: " + function);
+						 if(SERIAL_PARSE_DEBUG) LogMonitor.log("Function: " + function, LogMonitor.LogType.SERIAL_PARSER_PARSE);
 						 
 						 for(int j = 1; j <= bank.getDictionary().numActiveEntries(); j++){
 							 PDBID identifier = new PDBID(id, function, j); 
@@ -286,21 +289,21 @@ import com.psrt.threads.SerialMonitor;
 							 if(csvInfo == null) continue;
 							 PDBValueType type = csvInfo.getType();
 							 if(SERIAL_PARSE_DEBUG) {
-								 log("SerialParser.parse() - CanID: ID = " + identifier.id + " | Function = " + identifier.function + " | Entry: " + identifier.entry + " | St. Index: " + csvInfo.startIndex());
-								 if(type == null) log("SerialParser.parse() - Type null");
+								 LogMonitor.log("SerialParser.parse() - CanID: ID = " + identifier.id + " | Function = " + identifier.function + " | Entry: " + identifier.entry + " | St. Index: " + csvInfo.startIndex(), LogMonitor.LogType.SERIAL_PARSER_PARSE);
+								 if(type == null) LogMonitor.log("SerialParser.parse() - Type null", LogMonitor.LogType.SERIAL_PARSER_PARSE);
 							 }
 							 if(type == PDBValueType.FLOAT){
 								 byte[] floatBytes = subArray(bytes, pos + csvInfo.startIndex(), 4);
 								 value = new PDBFloatValue(bytesToFloat(floatBytes, 0), floatBytes);
-								 //log("FloatValue: " + value.getValue());
+								 //LogMonitor.log("FloatValue: " + value.getValue());
 							 }else if(type == PDBValueType.BYTE){
 								 value = new PDBIntValue(bytes[csvInfo.startIndex()] + 128, subArray(bytes, pos + csvInfo.startIndex(), 1));
-								 //log("ByteValue: " + (bytes[csvInfo.startIndex()] + 128));
-								 //log("ByteValue: " + (value.getValue().intValue()));
+								 //LogMonitor.log("ByteValue: " + (bytes[csvInfo.startIndex()] + 128));
+								 //LogMonitor.log("ByteValue: " + (value.getValue().intValue()));
 							 }
 							 if(value != null) {
 								 box.put(identifier, value);
-								 if(SERIAL_PARSE_DEBUG) log("SerialParser.parse(): " + identifier.hashCode());
+								 if(SERIAL_PARSE_DEBUG) LogMonitor.log("SerialParser.parse(): " + identifier.hashCode(), LogMonitor.LogType.SERIAL_PARSER_PARSE);
 							 }
 						 }
 					 }
@@ -340,10 +343,10 @@ import com.psrt.threads.SerialMonitor;
 		 int id = int_id1 | (id2 + 128); //0011 1010 <-*
 		 //byte b_combo = (byte)combo;
 		 if(SERIAL_PARSE_DEBUG){
-			 log("ID1: " + id1);
-			 log("ID2: " + id2);
-			 log("int_id1: " + int_id1);
-			 log("ID: " + id);
+			 LogMonitor.log("ID1: " + id1, LogMonitor.LogType.SERIAL_PARSER_PARSE);
+			 LogMonitor.log("ID2: " + id2, LogMonitor.LogType.SERIAL_PARSER_PARSE);
+			 LogMonitor.log("int_id1: " + int_id1, LogMonitor.LogType.SERIAL_PARSER_PARSE);
+			 LogMonitor.log("ID: " + id, LogMonitor.LogType.SERIAL_PARSER_PARSE);
 		 }
 		return id;
 	}
@@ -397,9 +400,9 @@ import com.psrt.threads.SerialMonitor;
 	  * @param end
 	  */
 	 private void print_range(int start, int end){
-		 log("Printing range [" + start + ", " + end + "]: ");
+		 LogMonitor.log("Printing range [" + start + ", " + end + "]: ", LogMonitor.LogType.SERIAL_PARSER_PARSE);
 		 for(int i = start; i < end; i++){
-			 log("\t[" + i + "]: " + internalBuffer.get(i));
+			 LogMonitor.log("\t[" + i + "]: " + internalBuffer.get(i), LogMonitor.LogType.SERIAL_PARSER_PARSE);
 		 }
 	 }
 	 
@@ -408,13 +411,13 @@ import com.psrt.threads.SerialMonitor;
 	  * @param a - byte array to print
 	  */
 	 public static void print_array(byte[] a){
-		 log("Printing out byte array: ");
+		 LogMonitor.log("Printing out byte array: ", LogMonitor.LogType.SERIAL_PARSER_PARSE);
 		 if(a != null){
 			 for(int i = 0; i < a.length; i++){
-				 log("\t[" + i + "]: " + a[i]);
+				 LogMonitor.log("\t[" + i + "]: " + a[i], LogMonitor.LogType.SERIAL_PARSER_PARSE);
 			 }
 		 }else{
-			 log("Byte array is null. skipping print");
+			 LogMonitor.log("Byte array is null. skipping print", LogMonitor.LogType.SERIAL_PARSER_PARSE);
 		 }
 	 }
  }

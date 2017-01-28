@@ -2,7 +2,8 @@ package com.psrt.threads;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 import com.psrt.entities.systems.Bank;
-import com.psrt.main.Main;
+import com.psrt.entities.systems.LogMonitor;
+//import com.psrt.main.Main;
 import com.psrt.serial.SerialParser;
 import com.psrt.serial.SerialReader2;
 
@@ -38,7 +39,7 @@ public class SerialMonitor  {
 	 * Ideally there should only be one instance of this class.
 	 */
 	public SerialMonitor(Bank bank){
-		log("Serial monitor started.");
+		LogMonitor.log("Serial monitor started.", LogMonitor.LogType.SERIAL_MONITOR);
 		internalBuffer = new CircularFifoQueue<Integer>(1024);
 		
 		//Parse and organize data
@@ -51,7 +52,7 @@ public class SerialMonitor  {
 					if(parser != null){
 						parser.parse();
 					}else {
-						log("SerialParser not started");
+						LogMonitor.log("SerialParser not started", LogMonitor.LogType.SERIAL_MONITOR);
 						break;
 					}
 				}
@@ -69,13 +70,13 @@ public class SerialMonitor  {
 					if(sr.seport != null && sr != null) sr.read();
 					else{
 						//running = false;
-						log("SerialPort not opened.");
+						LogMonitor.log("SerialPort not opened.", LogMonitor.LogType.SERIAL_MONITOR);
 						//break;
 					}
 					
 					if(System.currentTimeMillis() - sr.lastUpdate > SerialMonitor.TIMEOUT){
-						log("Serial Reader timed out after " + (System.currentTimeMillis() - sr.lastUpdate) + " ms");
-						log("Attempting reconnection");
+						LogMonitor.log("Serial Reader timed out after " + (System.currentTimeMillis() - sr.lastUpdate) + " ms", LogMonitor.LogType.SERIAL_MONITOR);
+						LogMonitor.log("Attempting reconnection", LogMonitor.LogType.SERIAL_MONITOR);
 						sr.close();
 						sr.seport = null;
 						sr.findPort();
@@ -108,9 +109,12 @@ public class SerialMonitor  {
 	  * Quick logger method
 	  * @param s
 	  */
+	
+	// to be removed
+	/*@Deprecated
 	 public static void log(String s){ 
 		 if(Main.DEBUG) {
-			 System.out.println(s);
+			 System.out.print(s);
 		 }
-	 }
+	 }*/
 }
