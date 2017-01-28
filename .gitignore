@@ -48,3 +48,4 @@ Temporary Items
 
 # Do not syncronize java class files
 *.class
+*.class

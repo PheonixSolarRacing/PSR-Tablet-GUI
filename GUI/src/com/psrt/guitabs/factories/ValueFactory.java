@@ -8,6 +8,7 @@ import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextComponent;
 import com.psrt.entities.components.ValueComponent;
 import com.psrt.guitabs.BMSTab;
+import com.psrt.guitabs.ErrorsTab;
 import com.psrt.guitabs.MainTab;
 import com.psrt.guitabs.PDBTab;
 import com.psrt.main.Main;
@@ -69,6 +70,24 @@ public class ValueFactory {
 		World world = main.getWorld();
 		if(n.getId() != null){ //Example of retrieving all elements automatically... Could be easier? Hmm
 			switch (n.getId()){
+				case "chk_main_debug":
+					ErrorsTab.chk_main_debug(n);
+					break;
+				case "chk_serial_parser_debug":
+					ErrorsTab.chk_serial_parser_debug(n);
+					break;
+				case "chk_serial_reader_debug":
+					ErrorsTab.chk_serial_reader_debug(n);
+					break;
+				case "chk_serial_monitor_debug":
+					ErrorsTab.chk_serial_monitor_debug(n);
+					break;
+				case "chk_uithread_debug":
+					ErrorsTab.chk_uithread_debug(n);
+					break;
+				case "chk_bank_system_debug":
+					ErrorsTab.chk_bank_system_debug(n);
+					break;
 				case "test_label":
 					MainTab.test_label(world, n);
 					break;
