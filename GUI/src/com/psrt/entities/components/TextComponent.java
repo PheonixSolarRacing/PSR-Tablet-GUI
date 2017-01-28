@@ -3,6 +3,11 @@ package com.psrt.entities.components;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Label;
 
+/**
+ * Component for JavaFX labels.  Holds the data about them. This Component is used as part of the Artemis Entity system
+ * @author austi
+ *
+ */
 public class TextComponent extends ValueComponent<String, Label>{
 	private String suffix = "";
 	private String prefix = "";

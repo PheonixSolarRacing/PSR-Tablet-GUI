@@ -52,7 +52,7 @@ public class Main extends Application{
  	**************************************/	
     public final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
    
-    public static boolean DEBUG = false; //Note, all Global static (public static) variables should be in caps
+    public static final boolean DEBUG = true; //Note, all Global static (public static) variables should be in caps
     
     public Bank bank;
     
@@ -163,7 +163,9 @@ public class Main extends Application{
     	uiThread = new UIThread(primaryStage, world, this);
     }
     
-
+    /**
+     * Initialize {@link SerialMonitor}
+     */
     private void initSerialMonitor() {
     	m = new SerialMonitor(bank);
 	}
@@ -277,7 +279,7 @@ public class Main extends Application{
     
     
     /***************************************************************************
-     * 								GETTERS
+                                       GETTERS
      ***************************************************************************/
     
     /**

@@ -9,8 +9,13 @@ import com.psrt.containers.PDBValue;
 
 
 public class DepositBox {
-	//private ArrayListValuedHashMap<CanID, CanValue> box;
-	//@SuppressWarnings("rawtypes")
+	
+	/*Note on this.  May get rid of DepositBoxes completely in the future
+	* and instead use ArrayListValuedHashMap directly in the bank class since it's
+	* a very similar data structure that may be more efficient.
+	*/
+	//private ArrayListValuedHashMap<AbstractID, AbstractValue> box2;
+
 	private HashMap<AbstractID, AbstractValue> box;
 	private StampedLock lock;
 	
@@ -18,14 +23,13 @@ public class DepositBox {
 		this(10);
 	}
 
-	//@SuppressWarnings("rawtypes")
+	
 	public DepositBox(int size){
-		//box = new ArrayListValuedHashMap<CanID, CanValue>();
+		//box2 = new ArrayListValuedHashMap<AbstractID, AbstractValue>();
 		box = new HashMap<AbstractID, AbstractValue>(size);
 		lock = new StampedLock();
 	}
-	
-	//@SuppressWarnings("rawtypes")
+
 	public DepositBox put(AbstractID key, AbstractValue value){
 		long stamp = lock.writeLock();
 		try{

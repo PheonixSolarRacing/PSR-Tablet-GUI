@@ -1,7 +1,5 @@
 package com.psrt.guitabs;
 
-import java.util.Vector;
-
 import com.artemis.Entity;
 import com.artemis.EntityEdit;
 import com.psrt.containers.BMSID;
@@ -851,7 +849,7 @@ public class BMSTab{
         return result;
     }
 	 
-	//@SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	private byte[] subArray(byte[] b, int start, int len){
 		byte[] n = new byte[len];
 		for(int i = 0; i < len; i++){
