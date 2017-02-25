@@ -42,7 +42,7 @@ public abstract class ValueComponent<V, T extends Node> extends Component {
 	
 	public synchronized void setValue(V value){
 		V oldValue = this.value.getValue();
-		//System.out.println("Old value: " + oldValue.toString() + ", new value: " + value.toString());
+		//if(reference.equals("txt_area_errors")) System.out.println("Old value: " + oldValue.toString() + ", new value: " + value.toString());
 		if(!oldValue.equals(value)){
 			//System.out.println(reference + "Has changed");
 			this.value.setValue(value);

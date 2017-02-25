@@ -73,8 +73,6 @@ public class ErrorsTab {
 	        public void changed(ObservableValue<? extends Boolean> ov,
 	            Boolean old_val, Boolean new_val) {
 	                LogMonitor.UITHREAD_DEBUG = new_val;
-	                System.out.println("Hello: " + new_val.toString());
-	                
 	        }
 	    });
 	}

@@ -25,8 +25,7 @@ public class LogMonitor {
 	public static boolean BANK_SYSTEM_DEBUG = false;
 	
 	public static LogMonitor lm;
-	
-	
+
 	ComponentMapper<TextAreaComponent> tm;
 	public static TextAreaComponent textArea;
 	
@@ -70,8 +69,8 @@ public class LogMonitor {
 	public static void print(String s) {
 		System.out.println(s);
 	}
-	public static void printToGUI(String s) {
-		// print("made it to printToGUI");
+	
+	public static void printToGUI(String s){
 		textArea.setValue(s);
 	}
 }

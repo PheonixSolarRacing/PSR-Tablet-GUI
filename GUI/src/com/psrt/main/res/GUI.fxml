@@ -391,6 +391,7 @@
                   <CheckBox id="chk_bank_system_debug" layoutX="46.0" layoutY="268.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="Bank Systems" />
                   <Button id="clear_txt_area_errors" layoutX="1218.0" layoutY="36.0" mnemonicParsing="false" prefHeight="606.0" prefWidth="54.0" text="Clear" />
 
+
                </children></AnchorPane>
          </content>
       </Tab>
