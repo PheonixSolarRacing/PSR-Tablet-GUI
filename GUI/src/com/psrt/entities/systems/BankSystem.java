@@ -25,8 +25,6 @@ public class BankSystem extends EntitySystem {
 		
 	long ticks = 0;
 	private Bank bank;
-	
-	private boolean debug = false;
 
 	public BankSystem(Bank b) {
 		super(Aspect.one(PDBID.class, BMSID.class));
@@ -98,7 +96,7 @@ public class BankSystem extends EntitySystem {
 		if(value != null){
 			if(tc != null){
 				tc.setValue("" + value.getValue());
-				if(debug) LogMonitor.print("BankSystem.process(): Value - " + value.getValue() + ", Hash: " + id.hashCode());
+				LogMonitor.print("BankSystem.process(): Value - " + value.getValue() + ", Hash: " + id.hashCode());
 			}else if(pc != null){
 				pc.setValue(value.getValue());
 			}else if(ic != null){

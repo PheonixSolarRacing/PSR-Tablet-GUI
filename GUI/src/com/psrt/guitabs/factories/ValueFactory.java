@@ -4,10 +4,12 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.psrt.entities.components.ImageComponent;
+import com.psrt.entities.components.LabelComponent;
 import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextAreaComponent;
 import com.psrt.entities.components.LabelComponent;
 import com.psrt.entities.components.ValueComponent;
+import com.psrt.entities.systems.BankSystem;
 import com.psrt.guitabs.BMSTab;
 import com.psrt.guitabs.ErrorsTab;
 import com.psrt.guitabs.MainTab;
@@ -57,6 +59,7 @@ public class ValueFactory {
 		ProgressComponent pc = pm.getSafe(e);
 		//TimingComponent t = timeM.getSafe(entityId);
 		ImageComponent ic = im.getSafe(e);
+
 		TextAreaComponent tac = tam.getSafe(e);
 		
 		ValueComponent v = null;
@@ -64,7 +67,7 @@ public class ValueFactory {
 		if(tc != null) v = tc;
 		else if(pc != null) v = pc;
 		else if(ic != null) v = ic;
-		else if(tac != null) v= tac;
+		else if(tac != null) v = tac;
 		
 		return v;
 	}

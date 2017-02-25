@@ -95,6 +95,7 @@ public class Main extends Application{
      */
     private void initAll(Stage primaryStage){
     	String user_dir = System.getProperty("user.dir");
+    	
     	LogMonitor.print(user_dir);
     	
     	DictionaryParser parser = null;
@@ -205,9 +206,7 @@ public class Main extends Application{
 						ProgressComponent pc = pm.getSafe(id);
 						ImageComponent ic = im.getSafe(id);
 						TextAreaComponent tac = tam.getSafe(id);
-						
-						LogMonitor.log("Test data interval", LogMonitor.LogType.UITHREAD);
-						
+
 						LogMonitor.log("Test data interval", LogMonitor.LogType.UITHREAD);
 						
 						if(tc != null){
@@ -250,7 +249,6 @@ public class Main extends Application{
 								// tac.setValue("Hello\n");
 							}
 						} 
-						
 					}
 				}
 				if(ticks > 50) ticks = 0;
