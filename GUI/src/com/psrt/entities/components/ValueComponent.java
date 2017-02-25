@@ -13,6 +13,8 @@ public abstract class ValueComponent<V, T extends Node> extends Component {
 		TEXT_AREA;
 	}
 	
+	int l =5;
+	
 	protected Property<V> value;
 	protected Property<V> initialValue;
 	protected T element;
