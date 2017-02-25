@@ -386,7 +386,7 @@
                   <CheckBox id="chk_serial_parser_debug" layoutX="45.0" layoutY="102.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="Serial Parser" />
                   <CheckBox id="chk_serial_reader_debug" layoutX="45.0" layoutY="151.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="Serial Reader" />
                   <CheckBox id="chk_serial_monitor_debug" layoutX="45.0" layoutY="199.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="Serial Monitor" />
-                  <CheckBox id="chk_uithread_debug" layoutX="45.0" layoutY="248.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="UI Thread" />
+                  <CheckBox id="chk_uithread_debug" layoutX="45.0" layoutY="253.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="UI Thread" />
                   <CheckBox id="chk_bank_system_debug" layoutX="47.0" layoutY="306.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="Bank Systems" />
                </children></AnchorPane>
          </content>

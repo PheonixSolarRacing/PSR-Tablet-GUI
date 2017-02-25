@@ -7,7 +7,7 @@ import com.psrt.containers.BMSValue;
 import com.psrt.containers.ImageHolder;
 import com.psrt.entities.components.DepositBox;
 import com.psrt.entities.components.ImageComponent;
-import com.psrt.entities.components.TextComponent;
+import com.psrt.entities.components.LabelComponent;
 import com.psrt.threads.SerialMonitor;
 
 import javafx.scene.Node;
@@ -52,20 +52,20 @@ public class BMSTab{
 	public static void x6FA_u32_0(com.artemis.World world, Node n){ //max cell voltage
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x6FA_u32_0", (Label) n, SerialMonitor.TIMEOUT, "mV"));
+		edit.add(new LabelComponent("NA", "x6FA_u32_0", (Label) n, SerialMonitor.TIMEOUT, "mV"));
 		edit.add(new BMSID(0x6FA, 0));
 	}
 	public static void x6FA_u32_1(com.artemis.World world, Node n){ //max cell voltage
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x6FA_u32_1", (Label) n, SerialMonitor.TIMEOUT, "mA"));
+		edit.add(new LabelComponent("NA", "x6FA_u32_1", (Label) n, SerialMonitor.TIMEOUT, "mA"));
 		edit.add(new BMSID(0x6FA, 1));
 	}
 	
 	public static void x6F8_u16_1(com.artemis.World world, Node n){ //max cell voltage
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x6F8_u16_1", (Label) n, SerialMonitor.TIMEOUT, "mV"));
+		edit.add(new LabelComponent("NA", "x6F8_u16_1", (Label) n, SerialMonitor.TIMEOUT, "mV"));
 		edit.add(new BMSID(0x6F8, 1));
 	}
 	
@@ -73,28 +73,28 @@ public class BMSTab{
 	public static void x601_16_2(com.artemis.World world, Node n){ //cmu temp
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x601_16_2", (Label) n, SerialMonitor.TIMEOUT, "V"));
+		edit.add(new LabelComponent("NA", "x601_16_2", (Label) n, SerialMonitor.TIMEOUT, "V"));
 		edit.add(new BMSID(0x601, 2));
 	}
 	
 	public static void x6F9_u16_1(com.artemis.World world, Node n){ //cell temp
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x6F9_16_1", (Label) n, SerialMonitor.TIMEOUT, "V"));
+		edit.add(new LabelComponent("NA", "x6F9_16_1", (Label) n, SerialMonitor.TIMEOUT, "V"));
 		edit.add(new BMSID(0x6F9, 1));
 	}
 	
 	public static void x6F8_u16_0(com.artemis.World world, Node n){ //min cell voltage
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x6F8_u16_0", (Label) n, SerialMonitor.TIMEOUT, "V"));
+		edit.add(new LabelComponent("NA", "x6F8_u16_0", (Label) n, SerialMonitor.TIMEOUT, "V"));
 		edit.add(new BMSID(0x6F8, 0));
 	}
 	
 	public static void x6F4_fp_0(com.artemis.World world, Node n){ //SOC Ah
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x6F4_data_fp_0", (Label) n, SerialMonitor.TIMEOUT, "Ah"));
+		edit.add(new LabelComponent("NA", "x6F4_data_fp_0", (Label) n, SerialMonitor.TIMEOUT, "Ah"));
 		edit.add(new BMSID(0x6F4, 0));
 	}
 	public static void x6F4_fp_1(com.artemis.World world, Node n){ //SOC %
@@ -102,229 +102,229 @@ public class BMSTab{
 		//MyEntityFactory.addTimer(e, 200, TimingType.ASTABLE);
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x6F4_data_fp_1", (Label) n, SerialMonitor.TIMEOUT, "%"));
+		edit.add(new LabelComponent("NA", "x6F4_data_fp_1", (Label) n, SerialMonitor.TIMEOUT, "%"));
 		edit.add(new BMSID(0x6F4, 1));
 	}
 	
 	public static void x608_16_0(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x608_16_0", (Label) n, SerialMonitor.TIMEOUT, "mV"))
+		edit.add(new LabelComponent("NA", "x608_16_0", (Label) n, SerialMonitor.TIMEOUT, "mV"))
 			.add(new BMSID(0x608, 0));
 	}
 	
 	public static void x608_16_1(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x608_16_1", (Label) n, SerialMonitor.TIMEOUT, "mV"))
+		edit.add(new LabelComponent("NA", "x608_16_1", (Label) n, SerialMonitor.TIMEOUT, "mV"))
 			.add(new BMSID(0x608, 1));
 	}
 	
 	public static void x608_16_2(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x608_16_2", (Label) n, SerialMonitor.TIMEOUT, "mV"))
+		edit.add(new LabelComponent("NA", "x608_16_2", (Label) n, SerialMonitor.TIMEOUT, "mV"))
 			.add(new BMSID(0x608, 2));
 	}
 	
 	public static void x608_16_3(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x608_16_3", (Label) n, SerialMonitor.TIMEOUT, "mV"))
+		edit.add(new LabelComponent("NA", "x608_16_3", (Label) n, SerialMonitor.TIMEOUT, "mV"))
 			.add(new BMSID(0x608, 3));
 	}
 	
 	public static void x609_16_0(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x609_16_0", (Label) n, SerialMonitor.TIMEOUT, "mV"))
+		edit.add(new LabelComponent("NA", "x609_16_0", (Label) n, SerialMonitor.TIMEOUT, "mV"))
 			.add(new BMSID(0x609, 0));
 	}
 	
 	public static void x609_16_1(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x609_16_1", (Label) n, SerialMonitor.TIMEOUT, "mV"))
+		edit.add(new LabelComponent("NA", "x609_16_1", (Label) n, SerialMonitor.TIMEOUT, "mV"))
 			.add(new BMSID(0x609, 1));
 	}
 	
 	public static void x609_16_2(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x609_16_2", (Label) n, SerialMonitor.TIMEOUT, "mV"))
+		edit.add(new LabelComponent("NA", "x609_16_2", (Label) n, SerialMonitor.TIMEOUT, "mV"))
 			.add(new BMSID(0x609, 2));
 	}
 	
 	public static void x605_16_0(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x605_16_0", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x605_16_0", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x605, 0));
 	}
 	
 	public static void x605_16_1(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x605_16_1", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x605_16_1", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x605, 1));
 	}
 	
 	public static void x605_16_2(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x605_16_2", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x605_16_2", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x605, 2));
 	}
 	
 	public static void x605_16_3(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x605_16_3", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x605_16_3", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x605, 3));
 	}
 	
 	public static void x606_16_0(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x606_16_0", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x606_16_0", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x606, 0));
 	}
 	
 	public static void x606_16_1(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x606_16_1", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x606_16_1", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x606, 1));
 	}
 	public static void x606_16_2(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x606_16_2", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x606_16_2", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x606, 2));
 	}
 	public static void x606_16_3(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x606_16_3", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x606_16_3", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x606, 3));
 	}
 	public static void x604_16_3(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x604_16_3", (Label) n, SerialMonitor.TIMEOUT, "*C"))
+		edit.add(new LabelComponent("NA", "x604_16_3", (Label) n, SerialMonitor.TIMEOUT, "*C"))
 			.add(new BMSID(0x604, 3));
 	}
 	
 	public static void x60A_16_3(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x60A_16_3", (Label) n, SerialMonitor.TIMEOUT, "*C"))
+		edit.add(new LabelComponent("NA", "x60A_16_3", (Label) n, SerialMonitor.TIMEOUT, "*C"))
 			.add(new BMSID(0x60A, 3));
 	}
 	
 	public static void x601_16_3(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x601_16_3", (Label) n, SerialMonitor.TIMEOUT, "*C"))
+		edit.add(new LabelComponent("NA", "x601_16_3", (Label) n, SerialMonitor.TIMEOUT, "*C"))
 			.add(new BMSID(0x601, 3));
 	}
 	
 	public static void x607_16_3(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x607_16_3", (Label) n, SerialMonitor.TIMEOUT, "*C"))
+		edit.add(new LabelComponent("NA", "x607_16_3", (Label) n, SerialMonitor.TIMEOUT, "*C"))
 			.add(new BMSID(0x607, 3));
 	}
 	
 	public static void x603_16_3(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x603_16_3", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x603_16_3", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x603, 3));
 	}
 	
 	public static void x603_16_2(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x603_16_2", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x603_16_2", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x603, 2));
 	}
 	public static void x603_16_1(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x603_16_1", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x603_16_1", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x603, 1));
 	}
 	public static void x603_16_0(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x603_16_0", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x603_16_0", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x603, 0));
 	}
 	public static void x602_16_3(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x602_16_3", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x602_16_3", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x602, 3));
 	}
 	public static void x602_16_2(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x602_16_2", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x602_16_2", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x602, 2));
 	}
 	public static void x602_16_1(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x602_16_1", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x602_16_1", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x602, 1));
 	}
 	public static void x602_16_0(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x602_16_0", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x602_16_0", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x602, 0));
 	}
 	public static void x60C_16_2(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x60C_16_2", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x60C_16_2", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x60C, 2));
 	}
 	public static void x60C_16_1(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x60C_16_1", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x60C_16_1", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x60C, 1));
 	}
 	public static void x60C_16_0(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x60C_16_0", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x60C_16_0", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x60C, 0));
 	}
 	public static void x60B_16_3(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x60B_16_3", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x60B_16_3", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x60B, 3));
 	}
 	public static void x60B_16_2(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x60B_16_2", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x60B_16_2", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x60B, 2));
 	}
 	public static void x60B_16_1(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x60B_16_1", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x60B_16_1", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x60B, 1));
 	}
 	public static void x60B_16_0(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "x60B_16_0", (Label) n, SerialMonitor.TIMEOUT, ""))
+		edit.add(new LabelComponent("NA", "x60B_16_0", (Label) n, SerialMonitor.TIMEOUT, ""))
 			.add(new BMSID(0x60B, 0));
 	}
 	

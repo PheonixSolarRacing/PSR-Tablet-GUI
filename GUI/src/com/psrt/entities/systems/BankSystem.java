@@ -12,21 +12,19 @@ import com.psrt.containers.PDBID;
 import com.psrt.entities.components.DepositBox;
 import com.psrt.entities.components.ImageComponent;
 import com.psrt.entities.components.ProgressComponent;
-import com.psrt.entities.components.TextComponent;
+import com.psrt.entities.components.LabelComponent;
 
 public class BankSystem extends EntitySystem {
 	EntitySubscription sub;
 	
 	ComponentMapper<PDBID> cm;
 	ComponentMapper<BMSID> bm;
-	ComponentMapper<TextComponent> tm;
+	ComponentMapper<LabelComponent> tm;
 	ComponentMapper<ProgressComponent> pm;
 	ComponentMapper<ImageComponent> im;
 		
 	long ticks = 0;
 	private Bank bank;
-	
-	private boolean debug = false;
 
 	public BankSystem(Bank b) {
 		super(Aspect.one(PDBID.class, BMSID.class));
@@ -43,7 +41,7 @@ public class BankSystem extends EntitySystem {
 		if(ticks == 0){
 			cm = world.getMapper(PDBID.class);
 			bm = world.getMapper(BMSID.class);
-			tm = world.getMapper(TextComponent.class);
+			tm = world.getMapper(LabelComponent.class);
 			pm = world.getMapper(ProgressComponent.class);
 			im = world.getMapper(ImageComponent.class);
 		}
@@ -61,7 +59,7 @@ public class BankSystem extends EntitySystem {
 			for(int i = 0; i < b.size(); i++){
 				if(box != null) process(b.get(i), box);
 				else {
-					if(debug) LogMonitor.log("Top box is null, ", LogMonitor.LogType.BANK_SYSTEM);
+					LogMonitor.log("Top box is null, ", LogMonitor.LogType.BANK_SYSTEM);
 				}
 			}
 		}
@@ -91,14 +89,14 @@ public class BankSystem extends EntitySystem {
 		if(id != null) {
 			value = box.get(id);
 		}
-		TextComponent tc = tm.getSafe(entityId);
+		LabelComponent tc = tm.getSafe(entityId);
 		ProgressComponent pc = pm.getSafe(entityId);
 		ImageComponent ic = im.getSafe(entityId);
 		
 		if(value != null){
 			if(tc != null){
 				tc.setValue("" + value.getValue());
-				if(debug) LogMonitor.print("BankSystem.process(): Value - " + value.getValue() + ", Hash: " + id.hashCode());
+				LogMonitor.print("BankSystem.process(): Value - " + value.getValue() + ", Hash: " + id.hashCode());
 			}else if(pc != null){
 				pc.setValue(value.getValue());
 			}else if(ic != null){

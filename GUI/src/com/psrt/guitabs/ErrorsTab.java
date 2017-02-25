@@ -1,15 +1,23 @@
 package com.psrt.guitabs;
 
+import com.artemis.Entity;
+import com.artemis.EntityEdit;
+import com.artemis.World;
+import com.psrt.entities.components.TextAreaComponent;
 import com.psrt.entities.systems.LogMonitor;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextArea;
 
 public class ErrorsTab {
-	public static void txt_area_errors(Node n){
-		
+	public static void txt_area_errors(Node n, World world){
+		Entity e = world.createEntity();
+		EntityEdit edit = e.edit();
+		TextArea ta = (TextArea) n;
+		edit.add(new TextAreaComponent("Hello\n", ta, "txt_area_errors"));
 	}
 	
 	public static void chk_main_debug(Node n) {
@@ -54,8 +62,6 @@ public class ErrorsTab {
 	        public void changed(ObservableValue<? extends Boolean> ov,
 	            Boolean old_val, Boolean new_val) {
 	                LogMonitor.UITHREAD_DEBUG = new_val;
-	                System.out.println("Hello: " + new_val.toString());
-	                
 	        }
 	    });
 	}

@@ -3,7 +3,7 @@ package com.psrt.guitabs;
 import com.artemis.Entity;
 import com.artemis.EntityEdit;
 import com.psrt.entities.components.ProgressComponent;
-import com.psrt.entities.components.TextComponent;
+import com.psrt.entities.components.LabelComponent;
 import com.psrt.threads.UIThread;
 
 import javafx.event.ActionEvent;
@@ -19,7 +19,7 @@ public class MainTab {
 	public static void speed_display(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "speed_display", (Label) n));
+		edit.add(new LabelComponent("NA", "speed_display", (Label) n));
 		//edit.add(new TimingComponent(500, TimingType.ASTABLE));
 	}
 	
@@ -47,7 +47,7 @@ public class MainTab {
 	public static void test_label(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "test_label", (Label) n));
+		edit.add(new LabelComponent("NA", "test_label", (Label) n));
 		
 	}
 	
