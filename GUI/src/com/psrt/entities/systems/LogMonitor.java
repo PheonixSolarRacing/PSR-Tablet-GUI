@@ -8,6 +8,7 @@ public class LogMonitor {
 		UITHREAD,
 		BANK_SYSTEM;
 	}
+  
 	public static boolean MAIN_DEBUG = false;
 	public static boolean SERIAL_PARSER_PARSE_DEBUG = false;
 	//public static boolean SERIAL_PARSER_CUT_DEBUG = false;

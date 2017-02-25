@@ -44,7 +44,7 @@ public class ValueFactory {
 		ExampleComponent ec = exampleMapper.getSafe(e).
 		You <b>MUST</b> also include a mapper for that new component type here.
 		If you don't do this, <b>none</b> of the elements based on that component type will work.
-		In the same vein, the {@link BankSystem} also requires this level of customization. (See process method there)
+		In the same vein, the {@link BankSystem} also requires this level of customization. See {@link BankSystem#process()}
 	 * @param e
 	 * @return
 	 */

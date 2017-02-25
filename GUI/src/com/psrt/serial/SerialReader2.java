@@ -24,12 +24,12 @@ import jssc.SerialPortException;
 public class SerialReader2 {
 	
 	/*************************************
-				PRIVATE FIELDS
+                PRIVATE FIELDS
 	**************************************/	
 	 private CircularFifoQueue<Integer> internalBuffer;
 	
     /*************************************
-				PUBLIC FIELDS
+                PUBLIC FIELDS
  	**************************************/		 
 	 public jssc.SerialPort seport;
 	 public SerialParser sp;
@@ -148,7 +148,7 @@ public class SerialReader2 {
 	 
 	 
 	 /**************************************************************************
-									UTILITIES (Byte interpretation)
+                            UTILITIES (Byte interpretation)
 	 ***************************************************************************/
 	
 	 /**
