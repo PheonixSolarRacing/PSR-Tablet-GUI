@@ -8,24 +8,24 @@ import javafx.scene.control.Label;
  * @author austi
  *
  */
-public class TextComponent extends ValueComponent<String, Label>{
+public class LabelComponent extends ValueComponent<String, Label>{
 	private String suffix = "";
 	private String prefix = "";
 
-	public TextComponent(String text, String reference, Label label){
+	public LabelComponent(String text, String reference, Label label){
 		this(text, reference, label, -1);
 	}
 	
-	public TextComponent(String text, String reference, Label label, int timeout){
+	public LabelComponent(String text, String reference, Label label, int timeout){
 		this(text, reference, label, timeout, "");
 	}
 	
-	public TextComponent(String text, String reference, Label label, int timeout, String suffix){
+	public LabelComponent(String text, String reference, Label label, int timeout, String suffix){
 		this(text, reference, label, timeout, suffix, "");
 	}
 	
-	public TextComponent(String text, String reference, Label label, int timeout, String suffix, String prefix){
-		super(new SimpleStringProperty(text), label, reference, ComponentType.TEXT, timeout);
+	public LabelComponent(String text, String reference, Label label, int timeout, String suffix, String prefix){
+		super(new SimpleStringProperty(text), label, reference, ComponentType.LABEL, timeout);
 		this.suffix = suffix;
 		this.prefix = prefix;
 		setValue(text);

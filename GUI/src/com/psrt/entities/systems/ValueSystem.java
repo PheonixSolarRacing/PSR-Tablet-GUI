@@ -7,8 +7,9 @@ import com.artemis.EntitySubscription;
 import com.artemis.EntitySystem;
 import com.artemis.utils.IntBag;
 import com.psrt.entities.components.ImageComponent;
+import com.psrt.entities.components.LabelComponent;
 import com.psrt.entities.components.ProgressComponent;
-import com.psrt.entities.components.TextComponent;
+import com.psrt.entities.components.TextAreaComponent;
 import com.psrt.entities.components.TimingComponent;
 import com.psrt.entities.components.ValueComponent;
 import com.psrt.main.Main;
@@ -21,7 +22,7 @@ public class ValueSystem extends EntitySystem {
 	private Main main;
 
 	public ValueSystem(Main main) {
-		super(Aspect.one(TextComponent.class, ProgressComponent.class, ImageComponent.class));
+		super(Aspect.one(LabelComponent.class, ProgressComponent.class, ImageComponent.class, TextAreaComponent.class));
 		this.main = main;
 	}
 	
