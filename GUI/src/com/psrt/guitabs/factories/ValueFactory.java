@@ -70,6 +70,9 @@ public class ValueFactory {
 		World world = main.getWorld();
 		if(n.getId() != null){ //Example of retrieving all elements automatically... Could be easier? Hmm
 			switch (n.getId()){
+				case "txt_area_errors":
+					ErrorsTab.txt_area_errors(n);
+					break;
 				case "chk_main_debug":
 					ErrorsTab.chk_main_debug(n);
 					break;

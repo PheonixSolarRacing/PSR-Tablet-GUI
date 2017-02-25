@@ -8,6 +8,10 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 
 public class ErrorsTab {
+	public static void txt_area_errors(Node n){
+		
+	}
+	
 	public static void chk_main_debug(Node n) {
 		CheckBox cb = (CheckBox) n;
 		cb.selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -50,6 +54,8 @@ public class ErrorsTab {
 	        public void changed(ObservableValue<? extends Boolean> ov,
 	            Boolean old_val, Boolean new_val) {
 	                LogMonitor.UITHREAD_DEBUG = new_val;
+	                System.out.println("Hello: " + new_val.toString());
+	                
 	        }
 	    });
 	}

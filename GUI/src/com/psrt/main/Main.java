@@ -19,6 +19,7 @@ import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextComponent;
 import com.psrt.entities.systems.Bank;
 import com.psrt.entities.systems.BankSystem;
+import com.psrt.entities.systems.LogMonitor;
 import com.psrt.entities.systems.TimingSystem;
 import com.psrt.entities.systems.ValueSystem;
 import com.psrt.guitabs.factories.ValueFactory;
@@ -199,6 +200,8 @@ public class Main extends Application{
 						ProgressComponent pc = pm.getSafe(id);
 						ImageComponent ic = im.getSafe(id);
 						
+						LogMonitor.log("Test data interval", LogMonitor.LogType.UITHREAD);
+						
 						if(tc != null){
 							if(tc.getReference().equals("speed_display")){
 								//System.out.println("True");
@@ -227,6 +230,7 @@ public class Main extends Application{
 							if(ic.getReference().equals("x6F7_u8_0_x08")){
 								//ic.setValue(0);
 								if(ic.getValue().intValue() == 0){
+									
 									ic.setValue(1);
 								}else{
 									ic.setValue(0);
