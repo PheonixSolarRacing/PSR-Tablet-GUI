@@ -208,6 +208,8 @@ public class Main extends Application{
 						
 						LogMonitor.log("Test data interval", LogMonitor.LogType.UITHREAD);
 						
+						LogMonitor.log("Test data interval", LogMonitor.LogType.UITHREAD);
+						
 						if(tc != null){
 							if(tc.getReference().equals("speed_display")){
 								//LogMonitor.print("True");
@@ -236,6 +238,7 @@ public class Main extends Application{
 							if(ic.getReference().equals("x6F7_u8_0_x08")){
 								//ic.setValue(0);
 								if(ic.getValue().intValue() == 0){
+									
 									ic.setValue(1);
 								}else{
 									ic.setValue(0);
