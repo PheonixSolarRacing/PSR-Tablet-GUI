@@ -6,7 +6,7 @@ import com.artemis.Entity;
 import com.artemis.EntityEdit;
 import com.psrt.containers.PDBID;
 import com.psrt.entities.components.ProgressComponent;
-import com.psrt.entities.components.TextComponent;
+import com.psrt.entities.components.LabelComponent;
 import com.psrt.entities.components.TimingComponent;
 import com.psrt.entities.components.TimingComponent.TimingType;
 
@@ -39,7 +39,7 @@ public class MyEntityFactory {
 		EntityEdit edit = e.edit();
 		switch(elementType){
 			case Label:
-				edit.add(new TextComponent(initValue, name, (Label) n, timeout));
+				edit.add(new LabelComponent(initValue, name, (Label) n, timeout));
 				break;
 			case ProgressBar:
 				edit.add(new ProgressComponent(Double.parseDouble(initValue), name, (ProgressBar) n, timeout));
@@ -73,16 +73,16 @@ public class MyEntityFactory {
 	}
 	
 	public static void addPrefix(com.artemis.World world, Entity e, String p){
-		ComponentMapper<TextComponent> tm = world.getMapper(TextComponent.class);
-		TextComponent t = tm.getSafe(e);
+		ComponentMapper<LabelComponent> tm = world.getMapper(LabelComponent.class);
+		LabelComponent t = tm.getSafe(e);
 		if(t != null){
 			t.setPrefix(p);
 		}
 	}
 	
 	public static void addSuffix(com.artemis.World world, Entity e, String s){
-		ComponentMapper<TextComponent> tm = world.getMapper(TextComponent.class);
-		TextComponent t = tm.getSafe(e);
+		ComponentMapper<LabelComponent> tm = world.getMapper(LabelComponent.class);
+		LabelComponent t = tm.getSafe(e);
 		if(t != null){
 			t.setSuffix(s);
 		}

@@ -7,7 +7,7 @@ import com.psrt.containers.AbstractID;
 import com.psrt.containers.ImageHolder;
 import com.psrt.containers.PDBID;
 import com.psrt.entities.components.ImageComponent;
-import com.psrt.entities.components.TextComponent;
+import com.psrt.entities.components.LabelComponent;
 import com.psrt.guitabs.factories.MyEntityFactory;
 import com.psrt.guitabs.factories.MyEntityFactory.ElementType;
 import com.psrt.main.Main;
@@ -22,7 +22,7 @@ public class PDBTab {
 	public static void battery_1_voltage(com.artemis.World world, Node n){
 		Entity e2 = world.createEntity();
 		EntityEdit edit2 = e2.edit();
-		edit2.add(new TextComponent("NA", "battery_1_voltage", (Label) n, timeout, "V"));
+		edit2.add(new LabelComponent("NA", "battery_1_voltage", (Label) n, timeout, "V"));
 		edit2.add(new PDBID(1, 0, 1));
 	}
 	
@@ -42,14 +42,14 @@ public class PDBTab {
 	public static void battery_4_voltage(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "battery_4_voltage", (Label) n, timeout, "V"));
+		edit.add(new LabelComponent("NA", "battery_4_voltage", (Label) n, timeout, "V"));
 		edit.add(new PDBID(1, 3, 1));
 	}
 	
 	public static void batteries_all_current(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "batteries_all_current", (Label) n, timeout, "A"));
+		edit.add(new LabelComponent("NA", "batteries_all_current", (Label) n, timeout, "A"));
 		edit.add(new PDBID(1, 5, 1));
 	}
 	
@@ -62,96 +62,96 @@ public class PDBTab {
 	public static void dc_to_dc_current(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "dc_to_dc_voltage", (Label) n, timeout, "V"));
+		edit.add(new LabelComponent("NA", "dc_to_dc_voltage", (Label) n, timeout, "V"));
 		edit.add(new PDBID(1, 6, 1));
 	}
 	
 	public static void lv_bus_voltage(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "lv_bus_voltage", (Label) n, timeout, "V"));
+		edit.add(new LabelComponent("NA", "lv_bus_voltage", (Label) n, timeout, "V"));
 		edit.add(new PDBID(1, 7, 1));
 	}
 	
 	public static void output_1_current(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "output_1_current", (Label) n, timeout, "A"));
+		edit.add(new LabelComponent("NA", "output_1_current", (Label) n, timeout, "A"));
 		edit.add(new PDBID(1, 8, 1));
 	}
 
 	public static void output_2_current(World world, Node n) {
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "output_2_current", (Label) n, timeout, "A"));
+		edit.add(new LabelComponent("NA", "output_2_current", (Label) n, timeout, "A"));
 		edit.add(new PDBID(1, 9, 1));
 	}
 	public static void output_3_current(World world, Node n) {
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "output_3_current", (Label) n, timeout, "A"));
+		edit.add(new LabelComponent("NA", "output_3_current", (Label) n, timeout, "A"));
 		edit.add(new PDBID(1, 10, 1));
 	}
 	
 	public static void output_4_current(World world, Node n) {
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "output_4_current", (Label) n, timeout, "A"));
+		edit.add(new LabelComponent("NA", "output_4_current", (Label) n, timeout, "A"));
 		edit.add(new PDBID(1, 11, 1));
 	}
 	
 	public static void output_5_current(com.artemis.World world, Node n){
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "output_5_current", (Label) n, timeout, "A"));
+		edit.add(new LabelComponent("NA", "output_5_current", (Label) n, timeout, "A"));
 		edit.add(new PDBID(1, 12, 1));
 	}
 
 	public static void output_6_current(World world, Node n) {
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "output_6_current", (Label) n, timeout, "A"));
+		edit.add(new LabelComponent("NA", "output_6_current", (Label) n, timeout, "A"));
 		edit.add(new PDBID(1, 13, 1));
 	}
 	public static void output_7_current(World world, Node n) {
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "output_7_current", (Label) n, timeout, "A"));
+		edit.add(new LabelComponent("NA", "output_7_current", (Label) n, timeout, "A"));
 		edit.add(new PDBID(1, 14, 1));
 	}
 	
 	public static void output_8_current(World world, Node n) {
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "output_8_current", (Label) n, timeout, "A"));
+		edit.add(new LabelComponent("NA", "output_8_current", (Label) n, timeout, "A"));
 		edit.add(new PDBID(1, 15, 1));
 	}
 	
 	public static void battery_1_percentage(World world, Node n) {
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "battery_1_percentage", (Label) n, timeout, "%"));
+		edit.add(new LabelComponent("NA", "battery_1_percentage", (Label) n, timeout, "%"));
 		edit.add(new PDBID(1, 0, 2));
 	}
 	
 	public static void battery_2_percentage(World world, Node n) {
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "battery_2_percentage", (Label) n, timeout, "%"));
+		edit.add(new LabelComponent("NA", "battery_2_percentage", (Label) n, timeout, "%"));
 		edit.add(new PDBID(1, 1, 2));
 	}
 	
 	public static void battery_3_percentage(World world, Node n) {
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "battery_3_percentage", (Label) n, timeout, "%"));
+		edit.add(new LabelComponent("NA", "battery_3_percentage", (Label) n, timeout, "%"));
 		edit.add(new PDBID(1, 2, 2));
 	}
 	
 	public static void battery_4_percentage(World world, Node n) {
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		edit.add(new TextComponent("NA", "battery_4_percentage", (Label) n, timeout, "%"));
+		edit.add(new LabelComponent("NA", "battery_4_percentage", (Label) n, timeout, "%"));
 		edit.add(new PDBID(1, 3, 2));
 	}
 	

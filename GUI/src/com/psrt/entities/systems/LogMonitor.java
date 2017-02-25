@@ -1,5 +1,11 @@
 package com.psrt.entities.systems;
 
+import com.artemis.ComponentMapper;
+import com.artemis.EntitySubscription;
+import com.artemis.World;
+import com.artemis.utils.IntBag;
+import com.psrt.entities.components.TextAreaComponent;
+
 public class LogMonitor {
 	public static enum LogType {
 		MAIN,
@@ -18,22 +24,54 @@ public class LogMonitor {
 	public static boolean UITHREAD_DEBUG = false;
 	public static boolean BANK_SYSTEM_DEBUG = false;
 	
+	public static LogMonitor lm;
+	
+	
+	ComponentMapper<TextAreaComponent> tm;
+	public static TextAreaComponent textArea;
+	
+	public LogMonitor(World world) {
+		tm = world.getMapper(TextAreaComponent.class);
+		ValueSystem v = world.getSystem(ValueSystem.class);
+		EntitySubscription sub = v.getSubscription();
+		
+		try {
+			Thread.sleep(400);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		IntBag b = sub.getEntities();
+		for(int i = 0; i < b.size(); i++){
+			int id = b.get(i);
+			TextAreaComponent tac = tm.getSafe(id);
+			
+			if (tac != null && tac.getReference().equals("txt_area_errors")) {
+				textArea = tac;
+			}
+		}
+	}
+	
 	public static void log(String s, LogType type) {
 		if (type == LogType.MAIN && MAIN_DEBUG) {
-			print("Main: " + s);
+			printToGUI("Main: " + s + "\n");
 		} else if (type == LogType.SERIAL_PARSER_PARSE && SERIAL_PARSER_PARSE_DEBUG) {
-			print("SerialParser.Parse: " + s);
+			printToGUI("SerialParser.Parse: " + s + "\n");
 		} else if (type == LogType.SERIAL_READER && SERIAL_READER_DEBUG) {
-			print("SerialReader: " + s);
+			printToGUI("SerialReader: " + s + "\n");
 		} else if (type == LogType.SERIAL_MONITOR && SERIAL_MONITOR_DEBUG) {
-			print("SerialMonitor: " + s);
+			printToGUI("SerialMonitor: " + s + "\n");
 		} else if (type == LogType.UITHREAD && UITHREAD_DEBUG) {
-			print("UIThread: " + s);
+			printToGUI("UIThread: " + s + "\n");
 		} else if (type == LogType.BANK_SYSTEM && BANK_SYSTEM_DEBUG) {
-			print ("BankSystem: " + s);
+			printToGUI("BankSystem: " + s + "\n");
 		} //else if (type == LogType.)
 	}
 	public static void print(String s) {
 		System.out.println(s);
+	}
+	public static void printToGUI(String s) {
+		// print("made it to printToGUI");
+		textArea.setValue(s);
 	}
 }

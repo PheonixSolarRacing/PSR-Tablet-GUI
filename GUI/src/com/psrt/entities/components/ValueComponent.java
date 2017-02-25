@@ -7,9 +7,10 @@ import javafx.scene.Node;
 
 public abstract class ValueComponent<V, T extends Node> extends Component {
 	public static enum ComponentType{
-		TEXT,
+		LABEL,
 		PROGRESS_BAR,
-		IMAGE;
+		IMAGE,
+		TEXT_AREA;
 	}
 	
 	protected Property<V> value;

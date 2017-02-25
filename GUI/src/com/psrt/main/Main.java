@@ -15,8 +15,9 @@ import com.artemis.WorldConfiguration;
 import com.artemis.utils.IntBag;
 import com.psrt.containers.ImageHolder;
 import com.psrt.entities.components.ImageComponent;
+import com.psrt.entities.components.LabelComponent;
 import com.psrt.entities.components.ProgressComponent;
-import com.psrt.entities.components.TextComponent;
+import com.psrt.entities.components.TextAreaComponent;
 import com.psrt.entities.systems.Bank;
 import com.psrt.entities.systems.BankSystem;
 import com.psrt.entities.systems.LogMonitor;
@@ -123,6 +124,8 @@ public class Main extends Application{
     	initSerialMonitor();
     	startThreads();
     	
+    	LogMonitor.lm = new LogMonitor(world);
+    	
     	try {
 			parser.close();
 		} catch (IOException e) {
@@ -178,9 +181,10 @@ public class Main extends Application{
 		scheduler.scheduleAtFixedRate(uiThread, 0, 15, TimeUnit.MILLISECONDS);
 		scheduler.scheduleAtFixedRate(new Thread("Test data"){
 			long ticks = 0;
-			ComponentMapper<TextComponent> tm;
+			ComponentMapper<LabelComponent> tm;
 			ComponentMapper<ProgressComponent> pm;
 			ComponentMapper<ImageComponent> im;
+			ComponentMapper<TextAreaComponent> tam;
 			
 			@Override
 			public void run(){
@@ -188,17 +192,21 @@ public class Main extends Application{
 				ValueSystem v = world.getSystem(ValueSystem.class);
 				EntitySubscription sub = v.getSubscription();
 				if(ticks == 0){
-					tm = world.getMapper(TextComponent.class);
+					tm = world.getMapper(LabelComponent.class);
 					pm = world.getMapper(ProgressComponent.class);
 					im = world.getMapper(ImageComponent.class);
+					tam = world.getMapper(TextAreaComponent.class);
 				}
 				else{
 					IntBag b = sub.getEntities();
 					for(int i = 0; i < b.size(); i++){
 						int id = b.get(i);
-						TextComponent tc = tm.getSafe(id);
+						LabelComponent tc = tm.getSafe(id);
 						ProgressComponent pc = pm.getSafe(id);
 						ImageComponent ic = im.getSafe(id);
+						TextAreaComponent tac = tam.getSafe(id);
+						
+						LogMonitor.log("Test data interval", LogMonitor.LogType.UITHREAD);
 						
 						if(tc != null){
 							if(tc.getReference().equals("speed_display")){
@@ -233,7 +241,12 @@ public class Main extends Application{
 									ic.setValue(0);
 								}
 							}
-						}
+						} else if (tac != null) {
+							if (tac.getReference().equals("txt_area_errors")) {
+								// System.out.println("text area errors called.\n");
+								// tac.setValue("Hello\n");
+							}
+						} 
 						
 					}
 				}

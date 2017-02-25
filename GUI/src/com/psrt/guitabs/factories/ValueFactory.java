@@ -5,7 +5,8 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.psrt.entities.components.ImageComponent;
 import com.psrt.entities.components.ProgressComponent;
-import com.psrt.entities.components.TextComponent;
+import com.psrt.entities.components.TextAreaComponent;
+import com.psrt.entities.components.LabelComponent;
 import com.psrt.entities.components.ValueComponent;
 import com.psrt.guitabs.BMSTab;
 import com.psrt.guitabs.ErrorsTab;
@@ -17,15 +18,17 @@ import com.psrt.threads.UIThread;
 import javafx.scene.Node;
 
 public class ValueFactory {
-	ComponentMapper<TextComponent> tm;
+	ComponentMapper<LabelComponent> tm;
 	ComponentMapper<ProgressComponent> pm;
 	ComponentMapper<ImageComponent> im;
+	ComponentMapper<TextAreaComponent> tam;
 	
 	World w;
 	public ValueFactory(World w){
-		tm = w.getMapper(TextComponent.class);
+		tm = w.getMapper(LabelComponent.class);
 		pm = w.getMapper(ProgressComponent.class);
 		im = w.getMapper(ImageComponent.class);
+		tam = w.getMapper(TextAreaComponent.class);
 		this.w = w;
 	}
 	
@@ -50,18 +53,18 @@ public class ValueFactory {
 	 */
 	@SuppressWarnings("rawtypes")
 	public synchronized ValueComponent getValue(Entity e){
-		TextComponent tc = tm.getSafe(e);
+		LabelComponent tc = tm.getSafe(e);
 		ProgressComponent pc = pm.getSafe(e);
 		//TimingComponent t = timeM.getSafe(entityId);
 		ImageComponent ic = im.getSafe(e);
-		
-		
+		TextAreaComponent tac = tam.getSafe(e);
 		
 		ValueComponent v = null;
 		//if tc isn't null set it to v, if tc is null then set pc to v, if pc is null then set v to null
 		if(tc != null) v = tc;
 		else if(pc != null) v = pc;
 		else if(ic != null) v = ic;
+		else if(tac != null) v= tac;
 		
 		return v;
 	}
@@ -70,6 +73,12 @@ public class ValueFactory {
 		World world = main.getWorld();
 		if(n.getId() != null){ //Example of retrieving all elements automatically... Could be easier? Hmm
 			switch (n.getId()){
+				case "clear_txt_area_errors":
+					ErrorsTab.clear_txt_area_errors(n);
+					break;
+				case "txt_area_errors":
+					ErrorsTab.txt_area_errors(n, world);
+					break;
 				case "chk_main_debug":
 					ErrorsTab.chk_main_debug(n);
 					break;
