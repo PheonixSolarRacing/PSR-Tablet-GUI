@@ -383,12 +383,11 @@
                <children>
                   <TextArea layoutX="589.0" layoutY="35.0" prefHeight="607.0" prefWidth="650.0" />
                   <CheckBox id="chk_main_debug" layoutX="56.0" layoutY="75.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="84.0" text="Main" />
-                  <CheckBox layoutX="52.0" layoutY="114.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="Serial Parser" />
-                  <CheckBox layoutX="55.0" layoutY="152.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="Serial Parser" />
-                  <CheckBox layoutX="51.0" layoutY="191.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="Serial Reader" />
-                  <CheckBox layoutX="51.0" layoutY="231.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="Serial Monitor" />
-                  <CheckBox layoutX="49.0" layoutY="267.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="UI Thread" />
-                  <CheckBox layoutX="50.0" layoutY="308.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="Bank Systems" />
+                  <CheckBox id="chk_serial_parser_debug" layoutX="52.0" layoutY="114.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="Serial Parser" />
+                  <CheckBox id="chk_serial_reader_debug" layoutX="47.0" layoutY="151.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="Serial Reader" />
+                  <CheckBox id="chk_serial_monitor_debug" layoutX="47.0" layoutY="191.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="Serial Monitor" />
+                  <CheckBox id="chk_uithread_debug" layoutX="45.0" layoutY="227.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="UI Thread" />
+                  <CheckBox id="chk_bank_system_debug" layoutX="46.0" layoutY="268.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" text="Bank Systems" />
                </children></AnchorPane>
          </content>
       </Tab>
