@@ -1,4 +1,5 @@
 package com.psrt.guitabs.factories;
+import com.psrt.entities.systems.LogMonitor;
 
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -46,7 +47,7 @@ public class MyEntityFactory {
 			case ImageView:
 				break;
 			default:
-				System.out.println("ElementFactory: An unrecognized ElementType was used.");
+				LogMonitor.print("ElementFactory: An unrecognized ElementType was used.");
 				break;
 		}
 		

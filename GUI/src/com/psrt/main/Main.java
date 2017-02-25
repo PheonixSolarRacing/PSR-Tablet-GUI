@@ -19,6 +19,7 @@ import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextComponent;
 import com.psrt.entities.systems.Bank;
 import com.psrt.entities.systems.BankSystem;
+import com.psrt.entities.systems.LogMonitor;
 import com.psrt.entities.systems.TimingSystem;
 import com.psrt.entities.systems.ValueSystem;
 import com.psrt.guitabs.factories.ValueFactory;
@@ -62,9 +63,9 @@ public class Main extends Application{
      * @param args
      */
     public static void main(String[] args) {  //Note: main should go at the top of the class
-    	System.out.println("Starting");
+    	LogMonitor.print("Starting");
         launch(args);
-        System.out.println("Clean exit");
+        LogMonitor.print("Clean exit");
     }
     
 	/**
@@ -93,13 +94,13 @@ public class Main extends Application{
      */
     private void initAll(Stage primaryStage){
     	String user_dir = System.getProperty("user.dir");
-    	System.out.println(user_dir);
+    	LogMonitor.print(user_dir);
     	
     	DictionaryParser parser = null;
 		try {
 			parser = new DictionaryParser("res/dictionary.csv");
 		} catch (FileNotFoundException | URISyntaxException e) {
-			System.out.println("Wow, couldn't open the dictionary file :/");
+			LogMonitor.print("Wow, couldn't open the dictionary file :/");
 			e.printStackTrace();
 		}
     	if(parser != null ){
@@ -125,7 +126,7 @@ public class Main extends Application{
     	try {
 			parser.close();
 		} catch (IOException e) {
-			System.out.println("Problem closing DictionaryParser FileStream");
+			LogMonitor.print("Problem closing DictionaryParser FileStream");
 			e.printStackTrace();
 		}
     }
@@ -183,7 +184,7 @@ public class Main extends Application{
 			
 			@Override
 			public void run(){
-				//System.out.println("Run");
+				//LogMonitor.print("Run");
 				ValueSystem v = world.getSystem(ValueSystem.class);
 				EntitySubscription sub = v.getSubscription();
 				if(ticks == 0){
@@ -201,7 +202,7 @@ public class Main extends Application{
 						
 						if(tc != null){
 							if(tc.getReference().equals("speed_display")){
-								//System.out.println("True");
+								//LogMonitor.print("True");
 								tc.setValue(""+ticks);
 							}if(tc.getReference().equals("battery_1_voltage")){
 								//tc.setValue(""+(50 - ticks));
@@ -252,7 +253,7 @@ public class Main extends Application{
     		if(uiThread != null)
     			uiThread.inject(e);
     		else
-    			System.out.println("Main: UIThread not initialized. Can't pass data from " + e.toString());
+    			LogMonitor.print("Main: UIThread not initialized. Can't pass data from " + e.toString());
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}

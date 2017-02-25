@@ -1,5 +1,6 @@
 package com.psrt.parsers;
 
+import com.psrt.entities.systems.LogMonitor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -79,9 +80,9 @@ public class DictionaryParser {
 		
 	    for(int i = 0; i < lines.size(); i++) {
 	    	String[] line = lines.get(i);
-	    	//System.out.println("Row: " + i);
+	    	//LogMonitor.print("Row: " + i);
 	    	for(int j = 0; j < line.length; j++ ){
-				//System.out.println("\tCol: " + j + ", " + line[j]);
+				//LogMonitor.print("\tCol: " + j + ", " + line[j]);
 				if(line[j].toLowerCase().equals(CAN_ID_STRING.toLowerCase())){
 					id_col = j;
 				}
@@ -163,6 +164,6 @@ public class DictionaryParser {
 	}
 	
 	private void log(String s){
-		if(debug) System.out.println(s);
+		if(debug) LogMonitor.print(s);
 	}
 }
