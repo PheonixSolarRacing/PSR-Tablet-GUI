@@ -8,18 +8,29 @@ import com.psrt.entities.systems.LogMonitor;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 
 public class ErrorsTab {
-	public static void txt_area_errors(Node n, World world){
+	public static void clear_txt_area_errors(Node n) {
+		Button b = (Button) n;
+		b.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent event){
+				//System.out.println("Hello!");
+				LogMonitor.textArea.getElement().clear();
+			}
+		});
+	}
+	public static void txt_area_errors(Node n, World world) {
 		Entity e = world.createEntity();
 		EntityEdit edit = e.edit();
-		TextArea ta = (TextArea) n;
-		edit.add(new TextAreaComponent("Hello\n", ta, "txt_area_errors"));
+		edit.add(new TextAreaComponent("Hello\n", (TextArea) n, "txt_area_errors"));
 	}
-	
 	public static void chk_main_debug(Node n) {
 		CheckBox cb = (CheckBox) n;
 		cb.selectedProperty().addListener(new ChangeListener<Boolean>() {

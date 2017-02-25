@@ -25,38 +25,31 @@ public class LogMonitor {
 	public static boolean BANK_SYSTEM_DEBUG = false;
 	
 	public static LogMonitor lm;
-	
-	
-	
+
 	ComponentMapper<TextAreaComponent> tm;
 	public static TextAreaComponent textArea;
 	
-	public LogMonitor(World world){
+	public LogMonitor(World world) {
 		tm = world.getMapper(TextAreaComponent.class);
-		
 		ValueSystem v = world.getSystem(ValueSystem.class);
 		EntitySubscription sub = v.getSubscription();
 		
-		System.out.println("Inside logmonitor");
-		
-		IntBag b = sub.getEntities();
-		
 		try {
-			Thread.sleep(300);
+			Thread.sleep(400);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		
+		IntBag b = sub.getEntities();
 		for(int i = 0; i < b.size(); i++){
 			int id = b.get(i);
 			TextAreaComponent tac = tm.getSafe(id);
-			if(tac != null && tac.getReference().equals("txt_area_errors")){
+			
+			if (tac != null && tac.getReference().equals("txt_area_errors")) {
 				textArea = tac;
 			}
 		}
 	}
-	
-	
 	
 	public static void log(String s, LogType type) {
 		if (type == LogType.MAIN && MAIN_DEBUG) {
@@ -70,7 +63,7 @@ public class LogMonitor {
 		} else if (type == LogType.UITHREAD && UITHREAD_DEBUG) {
 			printToGUI("UIThread: " + s + "\n");
 		} else if (type == LogType.BANK_SYSTEM && BANK_SYSTEM_DEBUG) {
-			printToGUI ("BankSystem: " + s + "\n");
+			printToGUI("BankSystem: " + s + "\n");
 		} //else if (type == LogType.)
 	}
 	public static void print(String s) {

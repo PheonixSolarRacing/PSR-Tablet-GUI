@@ -206,7 +206,7 @@ public class Main extends Application{
 						ProgressComponent pc = pm.getSafe(id);
 						ImageComponent ic = im.getSafe(id);
 						TextAreaComponent tac = tam.getSafe(id);
-						
+
 						LogMonitor.log("Test data interval", LogMonitor.LogType.UITHREAD);
 						
 						if(tc != null){
@@ -243,13 +243,12 @@ public class Main extends Application{
 									ic.setValue(0);
 								}
 							}
-						}else if(tac != null){
-							if(tac.getReference().equals("txt_area_errors")){
-								//System.out.println("Main: txt_area_errors called");
-								//tac.setValue("Hello\n");
+						} else if (tac != null) {
+							if (tac.getReference().equals("txt_area_errors")) {
+								// System.out.println("text area errors called.\n");
+								// tac.setValue("Hello\n");
 							}
-						}
-						
+						} 
 					}
 				}
 				if(ticks > 50) ticks = 0;
