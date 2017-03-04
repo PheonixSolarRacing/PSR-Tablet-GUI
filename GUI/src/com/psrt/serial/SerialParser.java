@@ -57,8 +57,8 @@ import com.psrt.threads.SerialMonitor;
 	 /*************************************
 				PUBLIC FIELDS
 	 **************************************/
-	 public static final boolean SERIAL_PARSE_DEBUG = false;
-	 public static final boolean SERIAL_CUT_DEBUG = false;
+	 public static final boolean SERIAL_PARSE_DEBUG = true;
+	 public static final boolean SERIAL_CUT_DEBUG = true;
 	 
 	 
 	 
@@ -250,9 +250,8 @@ import com.psrt.threads.SerialMonitor;
 	  */
 	 @SuppressWarnings("rawtypes")
 	public void parse(){
-		 //LogMonitor.log("parsing");
 		 int l = parseBuffer.size();
-		 //if(parse_debug) LogMonitor.log("Parsebuffer size: " + l);
+		 if(SERIAL_PARSE_DEBUG) LogMonitor.log("Parsebuffer size: " + l, LogMonitor.LogType.SERIAL_PARSER_PARSE);
 		 if(l > 0){
 			 byte[] bytes = parseBuffer.poll();
 			 if(SERIAL_PARSE_DEBUG) print_array(bytes);

@@ -96,7 +96,7 @@ public class BankSystem extends EntitySystem {
 		if(value != null){
 			if(tc != null){
 				tc.setValue("" + value.getValue());
-				LogMonitor.print("BankSystem.process(): Value - " + value.getValue() + ", Hash: " + id.hashCode());
+				LogMonitor.log("BankSystem.process(): Value - " + value.getValue() + ", Hash: " + id.hashCode(), LogMonitor.LogType.BANK_SYSTEM);
 			}else if(pc != null){
 				pc.setValue(value.getValue());
 			}else if(ic != null){

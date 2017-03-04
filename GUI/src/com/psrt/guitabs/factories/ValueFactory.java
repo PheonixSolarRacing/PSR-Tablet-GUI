@@ -7,7 +7,6 @@ import com.psrt.entities.components.ImageComponent;
 import com.psrt.entities.components.LabelComponent;
 import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.TextAreaComponent;
-import com.psrt.entities.components.LabelComponent;
 import com.psrt.entities.components.ValueComponent;
 import com.psrt.entities.systems.BankSystem;
 import com.psrt.guitabs.BMSTab;
