@@ -5,9 +5,9 @@ import com.artemis.EntityEdit;
 import com.psrt.containers.BMSID;
 import com.psrt.containers.BMSValue;
 import com.psrt.containers.ImageHolder;
-import com.psrt.entities.components.DepositBox;
 import com.psrt.entities.components.ImageComponent;
 import com.psrt.entities.components.LabelComponent;
+import com.psrt.entities.systems.Bank;
 import com.psrt.threads.SerialMonitor;
 
 import javafx.scene.Node;
@@ -328,7 +328,7 @@ public class BMSTab{
 			.add(new BMSID(0x60B, 0));
 	}
 	
-	public static void BMS_TREE(int id, byte[] data, DepositBox box){
+	public static void BMS_TREE(int id, byte[] data, Bank bank){
 		BMSValue v = null;
 		//System.out.println("Data len: " + data.length);
 		switch(id){
@@ -346,7 +346,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x6F4, 0), v);
+				bank.put(new BMSID(0x6F4, 0), v);
 				
 				v = new BMSValue(data){ //data_fp[1]
 					@Override
@@ -361,7 +361,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x6F4, 1), v);
+				bank.put(new BMSID(0x6F4, 1), v);
 				break;
 				// end Pack SOC 
 			//------------------------------------------------------------------------------------				
@@ -397,7 +397,7 @@ public class BMSTab{
 						}
 					};
 				}
-				box.put(new BMSID(0x6F7, 0), v);
+				bank.put(new BMSID(0x6F7, 0), v);
 				break;
 				
 				//end Precharge status
@@ -416,7 +416,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x6FA, 0), v);
+				bank.put(new BMSID(0x6FA, 0), v);
 				
 				v = new BMSValue(data){ //data_32[1]
 					@Override
@@ -431,7 +431,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x6FA, 1), v);
+				bank.put(new BMSID(0x6FA, 1), v);
 				break;
 			//--------------------------------------------------------------------
 			case 0x6F8:
@@ -445,7 +445,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x6F8, 1), v);
+				bank.put(new BMSID(0x6F8, 1), v);
 				
 				v = new BMSValue(data){ //data_u16[0]
 					@Override
@@ -457,7 +457,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x6F8, 0), v);
+				bank.put(new BMSID(0x6F8, 0), v);
 				break;
 			//--------------------------------------------------------------------
 			case 0x601:
@@ -471,7 +471,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x601, 2), v);
+				bank.put(new BMSID(0x601, 2), v);
 				
 				v = new BMSValue(data){ //data_u16[3]
 					@Override
@@ -483,7 +483,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x601, 3), v);
+				bank.put(new BMSID(0x601, 3), v);
 				break;
 			//----------------------------------------------------------------------
 			case 0x6F9:
@@ -497,7 +497,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x601, 1), v);
+				bank.put(new BMSID(0x601, 1), v);
 				break;
 			//---------------------------------------------------------------------
 			case 0x608:
@@ -510,7 +510,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x608, 0), v);
+				bank.put(new BMSID(0x608, 0), v);
 				
 				v = new BMSValue(data){ //data_16[1]
 					@Override
@@ -521,7 +521,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x608, 1), v);
+				bank.put(new BMSID(0x608, 1), v);
 				
 				v = new BMSValue(data){ //data_16[2]
 					@Override
@@ -532,7 +532,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x608, 2), v);
+				bank.put(new BMSID(0x608, 2), v);
 				
 				v = new BMSValue(data){ //data_16[3]
 					@Override
@@ -543,7 +543,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x608, 3), v);
+				bank.put(new BMSID(0x608, 3), v);
 				break;
 			//---------------------------------------------------------------------
 			case 0x609:
@@ -556,7 +556,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x609, 0), v);
+				bank.put(new BMSID(0x609, 0), v);
 				
 				v = new BMSValue(data){ //data_16[1]
 					@Override
@@ -567,7 +567,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x609, 1), v);
+				bank.put(new BMSID(0x609, 1), v);
 				
 				v = new BMSValue(data){ //data_16[2]
 					@Override
@@ -578,7 +578,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x609, 2), v);
+				bank.put(new BMSID(0x609, 2), v);
 				break;
 			//---------------------------------------------------------------------
 			case 0x605:
@@ -591,7 +591,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x605, 0), v);
+				bank.put(new BMSID(0x605, 0), v);
 				
 				v = new BMSValue(data){ //data_16[1]
 					@Override
@@ -602,7 +602,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x605, 1), v);
+				bank.put(new BMSID(0x605, 1), v);
 				
 				v = new BMSValue(data){ //data_16[2]
 					@Override
@@ -613,7 +613,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x605, 2), v);
+				bank.put(new BMSID(0x605, 2), v);
 				
 				v = new BMSValue(data){ //data_16[3]
 					@Override
@@ -624,7 +624,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x605, 3), v);
+				bank.put(new BMSID(0x605, 3), v);
 				break;
 			//---------------------------------------------------------------------
 			case 0x606: //cell 4->7 voltage
@@ -637,7 +637,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x606, 0), v);
+				bank.put(new BMSID(0x606, 0), v);
 				
 				v = new BMSValue(data){ //data_16[1]
 					@Override
@@ -648,7 +648,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x606, 1), v);
+				bank.put(new BMSID(0x606, 1), v);
 				
 				v = new BMSValue(data){ //data_16[2]
 					@Override
@@ -659,7 +659,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x606, 2), v);
+				bank.put(new BMSID(0x606, 2), v);
 				
 				v = new BMSValue(data){ //data_16[3]
 					@Override
@@ -670,7 +670,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x606, 3), v);
+				bank.put(new BMSID(0x606, 3), v);
 				break;
 			//---------------------------------------------------------------------
 			case 0x604:  //cmu 2 cell temp
@@ -683,7 +683,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x604, 3), v);
+				bank.put(new BMSID(0x604, 3), v);
 				break;
 			//---------------------------------------------------------------------
 			case 0x60A:  //cmu 4 cell temp
@@ -696,7 +696,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x60A, 3), v);
+				bank.put(new BMSID(0x60A, 3), v);
 				break;
 			//--------------------------------------------------------------------
 			case 0x607: //cmu 3 cell temp
@@ -709,7 +709,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x607, 3), v);
+				bank.put(new BMSID(0x607, 3), v);
 				break;
 			//--------------------------------------------------------------------
 			case 0x603:
@@ -722,7 +722,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x603, 3), v);
+				bank.put(new BMSID(0x603, 3), v);
 				
 				v = new BMSValue(data){ //data_16[2]
 					@Override
@@ -733,7 +733,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x603, 2), v);
+				bank.put(new BMSID(0x603, 2), v);
 				
 				v = new BMSValue(data){ //data_16[1]
 					@Override
@@ -744,7 +744,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x603, 1), v);
+				bank.put(new BMSID(0x603, 1), v);
 				
 				v = new BMSValue(data){ //data_16[0]
 					@Override
@@ -755,7 +755,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x603, 0), v);
+				bank.put(new BMSID(0x603, 0), v);
 				break;
 			//--------------------------------------------------------------------
 			case 0x602:
@@ -768,7 +768,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x602, 3), v);
+				bank.put(new BMSID(0x602, 3), v);
 				
 				v = new BMSValue(data){ //data_16[2]
 					@Override
@@ -779,7 +779,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x602, 2), v);
+				bank.put(new BMSID(0x602, 2), v);
 				
 				v = new BMSValue(data){ //data_16[1]
 					@Override
@@ -790,7 +790,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x602, 1), v);
+				bank.put(new BMSID(0x602, 1), v);
 				
 				v = new BMSValue(data){ //data_16[0]
 					@Override
@@ -801,7 +801,7 @@ public class BMSTab{
 						return val;
 					}
 				};
-				box.put(new BMSID(0x602, 0), v);
+				bank.put(new BMSID(0x602, 0), v);
 				break;
 			//---------------------------------------------------------------------
 			case 0x60C:

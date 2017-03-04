@@ -261,7 +261,6 @@ import com.psrt.threads.SerialMonitor;
 				 // use this as a template for the rest of the implemenatinos
 				 LogMonitor.log("Num messages: " + messages, LogMonitor.LogType.SERIAL_PARSER_PARSE); 
 				 
-				 DepositBox box = new DepositBox(messages);
 				 
 				 for(int i = 0; i < messages; i++){
 					 //String reference = "-1";
@@ -275,7 +274,7 @@ import com.psrt.threads.SerialMonitor;
 						 if(SERIAL_PARSE_DEBUG) LogMonitor.log("BMS ID found " + id, LogMonitor.LogType.SERIAL_PARSER_PARSE);
 						 
 						 byte[] data_bytes = subArray(bytes, pos + 2, 8);
-						 BMSTab.BMS_TREE(id, data_bytes, box);
+						 BMSTab.BMS_TREE(id, data_bytes, bank);
 						 
 					 }else{ //PDBCAN crap
 						 int function = getFunction(bytes, pos);
@@ -301,13 +300,12 @@ import com.psrt.threads.SerialMonitor;
 								 //LogMonitor.log("ByteValue: " + (value.getValue().intValue()));
 							 }
 							 if(value != null) {
-								 box.put(identifier, value);
+								 bank.put(identifier, value);
 								 if(SERIAL_PARSE_DEBUG) LogMonitor.log("SerialParser.parse(): " + identifier.hashCode(), LogMonitor.LogType.SERIAL_PARSER_PARSE);
 							 }
 						 }
 					 }
 				 }
-				 bank.addBox(box);
 			 }
 		 }
 	 }

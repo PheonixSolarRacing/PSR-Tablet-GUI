@@ -11,8 +11,9 @@ import com.psrt.containers.BMSID;
 import com.psrt.containers.PDBID;
 import com.psrt.entities.components.DepositBox;
 import com.psrt.entities.components.ImageComponent;
-import com.psrt.entities.components.ProgressComponent;
 import com.psrt.entities.components.LabelComponent;
+import com.psrt.entities.components.ProgressComponent;
+import com.psrt.guitabs.factories.ValueFactory;
 
 public class BankSystem extends EntitySystem {
 	EntitySubscription sub;
@@ -47,7 +48,6 @@ public class BankSystem extends EntitySystem {
 		}
 		else{
 			IntBag b = sub.getEntities();
-			DepositBox box = bank.getTop();
 			
 			/*
 			 * Note here: Needing to cycle through each entity against every HashMap of data that comes through
@@ -57,7 +57,7 @@ public class BankSystem extends EntitySystem {
 			 */
 			
 			for(int i = 0; i < b.size(); i++){
-				if(box != null) process(b.get(i), box);
+				if(bank != null) process(b.get(i));
 				else {
 					LogMonitor.log("Top box is null, ", LogMonitor.LogType.BANK_SYSTEM);
 				}
@@ -76,7 +76,7 @@ public class BankSystem extends EntitySystem {
 	 * @param entityId
 	 * @param box
 	 */
-	private void process(int entityId, DepositBox box){
+	private void process(int entityId){
 		AbstractID id = null;
 		
 		PDBID pid = cm.getSafe(entityId);
@@ -87,7 +87,7 @@ public class BankSystem extends EntitySystem {
 		else if(bid != null) id = bid;
 		
 		if(id != null) {
-			value = box.get(id);
+			value = bank.get(id);
 		}
 		LabelComponent tc = tm.getSafe(entityId);
 		ProgressComponent pc = pm.getSafe(entityId);

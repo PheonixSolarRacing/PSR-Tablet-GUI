@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.StampedLock;
 
+import com.psrt.containers.AbstractID;
+import com.psrt.containers.AbstractValue;
 import com.psrt.entities.components.DepositBox;
 import com.psrt.parsers.DictionaryParser;
 
@@ -25,12 +27,12 @@ import com.psrt.parsers.DictionaryParser;
 *
 */ 
 public class Bank {
-	BlockingQueue<DepositBox> boxes;
+	ConcurrentHashMap<AbstractID, AbstractValue> map;
 	StampedLock lock;
 	DictionaryParser dictionary;
 	
 	public Bank(DictionaryParser dictionary){
-		boxes = new ArrayBlockingQueue<DepositBox>(256);
+		map = new ConcurrentHashMap<AbstractID, AbstractValue>(4096);
 		lock = new StampedLock();
 		this.dictionary = dictionary;
 	}
@@ -39,12 +41,12 @@ public class Bank {
 		this(new DictionaryParser(""));
 	}
 	
-	public Bank addBox(DepositBox b){
+	public Bank put(AbstractID id, AbstractValue value){
 		
 		long stamp = lock.writeLock();
 		try{
 			if(lock.isWriteLocked()){
-				boxes.offer(b);
+				map.put(id, value);
 			}
 		}finally{
 			lock.unlockWrite(stamp);
@@ -52,36 +54,22 @@ public class Bank {
 		return this;
 	}
 	
-	public Bank addBoxes(DepositBox[] b){
-		List<DepositBox> bs = new ArrayList<DepositBox>(b.length);
-		for(int i = 0; i < b.length; i++){
-			bs.add(b[i]);
-		}
-		long stamp = lock.writeLock();
+	public AbstractValue get(AbstractID key){
+		long stamp = lock.tryOptimisticRead();
+		AbstractValue value = null;
 		try{
-			if(lock.isWriteLocked()){
-				boxes.addAll(bs);
+			if(lock.validate(stamp)){
+				value = map.get(key);
 			}
 		}finally{
-			lock.unlockWrite(stamp);
-		}
-		return this;
-	}
-	
-	public Bank addBoxes(Collection<? extends DepositBox> b){
-		long stamp = lock.writeLock();
-		try{
-			if(lock.isWriteLocked()){
-				boxes.addAll(b);
+			try{
+				lock.unlockRead(stamp);
+			}catch(IllegalMonitorStateException e){
+				//System.out.println("Lock mixup");
+				//I dunno, ignore it? Hmm
 			}
-		}finally{
-			lock.unlockWrite(stamp);
 		}
-		return this;
-	}
-	
-	public DepositBox getTop(){
-		return boxes.poll();
+		return value;
 	}
 	
 	public DictionaryParser getDictionary(){
