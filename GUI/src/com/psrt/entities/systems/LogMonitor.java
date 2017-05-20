@@ -71,6 +71,7 @@ public class LogMonitor {
 	}
 	
 	public static void printToGUI(String s){
+		print(s);
 		textArea.setValue(s);
 	}
 }

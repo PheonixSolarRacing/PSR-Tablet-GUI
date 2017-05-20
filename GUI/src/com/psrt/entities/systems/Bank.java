@@ -2,16 +2,11 @@ package com.psrt.entities.systems;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.StampedLock;
 
 import com.psrt.containers.AbstractID;
 import com.psrt.containers.AbstractValue;
-import com.psrt.entities.components.DepositBox;
 import com.psrt.parsers.DictionaryParser;
 
 
